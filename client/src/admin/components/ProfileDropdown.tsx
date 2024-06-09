@@ -36,7 +36,7 @@ const ProfileDropdown = () => {
       <div className="profile" ref={dropdownRef}>
         <button
           type="button"
-          className="flex items-center gap-1.5 xl:gap-0 dark:text-white/80 text-black"
+          className="flex items-center gap-1.5 xl:gap-0 dark:text-white/80"
           onClick={(e: any) => {
             e.preventDefault();
             toggleOpen();
@@ -48,7 +48,7 @@ const ProfileDropdown = () => {
             src={user}
             alt="Header Avatar"
           />
-          <span className="hidden fw-medium xl:block font-thin dark:text-white/80 text-black">
+          <span className="hidden fw-medium xl:block font-thin dark:text-white/80">
             Stevens L.
           </span>
           <svg
@@ -70,7 +70,7 @@ const ProfileDropdown = () => {
           className={`dropdown -ml-14 mt-2 ${isDropdownOpen ? "visible" : "hidden"}`}
           >
           <li>
-            <Link to="/profile" className="flex items-center gap-2">
+            <Link to="/admin/profile" className="flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -129,11 +129,11 @@ const ProfileDropdown = () => {
               Support
             </Link>
           </li>
-          <li className="block h-px my-1 bg-black/5 dark:bg-darkborder"></li>
+          <li className="block h-px my-1 dark:bg-darkborder"></li>
           <li>
             <Link
               to="/auth-logout"
-              className="flex items-center gap-2 text-black dark:text-white"
+              className="flex items-center gap-2 dark:text-white"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

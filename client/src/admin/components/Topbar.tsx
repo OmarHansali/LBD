@@ -9,12 +9,12 @@ import NotificationDropdown from "./NotificationDropdown";
 const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
   return (
     <React.Fragment>
-      <div className="bg-white dark:bg-darklight dark:border-darkborder flex gap-4 lg:z-10 items-center justify-between px-4 h-[60px] border-b border-black/10 detached-topbar relative">
+      <div className=" dark:bg-darklight dark:border-darkborder flex gap-4 lg:z-10 items-center justify-between px-4 h-[60px] border-b border-black/10 detached-topbar relative">
         <div className="flex items-center flex-1 gap-2 sm:gap-4">
           {/* toggle button */}
           <button
             type="button"
-            className="text-black dark:text-white/80"
+            className=" dark:text-white/80"
             onClick={toggleSidebarCollapse}
           >
             <svg
@@ -41,7 +41,7 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
               />
               <button
                 type="button"
-                className="absolute right-1 rounded-lg hover:bg-gray-200 px-3 inset-y-0 flex items-center text-black ltr:right-0 rtl:left-0 ltr:pr-2 rtl:pl-2 dark:text-white/80"
+                className="absolute right-1 rounded-lg hover:bg-gray-200 px-3 inset-y-0 flex items-center ltr:right-0 rtl:left-0 ltr:pr-2 rtl:pl-2 dark:text-white/80"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -66,7 +66,7 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
           <div>
             <Link
               to="#"
-              className="text-black dark:text-white/80"
+              className="dark:text-white/80"
               onClick={toggleDarkMode}
             >
               {isDarkMode ? (
@@ -97,7 +97,7 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
             </Link> */}
           </div>
           {/* Notification Dropdown */}
-          <NotificationDropdown />
+        <NotificationDropdown />
 
           {/* Profile Dropdown */}
           <ProfileDropdown />

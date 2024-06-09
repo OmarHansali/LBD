@@ -2,7 +2,9 @@ import ReactDOM from "react-dom/client";
 import App from "./App.tsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./client/styles/css/all.min.css";
+
 import "./client/styles/css/icofont.min.css";
+
 import "./client/styles/css/sharp-regular.min.css";
 import "./client/styles/css/sharp-solid.min.css";
 import "swiper/css/bundle";

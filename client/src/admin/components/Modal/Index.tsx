@@ -1,35 +1,33 @@
-import React from "react";
-
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface ModalProps {
-  isOpen: boolean;
-  toggleModal: any;
   title: string;
   divClass: string;
   content: any;
-  onDiscard: any;
+  onDiscard: () => void;
   sizeClass: string;
   spaceClass: string;
+  onSubmit: () => void
 }
 
-const Modal = ({ isOpen, title, content, onDiscard, toggleModal, divClass, sizeClass, spaceClass }: ModalProps) => {
+const Modal = ({ title, content, onDiscard, divClass, sizeClass, spaceClass, onSubmit }: ModalProps) => {
+
   return (
-    <React.Fragment>
+    <>
       <div
-        className={`fixed inset-0 bg-black/80 z-[99999] overflow-y-auto hidden dark:bg-dark/90 ${
-          isOpen === true ? "!block" : ""
-        }`}
+        className={`fixed inset-0 bg-black/80 z-[99999] overflow-y-auto dark:bg-dark/90 !block`}
       >
         <div
           className={divClass}
-          onClick={toggleModal}
         >
           <div className={sizeClass}>
             <div className="flex items-center justify-between px-5 py-3 bg-white border-b border-black/10 dark:bg-darklight dark:border-darkborder">
-              <h5 className="text-lg font-semibold dark:text-white">{title}</h5>
+              <h5 className="text-lg font-semibold dark:text-white text-black">{title}</h5>
+
+              {/* exit button (cross) */}
               <button
                 type="button"
                 className="text-muted hover:text-black dark:hover:text-white"
-                onClick={toggleModal}
+                onClick={onDiscard}
               >
                 <svg
                   className="w-5 h-5"
@@ -50,6 +48,7 @@ const Modal = ({ isOpen, title, content, onDiscard, toggleModal, divClass, sizeC
                 </svg>
               </button>
             </div>
+
             <div className={spaceClass}>
               <div className="text-black dark:text-muted">
                 {content}
@@ -57,24 +56,24 @@ const Modal = ({ isOpen, title, content, onDiscard, toggleModal, divClass, sizeC
               <div className="flex items-center justify-end gap-4">
                 <button
                   type="button"
-                  className="transition-all duration-300 border rounded-md btn text-danger border-danger hover:bg-danger hover:text-white"
+                  className="transition-all duration-300 border rounded-md btn text-danger border-danger hover:text-white hover:bg-red-400"
                   onClick={onDiscard}
                 >
-                  Discard
+                  Cancel
                 </button>
                 <button
                   type="button"
                   className="transition-all duration-300 border rounded-md btn text-purple border-purple hover:bg-purple hover:text-white"
-                //   onClick={onClose}
+                  onClick={onSubmit}
                 >
-                  Save
+                  Continue
                 </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+.active-nav-link {
+    border-right: 4px solid #6366f1;
+
+    @apply bg-gradient-to-l from-indigo-200 to-transparent text-indigo-700 transition-colors duration-75
+}
+
+.header {
+    @apply font-bold text-3xl
+}
+
+.darkClass {
+    @apply bg-slate-800 text-white
+}

@@ -94,7 +94,7 @@ const NotificationDropdown = () => {
       <div className="relative inline-block h-5 notification" ref={dropdownRef}>
         <button
           type="button"
-          className="relative text-black dark:text-white/80"
+          className="relative dark:text-white/80"
           onClick={(e: any) => {
             e.preventDefault();
             toggleOpen();
