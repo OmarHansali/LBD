@@ -1,55 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { contactsData } from "../data/Data";
 
-import avatar1 from "/assets/images/avatar-1.png";
-import avatar4 from "/assets/images/avatar-4.png";
-import avatar13 from "/assets/images/avatar-13.png";
-import avatar19 from "/assets/images/avatar-19.png";
-import avatar24 from "/assets/images/avatar-24.png";
 
-const jsonData = [
-  {
-    avatar: avatar1,
-    action: "Edited the details of Project",
-    time: "5m ago",
-  },
-  {
-    avatar: avatar4,
-    action: "Released a new version",
-    time: "5m ago",
-  },
-  {
-    avatar: avatar13,
-    action: "Submitted a bug",
-    time: "5m ago",
-  },
-  {
-    avatar: avatar19,
-    action: "Modified A data in Page",
-    time: "5m ago",
-  },
-  {
-    avatar: avatar24,
-    action: "Modified A data in Page",
-    time: "5m ago",
-  },
-  {
-    avatar: avatar1,
-    action: "Edited the details of Project",
-    time: "5m ago",
-  },
-  {
-    avatar: avatar4,
-    action: "Released a new version",
-    time: "5m ago",
-  },
-  {
-    avatar: avatar13,
-    action: "Submitted a bug",
-    time: "5m ago",
-  },
-];
 
 const NotificationDropdown = () => {
 
@@ -77,17 +31,24 @@ const NotificationDropdown = () => {
 
     return () => {
       document.removeEventListener("click", handleClick);
-    };  
+    };
   }, [isDropdownOpen, toggleOpen]);
 
-// 
-  const [showElement, setShowElement] = useState(Array(jsonData.length).fill(true));
-  
-  const toggleVisibility = (index : any) => {
-    const updatedVisibility = [...showElement];
-    updatedVisibility[index] = !updatedVisibility[index];
-    setShowElement(updatedVisibility);
-  };
+  // 
+  const [showElement, setShowElement] = useState(Array(contactsData.length).fill(true));
+
+  const messagesCounter = contactsData.reduce((total, item) => {
+    item.messages.map((_, index) => {
+      total += (index + 1)
+    })
+    return total
+  }, 0)
+
+  // const toggleVisibility = (index : any) => {
+  //   const updatedVisibility = [...showElement];
+  //   updatedVisibility[index] = !updatedVisibility[index];
+  //   setShowElement(updatedVisibility);
+  // };
 
   return (
     <React.Fragment>
@@ -120,11 +81,11 @@ const NotificationDropdown = () => {
               <h4 className="text-black dark:text-white/80 px-2 py-2.5 border-b border-black/10 flex items-center gap-2">
                 Notification{" "}
                 <span className="inline-block bg-purple/10 text-purple text-[10px] p-1 leading-none rounded">
-                  32
+                  { messagesCounter }
                 </span>
               </h4>
               <ul className="overflow-y-auto max-h-56 ">
-                {jsonData.map((item, index) => (
+                {contactsData.map((item, index) => (
                   <li key={index}>
                     <div
                       className="flex gap-2 cursor-pointer group"
@@ -132,34 +93,15 @@ const NotificationDropdown = () => {
                     >
                       <div className="flex-none overflow-hidden rounded-full h-9 w-9">
                         <img
-                          src={item.avatar}
+                          src={item.profile}
                           className="object-cover"
                           alt="avatar"
                         />
                       </div>
                       <div className="relative flex-1">
-                        <p className="whitespace-nowrap overflow-hidden text-ellipsis w-[185px] text-black dark:text-white ltr:pr-4 rtl:pl-4">
-                          {item.action}
+                        <p className="whitespace-nowrap overflow-hidden text-ellipsis w-[185px] text-gray-700 text-sm dark:text-white ltr:pr-4 rtl:pl-4">
+                          {item.messages[item.messages.length - 1].title}
                         </p>
-                        <p className="text-xs text-black/40 dark:text-darkmuted">
-                          {item.time}
-                        </p>
-                        <button
-                          type="button"
-                          onClick={() => toggleVisibility(index)}
-                          className="absolute hidden transition-all duration-300 rotate-0 ltr:right-0 rtl:left-0 top-1 dark:text-white/80 group-hover:block hover:opacity-80 hover:rotate-180"
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            viewBox="0 0 24 24"
-                            className="w-3.5 h-3.5"
-                          >
-                            <path
-                              d="M12.0007 10.5865L16.9504 5.63672L18.3646 7.05093L13.4149 12.0007L18.3646 16.9504L16.9504 18.3646L12.0007 13.4149L7.05093 18.3646L5.63672 16.9504L10.5865 12.0007L5.63672 7.05093L7.05093 5.63672L12.0007 10.5865Z"
-                              fill="currentColor"
-                            ></path>
-                          </svg>
-                        </button>
                       </div>
                     </div>
                   </li>

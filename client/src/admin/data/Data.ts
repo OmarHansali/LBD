@@ -150,14 +150,19 @@ export const sallesData = [
 ];
 
 export const materials = [
-    { id: 1, material: "3D Printer", createdAt: "2022-06-10" },
-    { id: 2, material: "Projector", createdAt: "2022-06-10" },
-    { id: 3, material: "Chairs", createdAt: "2022-06-10" },
-    { id: 4, material: "Tables", createdAt: "2022-06-10" },
-    { id: 5, material: "Whiteboard", createdAt: "2022-06-10" },
-    { id: 6, material: "Laptop", createdAt: "2022-06-10" },
-    { id: 7, material: "Computers", createdAt: "2022-06-10" },
-    { id: 8, material: "Microphone", createdAt: "2022-06-10" },
+    {
+        id: 1,
+        material: "3D Printer",
+        quantity: 10,
+        createdAt: "2022-06-10"
+    },
+    { id: 2, material: "Projector", quantity: 12, createdAt: "2022-06-10" },
+    { id: 3, material: "Chairs", quantity: 2, createdAt: "2022-06-10" },
+    { id: 4, material: "Tables", quantity: 30, createdAt: "2022-06-10" },
+    { id: 5, material: "Whiteboard", quantity: 5, createdAt: "2022-06-10" },
+    { id: 6, material: "Laptop", quantity: 19, createdAt: "2022-06-10" },
+    { id: 7, material: "Computers", quantity: 13, createdAt: "2022-06-10" },
+    { id: 8, material: "Microphone", quantity: 9, createdAt: "2022-06-10" },
     // Add more materials as needed
 ];
 
@@ -167,7 +172,6 @@ export const sallesType = [
     { id: 3, type: "fablab" },
     // Add more materials as needed
 ];
-
 
 export const reservationsData = [
     {
@@ -263,7 +267,6 @@ export const reservationsData = [
 ]
 
 
-
 export const contactsData = [
     {
         id: 1,
@@ -302,3 +305,4 @@ export const contactsData = [
         ]
     },
 ]
+

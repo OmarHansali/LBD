@@ -18,6 +18,12 @@ const Materials = () => {
             enableSorting: true,
         },
         {
+            header: "Quantity",
+            accessorKey: "quantity",
+            enableColumnFilter: false,
+            enableSorting: true,
+        },
+        {
             header: "Created At",
             accessorKey: "createdAt",
             enableColumnFilter: false,
