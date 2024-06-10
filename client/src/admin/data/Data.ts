@@ -1,10 +1,6 @@
 import user from "/assets/images/user.png"
 import slack from "/assets/images/slack.svg"
-import avatar6 from "/assets/images/avatar-6.png"
-import avatar7 from "/assets/images/avatar-7.png"
-import avatar8 from "/assets/images/avatar-8.png"
-import behance from "/assets/images/behance.png"
-import chatgpt from "/assets/images/chatgpt.png"
+
 
 export const usersData = [
     {
@@ -274,62 +270,35 @@ export const contactsData = [
         username: "John Doe",
         profile: user,
         email: "john@gmail.com",
-        createdAt: "10-02-2024 12:39",
-        title: "Rapport About CS50",
-        content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum."
+        messages: [
+            {
+                title: "Rapport About CS50",
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum.",
+                createdAt: "10-02-2024 12:39",
+            },
+            {
+                title: "Rapport About CS50",
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum.",
+                createdAt: "10-02-2024 12:39",
+            }
+        ]
     },
     {
         id: 2,
         username: "Jane Smith",
-        profile: avatar6,
-        email: "jane@gmail.com",
-        createdAt: "15-03-2024 08:22",
-        title: "Meeting Notes",
-        content: "Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam."
-    },
-    {
-        id: 3,
-        username: "Alice Johnson",
-        profile: avatar7,
-        email: "alice@gmail.com",
-        createdAt: "20-04-2024 14:15",
-        title: "Project Plan",
-        content: "Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
-    },
-    {
-        id: 4,
-        username: "Bob Brown",
-        profile: avatar8,
-        email: "bob@gmail.com",
-        createdAt: "05-05-2024 09:30",
-        title: "Weekly Report",
-        content: "Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
-    },
-    {
-        id: 5,
-        username: "Charlie Davis",
         profile: slack,
-        email: "charlie@gmail.com",
-        createdAt: "12-06-2024 16:45",
-        title: "Slack Integration",
-        content: "Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
+        email: "jane@gmail.com",
+        messages: [
+            {
+                title: "Meeting Summary",
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum.",
+                createdAt: "10-02-2024 12:39",
+            },
+            {
+                title: "Meeting Summary",
+                content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus imperdiet, nulla et dictum interdum.",
+                createdAt: "10-02-2024 12:39",
+            }
+        ]
     },
-    {
-        id: 6,
-        username: "David Evans",
-        profile: behance,
-        email: "david@gmail.com",
-        createdAt: "19-07-2024 11:00",
-        title: "Design Portfolio",
-        content: "Curabitur non nulla sit amet nisl tempus convallis quis ac lectus. Praesent sapien massa, convallis a pellentesque nec."
-    },
-    {
-        id: 7,
-        username: "Emma Wilson",
-        profile: chatgpt,
-        email: "emma@gmail.com",
-        createdAt: "25-08-2024 13:29",
-        title: "AI Research",
-        content: "Vivamus magna justo, lacinia eget consectetur sed, convallis at tellus. Nulla quis lorem ut libero malesuada feugiat."
-    }
 ]

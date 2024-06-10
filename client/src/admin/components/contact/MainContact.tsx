@@ -1,19 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { iContactProps } from "../../constants/Types"
 
-interface iContactProps {
-  id: number;
-  username: string;
-  profile: string;
-  email: string;
-  createdAt: string;
-  title: string;
-  content: string;
-}
+
 
 const MainContact = ({ data }: { data: iContactProps }) => {
 
-  const { username, content, profile, email, createdAt, title } = data
+  const { username, profile, email, messages } = data
   return (
     <>
       <div
@@ -45,9 +38,19 @@ const MainContact = ({ data }: { data: iContactProps }) => {
             </div>
           </div>
         </div>
-        <div className="rounded pt-10 h-[60vh] overflow-y-auto px-4 space-y-3">
-            <span className="text-lg ">{title}</span>
-            <h1 className="text-lg text-gray-700">{content}</h1>
+        <div className="overflow-y-scroll">
+          {
+            messages.map((message, index) => (
+              <div
+                key={index}
+                className=" p-4 overflow-y-auto px-4 space-y-2 border m-2"
+              >
+                <h1 className="text-gray-700 text-sm">{message.createdAt}</h1>
+                <span className="text-lg ">{message.title}</span>
+                <h1 className="text-gray-700 italic text-base">{message.content}</h1>
+              </div>
+            ))
+          }
         </div>
       </div>
     </>

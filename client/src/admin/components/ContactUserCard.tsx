@@ -1,25 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import React from "react";
-
-interface ContactProps {
-    id: any;
-    username: string;
-    profile: string;
-    email: string;
-    createdAt: string;
-    title: string;
-    content: string;
-}
+import { iContactProps } from "../constants/Types";
 
 interface ContactUserCardProps extends React.HTMLAttributes<HTMLDivElement> {
-    contact: ContactProps;
+    contact: iContactProps;
     isActive?: boolean
 }
 
 const ContactUserCard: React.FC<ContactUserCardProps> = ({ contact, isActive, ...props }) => {
 
-    const time = contact.createdAt.split(" ")[1];
+    // const time = contact.createdAt.split(" ")[1];
     return (
         <div
             {...props}
@@ -34,9 +25,9 @@ const ContactUserCard: React.FC<ContactUserCardProps> = ({ contact, isActive, ..
                 <span>{ contact.username }</span>
             </div>
 
-            <div className={`text-sm ${isActive ? "text-white" : "text-gray-700"}`}>
+            {/* <div className={`text-sm ${isActive ? "text-white" : "text-gray-700"}`}>
                 { time }
-            </div>
+            </div> */}
         </div>
     );
 };

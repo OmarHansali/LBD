@@ -12,7 +12,7 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
       <div className=" dark:bg-darklight dark:border-darkborder flex gap-4 lg:z-10 items-center justify-between px-4 h-[60px] border-b border-black/10 detached-topbar relative">
         <div className="flex items-center flex-1 gap-2 sm:gap-4">
           {/* toggle button */}
-          <button
+          {/* <button
             type="button"
             className=" dark:text-white/80"
             onClick={toggleSidebarCollapse}
@@ -27,10 +27,10 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
                 fill="currentColor"
               ></path>
             </svg>
-          </button>
+          </button> */}
 
           {/*  */}
-          <form className="flex-1 hidden min-[420px]:block">
+          {/* <form className="flex-1 hidden min-[420px]:block">
             <div className="relative max-w-[180px] md:max-w-[350px]">
               <input
                 type="text"
@@ -56,7 +56,7 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
 
               </button>
             </div>
-          </form>
+          </form> */}
         </div>
         <div className="flex items-center gap-4">
           {/* FullScreen */}
@@ -97,7 +97,7 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
             </Link> */}
           </div>
           {/* Notification Dropdown */}
-        <NotificationDropdown />
+          <NotificationDropdown />
 
           {/* Profile Dropdown */}
           <ProfileDropdown />

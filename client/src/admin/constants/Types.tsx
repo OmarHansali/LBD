@@ -30,3 +30,17 @@ export interface iReservationType {
     duration: number | null,
     material: [],
 }
+
+export interface iContactProps {
+    id: number | string;
+    username: string;
+    profile: string;
+    email: string;
+    messages: [
+        {
+            createdAt: string;
+            title: string;
+            content: string;
+        }
+    ]
+}
