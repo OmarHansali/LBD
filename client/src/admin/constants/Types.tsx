@@ -1,4 +1,4 @@
-export interface iEditUser {
+export interface iUserType {
         username?: string,
         phoneNumber?: string,
         email?: string,
@@ -9,8 +9,18 @@ export interface iEditUser {
 export interface iSalleType {
     id?: number,
     type: string,
-    material: string,
+    material: [],
     number: string,
     capacity: number,
     availability: string
+}
+
+export interface iReservationType {
+    id?: number,
+    userId: number | null,
+    salleId: number | null,
+    startDate: Date,
+    endDate: Date,
+    duration: number | null,
+    material: [],
 }

@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TableContainer from "../../components/TableContainer";
-import { datatabledata } from "../../data/Data";
+import { usersData } from "../../data/Data";
 
 const Users = () => {
 
@@ -37,7 +37,7 @@ const Users = () => {
             <h1 className="header">Manage Users</h1>
             <TableContainer
                 columns={columns}
-                data={datatabledata}
+                data={usersData}
                 isGlobalFilter={true}
                 customPageSize={5}
                 isSelect={true}

@@ -1,9 +1,9 @@
-import { iEditUser } from "../constants/Types";
+import { iUserType } from "../constants/Types";
 import LoadingButton from "./LoadingButton";
 import NavigateBack from "./NavigateBack";
 
 interface iProps {
-    data?: iEditUser
+    data?: iUserType
 }
 
 const UserForm = ({ data }: iProps) => {

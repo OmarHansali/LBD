@@ -6,7 +6,7 @@ import avatar8 from "/assets/images/avatar-8.png"
 import behance from "/assets/images/behance.png"
 import chatgpt from "/assets/images/chatgpt.png"
 
-export const datatabledata = [
+export const usersData = [
     {
         id: 1,
         username: "tunia",
@@ -75,7 +75,7 @@ export const sallesData = [
         id: 1,
         type: "salle",
         number: "39JHK0",
-        material: "Projector",
+        material: ["Projector"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: true
     },
@@ -83,7 +83,7 @@ export const sallesData = [
         id: 2,
         type: "box",
         number: "20LDN3",
-        material: "Sound System",
+        material: ["Chairs"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: false
     },
@@ -91,7 +91,7 @@ export const sallesData = [
         id: 3,
         type: "fablab",
         number: "17MNB1",
-        material: "3D Printer",
+        material: ["3D Printer", "Projector"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: true
     },
@@ -99,7 +99,7 @@ export const sallesData = [
         id: 4,
         type: "salle",
         number: "25QRT4",
-        material: "Computers",
+        material: ["Computers"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: false
     },
@@ -107,7 +107,7 @@ export const sallesData = [
         id: 5,
         type: "box",
         number: "42PLM5",
-        material: "Microphone",
+        material: ["Microphone"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: true
     },
@@ -115,7 +115,7 @@ export const sallesData = [
         id: 6,
         type: "fablab",
         number: "38NFR9",
-        material: "Laptops",
+        material: ["Laptops"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: false
     },
@@ -123,7 +123,7 @@ export const sallesData = [
         id: 7,
         type: "salle",
         number: "14DFT2",
-        material: "Whiteboard",
+        material: ["Whiteboard"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: true
     },
@@ -131,7 +131,7 @@ export const sallesData = [
         id: 8,
         type: "box",
         number: "19QWE7",
-        material: "Tables",
+        material: ["Tables"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: false
     },
@@ -139,7 +139,7 @@ export const sallesData = [
         id: 9,
         type: "fablab",
         number: "22BVC6",
-        material: "Laser Cutter",
+        material: ["Laser Cutter"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: true
     },
@@ -147,36 +147,125 @@ export const sallesData = [
         id: 10,
         type: "salle",
         number: "15QAZ8",
-        material: "Chairs",
+        material: ["Chairs"],
         capacity: Math.floor(Math.random() * (30 - 6 + 1)) + 6,
         availability: true
     }
 ];
 
-export const materials = Array.from(
-    new Set(sallesData.map((salle) => salle.material))
-).map((material, index) => ({
-    id: index + 1,
-    material: material
-}));
+export const materials = [
+    { id: 1, material: "3D Printer" },
+    { id: 2, material: "Projector" },
+    { id: 3, material: "Chairs" },
+    { id: 4, material: "Tables" },
+    { id: 5, material: "Whiteboard" },
+    { id: 6, material: "Laptop" },
+    { id: 7, material: "Computers" },
+    { id: 8, material: "Microphone" },
+    // Add more materials as needed
+];
 
-export const reservationsData = Array.from({ length: 10 }, (_, index) => {
-    const randomUserId = Math.floor(Math.random() * 10) + 1;
-    const randomSalleId = Math.floor(Math.random() * 10) + 1;
+export const sallesType = [
+    { id: 1, type: "salle" },
+    { id: 2, type: "box" },
+    { id: 3, type: "fablab" },
+    // Add more materials as needed
+];
 
-    const filteredUser = datatabledata.filter(user => user.id === randomUserId);
-    const filteredSalle = sallesData.filter(salle => salle.id === randomSalleId);
 
-    return {
-        id: index + 1,
-        userId: filteredUser.length > 0 ? filteredUser[0].username : 'Unknown',
-        salleId: filteredSalle.length > 0 ? filteredSalle[0].type : 'Unknown',
-        startDate: `01-03-202${index}`,
-        endDate: `04-05-202${index + 1}`,
-        duration: `${15 * (index + 1)} min`,
-        material: ["Table", "Projector", "Sound System", "3D Printer", "Computers", "Microphone", "Laptops", "Whiteboard", "Tables", "Laser Cutter"][index % 10]
-    };
-});
+export const reservationsData = [
+    {
+        "id": 1,
+        "userId": "tunia",
+        "salleId": "salle",
+        "startDate": "01-03-2021",
+        "endDate": "04-05-2022",
+        "duration": 15,
+        "material": ["Tables"]
+    },
+    {
+        "id": 2,
+        "userId": "barney",
+        "salleId": "box",
+        "startDate": "01-03-2022",
+        "endDate": "04-05-2023",
+        "duration": 30,
+        "material": ["Projector"]
+    },
+    {
+        "id": 3,
+        "userId": "ressie",
+        "salleId": "fablab",
+        "startDate": "01-03-2023",
+        "endDate": "04-05-2024",
+        "duration": 45,
+        "material": ["Chairs"]
+    },
+    {
+        "id": 4,
+        "userId": "teresa",
+        "salleId": "salle",
+        "startDate": "01-03-2024",
+        "endDate": "04-05-2025",
+        "duration": 60,
+        "material": ["3D Printer"]
+    },
+    {
+        "id": 5,
+        "userId": "chelsey",
+        "salleId": "box",
+        "startDate": "01-03-2025",
+        "endDate": "04-05-2026",
+        "duration": 75,
+        "material": ["Computers"]
+    },
+    {
+        "id": 6,
+        "userId": "tatyana",
+        "salleId": "fablab",
+        "startDate": "01-03-2026",
+        "endDate": "04-05-2027",
+        "duration": 90,
+        "material": ["Microphone"]
+    },
+    {
+        "id": 7,
+        "userId": "oleta",
+        "salleId": "salle",
+        "startDate": "01-03-2027",
+        "endDate": "04-05-2028",
+        "duration": 105,
+        "material": ["Laptops"]
+    },
+    {
+        "id": 8,
+        "userId": "bette",
+        "salleId": "box",
+        "startDate": "01-03-2028",
+        "endDate": "04-05-2029",
+        "duration": 120,
+        "material": ["Whiteboard"]
+    },
+    {
+        "id": 9,
+        "userId": "meda",
+        "salleId": "fablab",
+        "startDate": "01-03-2029",
+        "endDate": "04-05-2030",
+        "duration": 135,
+        "material": ["Tables"]
+    },
+    {
+        "id": 10,
+        "userId": "elissa",
+        "salleId": "salle",
+        "startDate": "01-03-2030",
+        "endDate": "04-05-2031",
+        "duration": 150,
+        "material": ["Microphone"]
+    }
+]
+
 
 
 export const contactsData = [

@@ -24,12 +24,12 @@ const Salles = () => {
             enableColumnFilter: false,
             enableSorting: true,
         },
-        {
-            header: "Material",
-            accessorKey: "material",
-            enableColumnFilter: false,
-            enableSorting: true,
-        },
+        // {
+        //     header: "Material",
+        //     accessorKey: "material",
+        //     enableColumnFilter: false,
+        //     enableSorting: true,
+        // },
         {
             header: "Capacity",
             accessorKey: "capacity",
