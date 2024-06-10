@@ -116,7 +116,7 @@ const NotificationDropdown = () => {
         {isDropdownOpen && (
           <>
             {/* Dropdown content */}
-            <div className="noti-area">
+            <div className="noti-area -ml-36 mt-2">
               <h4 className="text-black dark:text-white/80 px-2 py-2.5 border-b border-black/10 flex items-center gap-2">
                 Notification{" "}
                 <span className="inline-block bg-purple/10 text-purple text-[10px] p-1 leading-none rounded">

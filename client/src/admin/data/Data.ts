@@ -154,14 +154,14 @@ export const sallesData = [
 ];
 
 export const materials = [
-    { id: 1, material: "3D Printer" },
-    { id: 2, material: "Projector" },
-    { id: 3, material: "Chairs" },
-    { id: 4, material: "Tables" },
-    { id: 5, material: "Whiteboard" },
-    { id: 6, material: "Laptop" },
-    { id: 7, material: "Computers" },
-    { id: 8, material: "Microphone" },
+    { id: 1, material: "3D Printer", createdAt: "2022-06-10" },
+    { id: 2, material: "Projector", createdAt: "2022-06-10" },
+    { id: 3, material: "Chairs", createdAt: "2022-06-10" },
+    { id: 4, material: "Tables", createdAt: "2022-06-10" },
+    { id: 5, material: "Whiteboard", createdAt: "2022-06-10" },
+    { id: 6, material: "Laptop", createdAt: "2022-06-10" },
+    { id: 7, material: "Computers", createdAt: "2022-06-10" },
+    { id: 8, material: "Microphone", createdAt: "2022-06-10" },
     // Add more materials as needed
 ];
 

@@ -11,11 +11,13 @@ const UserForm = ({ data }: iProps) => {
 
     return (
         <>
-            <NavigateBack />
-            <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
-                    User Details
+            <div className="flex items-center gap-10">
+                <NavigateBack />
+                <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
+                    {data != undefined ? "Edit User" : "Create New User"}
                 </h2>
+            </div>
+            <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
@@ -86,7 +88,7 @@ const UserForm = ({ data }: iProps) => {
                             />
                         </div>
                     </div>
-                    <LoadingButton isLoading={false} text="Update"  />
+                    <LoadingButton isLoading={false} text={ data ? "Update" : "Create"} />
                 </div>
             </div>
         </>

@@ -39,9 +39,9 @@ const MainContact = ({ data }: { data: iContactProps }) => {
                 {username} <span className="text-muted">|</span>{" "}
                 {email}
               </p>
-              <p className="text-xs text-muted dark:text-darkmuted">
+              {/* <p className="text-xs text-muted dark:text-darkmuted">
                 {createdAt}
-              </p>
+              </p> */}
             </div>
           </div>
         </div>

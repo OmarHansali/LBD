@@ -29,6 +29,10 @@ import CreateSalle from "./admin/pages/Salle/CreateSalle";
 import EditSalle from "./admin/pages/Salle/EditSalle";
 import Settings from "./admin/components/Settings";
 
+import AdminMaterials from "./admin/pages/Materials/Materials";
+import CreateMaterial from "./admin/pages/Materials/CreateMaterial";
+import EditMaterial from "./admin/pages/Materials/EditMaterial";
+
 function App() {
   return (
     <Router>
@@ -57,6 +61,11 @@ function App() {
             <Route path='reservations' element={<AdminReservations />} />
             <Route path='create-reservation' element={<CreateReservation/>} />
             <Route path='edit-reservation' element={<EditReservation/>} />
+
+            <Route path='materials' element={<AdminMaterials />} />
+            <Route path='create-material' element={<CreateMaterial/>} />
+            <Route path='edit-material' element={<EditMaterial/>} />
+
 
             <Route path='salles' element={<AdminSalles />} />
             <Route path='create-salle' element={<CreateSalle/>} />

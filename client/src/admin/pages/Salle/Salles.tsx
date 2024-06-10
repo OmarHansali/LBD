@@ -7,7 +7,7 @@ const Salles = () => {
 
     const columns = [
         {
-            header: "#",
+            header: "ID",
             accessorKey: "id",
             enableColumnFilter: false,
             enableSorting: true,

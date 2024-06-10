@@ -1,8 +1,8 @@
 export interface iUserType {
-        username?: string,
-        phoneNumber?: string,
-        email?: string,
-        password?: string,
+    username?: string,
+    phoneNumber?: string,
+    email?: string,
+    password?: string,
 }
 
 
@@ -13,6 +13,12 @@ export interface iSalleType {
     number: string,
     capacity: number,
     availability: string
+}
+
+export interface iMaterialType {
+    id?: number,
+    material: string,
+    createdAt: string
 }
 
 export interface iReservationType {

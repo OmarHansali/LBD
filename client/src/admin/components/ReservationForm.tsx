@@ -61,15 +61,17 @@ const ReservationForm = ({ data }: iProps) => {
     const { inputs, handleChange, isLoading } = useForm(initialState, "", "PUT")
 
     console.log(inputs);
-    
+
 
     return (
         <>
-            <NavigateBack />
-            <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
-                    User Details
+            <div className="flex items-center gap-10">
+                <NavigateBack />
+                <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
+                    {data != undefined ? "Edit Reservation" : "Create New Reservation"}
                 </h2>
+            </div>
+            <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                 <form className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
@@ -179,7 +181,7 @@ const ReservationForm = ({ data }: iProps) => {
 
                         </div>
                     </div>
-                    <LoadingButton isLoading={isLoading} text={ data ? "Update" : "Create"} />
+                    <LoadingButton isLoading={isLoading} text={data ? "Update" : "Create"} />
                 </form>
             </div>
         </>

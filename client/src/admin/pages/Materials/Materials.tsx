@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import TableContainer from "../../components/TableContainer";
-import { usersData } from "../../data/Data";
+import { materials } from "../../data/Data";
 
-const Users = () => {
+const Materials = () => {
 
     const columns = [
         {
@@ -12,20 +12,14 @@ const Users = () => {
             enableSorting: true,
         },
         {
-            header: "Username",
-            accessorKey: "username",
+            header: "Material",
+            accessorKey: "material",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Email",
-            accessorKey: "email",
-            enableColumnFilter: false,
-            enableSorting: true,
-        },
-        {
-            header: "Phone Number",
-            accessorKey: "phoneNumber",
+            header: "Created At",
+            accessorKey: "createdAt",
             enableColumnFilter: false,
             enableSorting: true,
         },
@@ -34,20 +28,20 @@ const Users = () => {
 
     return (
         <>
-            <h1 className="header">Manage Users</h1>
+            <h1 className="header">Manage Materials</h1>
             <TableContainer
                 columns={columns}
-                data={usersData}
+                data={materials}
                 isGlobalFilter={true}
                 customPageSize={5}
                 isSelect={true}
                 isPagination={true}
                 divclassName="overflow-auto"
                 tableclassName="min-w-[640px] w-full"
-                page="user"
+                page="material"
             />
         </>
     );
 };
 
-export default Users;
+export default Materials;

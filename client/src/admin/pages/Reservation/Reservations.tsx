@@ -5,7 +5,7 @@ const Reservations = () => {
 
     const columns = [
         {
-            header: "#",
+            header: "ID",
             accessorKey: "id",
             enableColumnFilter: false,
             enableSorting: true,
