@@ -5,7 +5,7 @@ import Sidebar from "../components/Sidebar";
 
 import bgmain from "../../../public/assets/images/bg-main.png";
 import Topbar from "../components/Topbar";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
@@ -13,13 +13,10 @@ import { toggleLayoutModeReducer } from "../../state/features/slices/reducer";
 import { THEME_MODE } from "../../constants/layoutType";
 import { Toaster } from "react-hot-toast";
 
-// import { createSelector } from "reselect";
-// import { useDispatch, useSelector } from "react-redux";
-
-// import { useNavigate } from "react-router-dom";
 
 const AdminLayout = () => {
 
+    const navigate = useNavigate()
     const dispatch = useDispatch();
     //  Dark & Light
     const currentThemeMode = useSelector((state: any) => state.layout.currentLayoutMode)
@@ -31,12 +28,18 @@ const AdminLayout = () => {
     };
 
     useEffect(() => {
+        // prevent a none admin users to access admin side
+        // if (!localStorage.getItem('user')) {
+        //     return navigate('/login')
+        // }
+
+
         if (currentThemeMode === THEME_MODE.DARK) {
             document.documentElement.classList.add('dark');
         } else {
             document.documentElement.classList.remove('dark');
         }
-    }, [currentThemeMode]);
+    }, [currentThemeMode, navigate]);
 
     // lg sm Sidebar
     const [isSidebarSize, setIsSidebarSize] = useState(false);
@@ -46,6 +49,7 @@ const AdminLayout = () => {
         setIsSidebarSize(!isSidebarSize)
     };
 
+    
 
     return (
         <>
