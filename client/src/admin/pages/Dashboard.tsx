@@ -6,8 +6,8 @@ const Dashboard = () => {
     return (
         <>
             <h1 className="header mb-3">Dashboard</h1>
-            <div className="space-y-4">
-                <div className="grid grid-cols-4 gap-2 h-28">
+            <div className="space-y-4 flex flex-col gap-1 md:gap-10">
+                <div className="grid lg:grid-cols-4 md:grid-cols-2 gap-2 h-28">
                     <StatisticsCard text="Total Users" title="users" number={139} />
                     <StatisticsCard text="Total Salles" title="salles" number={96} />
                     <StatisticsCard text="Available Salles" title="salles" number={16} />

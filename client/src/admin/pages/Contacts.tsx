@@ -29,7 +29,7 @@ const Contacts = () => {
                         contactsData.map((contact) => (
                             <ContactUserCard
                                 key={contact.id}
-                                contact={contact}
+                                contact={contact as any}
                                 onClick={() => handleChangeContact(contact.id)}
                                 className="bg-red-300"
                                 isActive={ contact.id === selectedContact.id }

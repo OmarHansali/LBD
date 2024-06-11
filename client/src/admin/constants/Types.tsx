@@ -18,7 +18,8 @@ export interface iSalleType {
 export interface iMaterialType {
     id?: number,
     material: string,
-    createdAt: string
+    quantity: number | null,
+    createdAt?: string
 }
 
 export interface iReservationType {
