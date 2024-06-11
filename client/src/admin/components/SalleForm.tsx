@@ -48,7 +48,7 @@ const SalleForm = ({ data }: iProps) => {
             <div className="flex items-center gap-10">
                 <NavigateBack />
                 <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
-                    {data != undefined ? "Edit Salle" : "Create New Salle"}
+                    {data != undefined ? "Modifier Salle" : "Créer une nouvelle salle"}
                 </h2>
             </div>
             <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">

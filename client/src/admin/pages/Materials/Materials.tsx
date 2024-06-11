@@ -34,7 +34,7 @@ const Materials = () => {
 
     return (
         <>
-            <h1 className="header">Manage Materials</h1>
+            <h1 className="header capitalize">Gérer les matériaux</h1>
             <TableContainer
                 columns={columns}
                 data={materials}
@@ -44,7 +44,7 @@ const Materials = () => {
                 isPagination={true}
                 divclassName="overflow-auto"
                 tableclassName="min-w-[640px] w-full"
-                page="material"
+                page="matérielle"
             />
         </>
     );

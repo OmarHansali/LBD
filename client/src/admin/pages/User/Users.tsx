@@ -34,7 +34,7 @@ const Users = () => {
 
     return (
         <>
-            <h1 className="header">Manage Users</h1>
+            <h1 className="header capitalize">gérer les utilisateurs</h1>
             <TableContainer
                 columns={columns}
                 data={usersData}
@@ -44,7 +44,7 @@ const Users = () => {
                 isPagination={true}
                 divclassName="overflow-auto"
                 tableclassName="min-w-[640px] w-full"
-                page="user"
+                page="utilisateur"
             />
         </>
     );

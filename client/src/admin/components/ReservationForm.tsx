@@ -68,7 +68,7 @@ const ReservationForm = ({ data }: iProps) => {
             <div className="flex items-center gap-10">
                 <NavigateBack />
                 <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
-                    {data != undefined ? "Edit Reservation" : "Create New Reservation"}
+                    {data != undefined ? "Modifier Réservation" : "Créer une nouvelle réservation"}
                 </h2>
             </div>
             <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">

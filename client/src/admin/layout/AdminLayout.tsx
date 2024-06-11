@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { toggleLayoutModeReducer } from "../../state/features/slices/reducer";
 import { THEME_MODE } from "../../constants/layoutType";
+import { Toaster } from "react-hot-toast";
 
 // import { createSelector } from "reselect";
 // import { useDispatch, useSelector } from "react-redux";
@@ -48,6 +49,10 @@ const AdminLayout = () => {
 
     return (
         <>
+            <div>
+                <Toaster containerClassName="mt-3" />
+            </div>
+
             <div className="bg-[#f9fbfd] dark:bg-dark text-black">
                 {/* Start detached bg */}
                 <div

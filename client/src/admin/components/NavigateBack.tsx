@@ -6,7 +6,7 @@ const NavigateBack = () => {
     return (
         <button onClick={() => navigate(-1)} className="bg-white px-3 py-2 w-fit border rounded-md cursor-pointer hover:bg-gray-200">
             <i className="icofont-arrow-left"></i>
-            <span>Back</span>
+            <span>Retour</span>
         </button>
     )
 }

@@ -16,7 +16,7 @@ const Contacts = () => {
 
     return (
         <div className="space-y-2 h-[80vh]">
-            <h1 className="header mb-4">Messages</h1>
+            <h1 className="header mb-4">Les Messages</h1>
             <div className="grid grid-cols-8 gap-1 h-full">
                 {/* main section */}
                 <div className="border col-span-6">

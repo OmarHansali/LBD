@@ -174,20 +174,20 @@ const TableContainer = ({
   // actions
 
   switch (page) {
-    case "user":
-      createAction = "/admin/create-user"
+    case "utilisateur":
+      createAction = "/admin/creer-utilisateur"
       break;
 
     case "salle":
-      createAction = "/admin/create-salle"
+      createAction = "/admin/creer-salle"
       break;
 
     case "reservation":
-      createAction = "/admin/create-reservation"
+      createAction = "/admin/creer-reservation"
       break;
 
-    case "material":
-      createAction = "/admin/create-material"
+    case "matérielle":
+      createAction = "/admin/creer-materielle"
       break;
 
   }
@@ -195,20 +195,20 @@ const TableContainer = ({
   const handleEdit = (row: any) => {
 
     switch (page) {
-      case "user":
-        navigate('/admin/edit-user', { state: { data: row } });
+      case "utilisateur":
+        navigate('/admin/modifier-utilisateur', { state: { data: row } });
         break;
 
       case "salle":
-        navigate('/admin/edit-salle', { state: { data: row } });
+        navigate('/admin/modifier-salle', { state: { data: row } });
         break;
 
       case "reservation":
-        navigate('/admin/edit-reservation', { state: { data: row } });
+        navigate('/admin/modifier-reservation', { state: { data: row } });
         break;
 
-      case "material":
-        navigate('/admin/edit-material', { state: { data: row } });
+      case "matérielle":
+        navigate('/admin/modifier-materielle', { state: { data: row } });
         break;
 
     }
@@ -263,10 +263,10 @@ const TableContainer = ({
       }
 
       {/* Modal */}
-      <div className="flex items-center justify-between gap-3">
+      <div className="flex items-center justify-between gap-3 ">
         {isSelect && (
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <p>Show</p>
+            <p>Afficher</p>
             <select
               className="form-select !w-20"
               onClick={(event: any) => setPageSize(event.target.value)}
@@ -287,7 +287,7 @@ const TableContainer = ({
                 value={globalFilter ?? ""}
                 onChange={(value) => setGlobalFilter(String(value))}
                 className="form-input border px-3 rounded-md"
-                placeholder="Search..."
+                placeholder="Recherche..."
               />
             )}
           </div>
@@ -297,13 +297,13 @@ const TableContainer = ({
             className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
           >
             <i className="icofont-plus text-white"></i>
-            <span className="capitalize">Create New {page}</span>
+            <span className="capitalize">Créer {page}</span>
           </Link>
         </div>
       </div>
 
       <div className={divclassName}>
-        <table className={tableclassName}>
+        <table className={`${tableclassName} my-2`}>
           <thead className={theadclassName}>
             {getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id} className={`${trclassName}`}>

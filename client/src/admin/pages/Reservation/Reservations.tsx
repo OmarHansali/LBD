@@ -50,7 +50,7 @@ const Reservations = () => {
 
     return (
         <>
-            <h1 className="header">Manage Reservations</h1>
+            <h1 className="header capitalize">Gérer les Reservations</h1>
             <TableContainer
                 columns={columns}
                 data={reservationsData}

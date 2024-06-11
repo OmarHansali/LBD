@@ -59,24 +59,24 @@ function App() {
             <Route path='dashboard' element={<AdminDashboard />} />
 
             <Route path='reservations' element={<AdminReservations />} />
-            <Route path='create-reservation' element={<CreateReservation/>} />
-            <Route path='edit-reservation' element={<EditReservation/>} />
+            <Route path='creer-reservation' element={<CreateReservation/>} />
+            <Route path='modifier-reservation' element={<EditReservation/>} />
 
-            <Route path='materials' element={<AdminMaterials />} />
-            <Route path='create-material' element={<CreateMaterial/>} />
-            <Route path='edit-material' element={<EditMaterial/>} />
+            <Route path='materiaux' element={<AdminMaterials />} />
+            <Route path='creer-materielle' element={<CreateMaterial/>} />
+            <Route path='modifier-materielle' element={<EditMaterial/>} />
 
 
             <Route path='salles' element={<AdminSalles />} />
-            <Route path='create-salle' element={<CreateSalle/>} />
-            <Route path='edit-salle' element={<EditSalle/>} />
+            <Route path='creer-salle' element={<CreateSalle/>} />
+            <Route path='modifier-salle' element={<EditSalle/>} />
 
-            <Route path='users' element={<ManageUsers />} />
-            <Route path='create-user' element={<EditInfo/>} />
-            <Route path='edit-user' element={<EditInfo/>} />
+            <Route path='utilisateurs' element={<ManageUsers />} />
+            <Route path='creer-utilisateur' element={<EditInfo/>} />
+            <Route path='modifier-utilisateur' element={<EditInfo/>} />
 
             <Route path='profile' element={<Profile />} />
-            <Route path='edit-profile' element={<Settings />} />
+            <Route path='modifier-profile' element={<Settings />} />
 
             <Route path='contacts' element={<AdminContacts />} />
           </Route>
