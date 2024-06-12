@@ -115,7 +115,7 @@ const Sidebar = (isSidebarSize: any) => {
                                                     display:
                                                         isSidebarSize && activeMenu === key ? "" : "none",
                                                 }}
-                                                className="flex flex-col gap-1 text-black sub-menu dark:text-white/60"
+                                                className="flex flex-col gap-1 text-black sub-menu ml-5 dark:text-white/60"
                                             >
                                                 {item.subItems.map((subitem: any, subkey: any) => (
                                                     <React.Fragment key={subkey}>
@@ -125,7 +125,7 @@ const Sidebar = (isSidebarSize: any) => {
                                                                     to={subitem.link}
                                                                     className={
                                                                         location.pathname === subitem.link
-                                                                            ? "active"
+                                                                            ? "active bg-indigo-100"
                                                                             : ""
                                                                     }
                                                                 >

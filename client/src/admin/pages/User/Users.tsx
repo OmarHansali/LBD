@@ -18,6 +18,12 @@ const Users = () => {
             enableSorting: true,
         },
         {
+            header: "Role",
+            accessorKey: "role",
+            enableColumnFilter: false,
+            enableSorting: true,
+        },
+        {
             header: "Email",
             accessorKey: "email",
             enableColumnFilter: false,

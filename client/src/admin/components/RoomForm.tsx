@@ -13,8 +13,8 @@ interface iProps {
 }
 
 
-const SalleForm = ({ data, page }: iProps) => {
-    const { type ,availability, capacity, material, number } = data || {}
+const RoomForm = ({ data, page }: iProps) => {
+    const { type, availability, capacity, material, number } = data || {}
 
     const [mutableMaterials, setMutableMaterials] = useState((data && material) ? material.map((item) => ({ label: item, value: item })) : []);
 
@@ -49,7 +49,7 @@ const SalleForm = ({ data, page }: iProps) => {
             <div className="flex items-center gap-10">
                 <NavigateBack />
                 <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
-                    {data != undefined ? `Modifier ${page ? page : type}` : `Créer une nouvelle ${page ? page : type}`}
+                    {data != undefined ? `Modifier ${type ? type : page}` : `Créer une nouvelle ${type ? type : page}`}
                 </h2>
             </div>
             <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
@@ -57,7 +57,7 @@ const SalleForm = ({ data, page }: iProps) => {
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label className="capitalize">{page ? page : type} Number</label>
+                            <label className="capitalize">{type ? type : page} Number</label>
                             <input
                                 type="text"
                                 className="form-input border"
@@ -145,4 +145,4 @@ const SalleForm = ({ data, page }: iProps) => {
         </>
     )
 }
-export default SalleForm
+export default RoomForm
