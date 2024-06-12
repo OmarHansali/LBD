@@ -22,16 +22,27 @@ import AdminContacts from "./admin/pages/Contacts";
 import ManageUsers from "./admin/pages/User/Users";
 import Profile from "./admin/pages/Profile";
 import EditInfo from "./admin/pages/User/EditUser";
-import AdminSalles from "./admin/pages/Salle/Salles";
 import CreateReservation from "./admin/pages/Reservation/CreateReservation";
 import EditReservation from "./admin/pages/Reservation/EditReservation";
-import CreateSalle from "./admin/pages/Salle/CreateSalle";
-import EditSalle from "./admin/pages/Salle/EditSalle";
+
+// rooms
+
+import AdminSalles from "./admin/pages/Rooms/Salle/Salles";
+import CreateSalle from "./admin/pages/Rooms/Salle/CreateSalle";
+import EditSalle from "./admin/pages/Rooms/Salle/EditSalle";
+
+
 import Settings from "./admin/components/Settings";
 
 import AdminMaterials from "./admin/pages/Materials/Materials";
 import CreateMaterial from "./admin/pages/Materials/CreateMaterial";
 import EditMaterial from "./admin/pages/Materials/EditMaterial";
+import Boxes from "./admin/pages/Rooms/Box/Boxes";
+import CreateBox from "./admin/pages/Rooms/Box/CreateBox";
+import EditBox from "./admin/pages/Rooms/Box/EditBox";
+import Fablabs from "./admin/pages/Rooms/Fablab/Fablabs";
+import CreateFablab from "./admin/pages/Rooms/Fablab/CreateFablab";
+import EditFablab from "./admin/pages/Rooms/Fablab/EditFablab";
 
 function App() {
   return (
@@ -66,10 +77,22 @@ function App() {
             <Route path='creer-materielle' element={<CreateMaterial/>} />
             <Route path='modifier-materielle' element={<EditMaterial/>} />
 
-
+            {/* --------------rooms------------------------- */}
             <Route path='salles' element={<AdminSalles />} />
             <Route path='creer-salle' element={<CreateSalle/>} />
             <Route path='modifier-salle' element={<EditSalle/>} />
+
+
+            <Route path='boxes' element={<Boxes />} />
+            <Route path='creer-box' element={<CreateBox/>} />
+            <Route path='modifier-box' element={<EditBox/>} />
+
+
+            <Route path='fablabs' element={<Fablabs />} />
+            <Route path='creer-fablab' element={<CreateFablab/>} />
+            <Route path='modifier-fablab' element={<EditFablab/>} />
+
+            {/* ------------------------------------------------ */}
 
             <Route path='utilisateurs' element={<ManageUsers />} />
             <Route path='creer-utilisateur' element={<EditInfo/>} />

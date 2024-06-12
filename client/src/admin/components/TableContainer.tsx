@@ -182,6 +182,14 @@ const TableContainer = ({
       createAction = "/admin/creer-salle"
       break;
 
+    case "box":
+      createAction = "/admin/creer-box"
+      break;
+
+    case "fablab":
+      createAction = "/admin/creer-fablab"
+      break;
+
     case "reservation":
       createAction = "/admin/creer-reservation"
       break;
@@ -194,7 +202,7 @@ const TableContainer = ({
 
   const handleEdit = (row: any) => {
     console.log(row);
-    
+
     switch (page) {
       case "utilisateur":
         navigate('/admin/modifier-utilisateur', { state: { data: row } });
@@ -202,6 +210,14 @@ const TableContainer = ({
 
       case "salle":
         navigate('/admin/modifier-salle', { state: { data: row } });
+        break;
+
+      case "box":
+        navigate('/admin/modifier-box', { state: { data: row } });
+        break;
+
+      case "fablab":
+        navigate('/admin/modifier-fablab', { state: { data: row } });
         break;
 
       case "reservation":
@@ -226,6 +242,14 @@ const TableContainer = ({
         console.log("Delete row in salles:", row);
         break;
 
+      case "box":
+        console.log("Delete row in box:", row);
+        break;
+
+      case "fablab":
+        console.log("Delete row in fablab:", row);
+        break;
+
       case "reservation":
         console.log("Delete row in reservations:", row);
         break;
@@ -239,22 +263,6 @@ const TableContainer = ({
     console.log("start deleting");
 
   }
-
-  const salleLinks = [
-    {
-      id: 1,
-      name: "Salle"
-    },
-    {
-      id: 2,
-      name: "Box"
-    },
-    {
-      id: 4,
-      name: "Fablab"
-    },
-  ]
-
 
 
   return (
@@ -281,67 +289,44 @@ const TableContainer = ({
       {/* Modal */}
       <div className="flex items-center justify-between gap-3 ">
         <div className="flex items-center gap-2">
-        {isSelect && (
-          <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <p>Afficher</p>
-            <select
-              className="form-select !w-20"
-              onClick={(event: any) => setPageSize(event.target.value)}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="25">25</option>
-              <option value="50">50</option>
-              <option value="100">100</option>
-            </select>
-          </div>
-        )}
+          {isSelect && (
+            <div className="flex items-center space-x-2 rtl:space-x-reverse">
+              <p>Afficher</p>
+              <select
+                className="form-select !w-20"
+                onClick={(event: any) => setPageSize(event.target.value)}
+              >
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+                <option value="100">100</option>
+              </select>
+            </div>
+          )}
           <div>
-          <div>
-            {isGlobalFilter && (
-              <DebouncedInput
-                value={globalFilter ?? ""}
-                onChange={(value) => setGlobalFilter(String(value))}
-                className="form-input border px-3 rounded-md"
-                placeholder="Recherche..."
-              />
-            )}
-          </div>
+            <div>
+              {isGlobalFilter && (
+                <DebouncedInput
+                  value={globalFilter ?? ""}
+                  onChange={(value) => setGlobalFilter(String(value))}
+                  className="form-input border px-3 rounded-md"
+                  placeholder="Recherche..."
+                />
+              )}
+            </div>
           </div>
         </div>
 
         <div className="flex gap-1 items-center">
-          
 
-          {
-            page != "salle" ? (
-              <Link
-                to={createAction!}
-                className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
-              >
-                <i className="icofont-plus text-white"></i>
-                <span className="capitalize">Créer {page}</span>
-              </Link>)
-              :
-              (<>
-                {
-                  salleLinks.map(({ id, name }) => (
-                    <Link
-                      key={id}
-                      to={{
-                        pathname: createAction!,
-                      }}
-                      state={name.toLowerCase()}
-                      className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
-                    >
-                      <i className="icofont-plus text-white"></i>
-                      <span className="capitalize">Créer {name}</span>
-                    </Link>
-                  ))
-                }
-              </>)
-          }
-
+          <Link
+            to={createAction!}
+            className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
+          >
+            <i className="icofont-plus text-white"></i>
+            <span className="capitalize">Créer {page}</span>
+          </Link>
 
         </div>
       </div>

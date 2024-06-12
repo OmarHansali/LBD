@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import TableContainer from "../../components/TableContainer";
-import { sallesData } from "../../data/Data";
+import TableContainer from "../../../components/TableContainer";
+import { sallesData } from "../../../data/Data";
 
 
-const Salles = () => {
+const Fablabs = () => {
 
-
+    const onlyFablabs = sallesData.filter((salle) => salle.type == "fablab")
     const columns = [
         {
             header: "ID",
@@ -62,21 +62,21 @@ const Salles = () => {
 
     return (
         <>
-            <h1 className="header capitalize">Gérer les salles</h1>
+            <h1 className="header capitalize">Gérer les fablabs</h1>
                 {/* <LoadingPage isLoading={isLoading} /> */}
                 <TableContainer
                     columns={columns}
-                    data={sallesData}
+                    data={onlyFablabs}
                     isGlobalFilter={true}
                     customPageSize={5}
                     isSelect={true}
                     isPagination={true}
                     divclassName="overflow-auto"
                     tableclassName="min-w-[640px] w-full"
-                    page="salle"
+                    page="fablab"
                 />
         </>
     );
 };
 
-export default Salles;
+export default Fablabs;
