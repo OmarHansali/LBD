@@ -1,4 +1,4 @@
-const datatabledata = [
+const usersData = [
   {
     name: "Brielle Kuphal",
     job: "Global Metrics Developer",
@@ -331,4 +331,4 @@ const datatabledata = [
   },
 ];
 
-export { datatabledata };
+export { usersData };

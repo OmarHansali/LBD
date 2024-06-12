@@ -1,4 +1,4 @@
-enum LAYOUT_MODE {
+enum THEME_MODE {
   LIGHT = "light",
   DARK = "dark",
 }
@@ -20,7 +20,7 @@ enum LAYOUT_TYPE_NAME {
 }
 
 export {
-    LAYOUT_MODE,
+    THEME_MODE,
     LAYOUT_DIRECTION,
     LAYOUT_TYPE,
     LAYOUT_TYPE_NAME

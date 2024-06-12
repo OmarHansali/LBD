@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 interface NavProps {
   ulPosition: string;
@@ -9,33 +10,33 @@ const NavSection: React.FC<NavProps> = ({ ulPosition, liStyle }) => {
   return (
     <ul className={ulPosition}>
       <li className={`tl-nav-item ${liStyle} `}>
-        <a role="button" href="/">
+        <Link role="button" to="/">
           Accueil
-        </a>
+        </Link>
       </li>
 
       <li className={`tl-nav-item ${liStyle} `}>
-        <a role="button" href="/resource">
+        <Link role="button" to="/resource">
           Ressources
-        </a>
+        </Link>
       </li>
 
       <li className={`tl-nav-item ${liStyle} `}>
-        <a role="button" href="/about" style={{ whiteSpace: "nowrap" }}>
+        <Link role="button" to="/about" style={{ whiteSpace: "nowrap" }}>
           À propos
-        </a>
+        </Link>
       </li>
 
       <li className={`tl-nav-item ${liStyle} `}>
-        <a role="button" href="/contact">
+        <Link role="button" to="/contact">
           Contact
-        </a>
+        </Link>
       </li>
 
       <li className={`tl-nav-item ${liStyle} `}>
-        <a role="button" href="/reservation">
+        <Link role="button" to="/reservation">
           Réservation
-        </a>
+        </Link>
       </li>
 
     </ul>

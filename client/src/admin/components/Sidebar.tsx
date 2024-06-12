@@ -2,12 +2,14 @@
 import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
-// import logolight from "/assets/images/logo-light.svg";
-import logodark from "/assets/images/logo-dark.svg";
+import logodark from "/assets/images/logos/logo_1_light.png";
+import logolight from "/assets/images/logos/logo_1.png";
+// import logodark from "/assets/images/logo-dark.svg";
 // import logoicon from "/assets/images/logo-icon.svg";
 import { sidebarData } from "../../constants/SidebarLinks";
+import { useSelector } from "react-redux";
 
-const Sidebar = (isSidebarSize : any) => {
+const Sidebar = (isSidebarSize: any) => {
 
     const location = useLocation();
     const storedData = localStorage.getItem("activeMenu");
@@ -23,32 +25,38 @@ const Sidebar = (isSidebarSize : any) => {
         setActiveMenu(activeMenu === menu ? null : menu);
     };
 
+    const currentThemeMode = useSelector((state: any) => state.layout.currentLayoutMode)
+
 
     return (
         <React.Fragment>
             <nav className="sidebar fixed z-[9999] flex-none w-[240px] ltr:border-r rtl:border-l dark:bg-darkborder border-black/10 transition-all duration-300 overflow-hidden">
-                <div className="h-full bg-white dark:bg-darklight">
+                <div className="h-full dark:bg-darklight border-r-[1px]">
                     <div className="py-4 flex justify-center">
                         <Link to="/admin/dashboard" className="w-full main-logo">
                             {/* dark:hidden */}
-                            <img
-                                src={logodark}
-                                className="mx-auto dark-logo h-7 logo" 
-                                alt="logo"
-                            />
+                            {
+                                currentThemeMode == "dark" ? (<img
+                                    src={logolight}
+                                    className="mx-auto light-logo h-14 logo dark:block"
+                                    alt="logo"
+                                />) :
+                                    (<img
+                                        src={logodark}
+                                        className="mx-auto dark-logo h-14 logo"
+                                        alt="logo"
+                                    />)
+                            }
+
+
                             {/* <img
-                                src={logolight}
-                                className="mx-auto light-logo h-7 logo dark:block"
-                                alt="logo"
-                            />
-                            <img
                                 src={logoicon}
                                 className=" mx-auto logo-icon h-7"
                                 alt=""
                             /> */}
                         </Link>
                     </div>
-                    <div className="h-[calc(100vh-60px)] overflow-y-auto overflow-x-hidden px-5 pb-4 space-y-16 detached-menu">
+                    <div className="h-[calc(100vh-60px)] overflow-y-auto overflow-x-hidden px-4 pb-4 space-y-16 detached-menu">
                         <ul className="relative flex flex-col gap-1">
                             {(sidebarData || []).map((item: any, key: any) => (
                                 <React.Fragment key={key}>
@@ -133,7 +141,7 @@ const Sidebar = (isSidebarSize : any) => {
                                         <li className="menu nav-item">
                                             <Link
                                                 to={item.link}
-                                                className={`items-center justify-between my-1 py-2 px-0.5 hover:bg-gray-200 text-black nav-link group ${location.pathname == item.link ? "text-blue-500 border" : ""
+                                                className={`items-center justify-between my-1 py-2 px-0.5 ${location.pathname == item.link ? "active-nav-link" : ""
                                                     }`}
                                                 onClick={() => toggleSubMenu(key)}
                                             >
@@ -155,7 +163,7 @@ const Sidebar = (isSidebarSize : any) => {
                                 </React.Fragment>
                             ))}
                         </ul>
-                        
+
                     </div>
                 </div>
             </nav>

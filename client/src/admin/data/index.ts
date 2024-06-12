@@ -4,7 +4,7 @@ import { alertdata } from "./alert";
 
 // table
 import { fullWidth, iconcheckbox } from "./basictable";
-import { datatabledata } from "./datatable";
+import { usersData } from "./datatable";
 
 // chat 
 import { sidechatdata } from "./chat";
@@ -21,7 +21,7 @@ export {
     alertdata,
     fullWidth,
     iconcheckbox,
-    datatabledata,
+    usersData,
     sidechatdata,
     contactdata,
     firstDrag,

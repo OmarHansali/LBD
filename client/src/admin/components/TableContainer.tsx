@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Fragment, useEffect, useState } from "react";
-
+import { Link, useNavigate } from "react-router-dom";
 import {
   Column,
   Table as ReactTable,
@@ -12,8 +13,8 @@ import {
   getSortedRowModel,
   flexRender,
 } from "@tanstack/react-table";
-
 import { rankItem } from "@tanstack/match-sorter-utils";
+import Modal from "./Modal/Index";
 
 // Column Filter
 const Filter = ({
@@ -72,6 +73,7 @@ const DebouncedInput = ({
     />
   );
 };
+
 interface TableContainerProps {
   columns?: any;
   data?: any;
@@ -91,6 +93,7 @@ interface TableContainerProps {
   isPagination: boolean;
   PaginationClassName?: string;
   SearchPlaceholder?: string;
+  page: string
 }
 
 const TableContainer = ({
@@ -109,7 +112,8 @@ const TableContainer = ({
   customPageSize,
   isGlobalFilter,
   PaginationClassName,
-  SearchPlaceholder,
+  page
+
 }: TableContainerProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [globalFilter, setGlobalFilter] = useState("");
@@ -159,12 +163,127 @@ const TableContainer = ({
     Number(customPageSize) && setPageSize(Number(customPageSize));
   }, [customPageSize, setPageSize]);
 
+
+  const navigate = useNavigate()
+  // modal
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [deleteApiKey, setDeleteApiKey] = useState<string>("")
+
+  let createAction
+
+  // actions
+
+  switch (page) {
+    case "utilisateur":
+      createAction = "/admin/creer-utilisateur"
+      break;
+
+    case "salle":
+      createAction = "/admin/creer-salle"
+      break;
+
+    case "reservation":
+      createAction = "/admin/creer-reservation"
+      break;
+
+    case "matérielle":
+      createAction = "/admin/creer-materielle"
+      break;
+
+  }
+
+  const handleEdit = (row: any) => {
+    console.log(row);
+    
+    switch (page) {
+      case "utilisateur":
+        navigate('/admin/modifier-utilisateur', { state: { data: row } });
+        break;
+
+      case "salle":
+        navigate('/admin/modifier-salle', { state: { data: row } });
+        break;
+
+      case "reservation":
+        navigate('/admin/modifier-reservation', { state: { data: row } });
+        break;
+
+      case "matérielle":
+        navigate('/admin/modifier-materielle', { state: { data: row } });
+        break;
+
+    }
+  };
+
+  const handleDeleteClick = (row: any) => {
+    setIsModalOpen(true);
+    switch (page) {
+      case "user":
+        console.log("Delete row in users:", row);
+        break;
+
+      case "salle":
+        console.log("Delete row in salles:", row);
+        break;
+
+      case "reservation":
+        console.log("Delete row in reservations:", row);
+        break;
+
+    }
+  };
+
+  const deletProcess = () => {
+    // axios
+    setIsModalOpen(true)
+    console.log("start deleting");
+
+  }
+
+  const salleLinks = [
+    {
+      id: 1,
+      name: "Salle"
+    },
+    {
+      id: 2,
+      name: "Box"
+    },
+    {
+      id: 4,
+      name: "Fablab"
+    },
+  ]
+
+
+
   return (
     <Fragment>
-      <div className="flex items-center justify-between gap-3">
+      {/* Modal */}
+
+      {
+        isModalOpen &&
+        <Modal
+          title={`Delete ${page}`}
+          divClass="flex items-center justify-center min-h-screen px-4"
+          content={`Are you sure that you to delete this ${page} ?`}
+          onDiscard={() => {
+            setIsModalOpen(false)
+            // setDeleteApiKey("")
+          }}
+          onSubmit={deletProcess}
+          sizeClass="relative w-full max-w-lg p-0 my-1 overflow-hidden bg-white border rounded-lg border-black/10 dark:bg-darklight dark:border-darkborder"
+          spaceClass="py-4 px-5 space-y-4"
+        />
+
+      }
+
+      {/* Modal */}
+      <div className="flex items-center justify-between gap-3 ">
+        <div className="flex items-center gap-2">
         {isSelect && (
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
-            <p>Show</p>
+            <p>Afficher</p>
             <select
               className="form-select !w-20"
               onClick={(event: any) => setPageSize(event.target.value)}
@@ -177,31 +296,68 @@ const TableContainer = ({
             </select>
           </div>
         )}
+          <div>
+          <div>
+            {isGlobalFilter && (
+              <DebouncedInput
+                value={globalFilter ?? ""}
+                onChange={(value) => setGlobalFilter(String(value))}
+                className="form-input border px-3 rounded-md"
+                placeholder="Recherche..."
+              />
+            )}
+          </div>
+          </div>
+        </div>
 
-        <div>
-          {isGlobalFilter && (
-            <DebouncedInput
-              value={globalFilter ?? ""}
-              onChange={(value) => setGlobalFilter(String(value))}
-              className="form-input"
-              placeholder="Search..."
-            />
-          )}
+        <div className="flex gap-1 items-center">
+          
+
+          {
+            page != "salle" ? (
+              <Link
+                to={createAction!}
+                className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
+              >
+                <i className="icofont-plus text-white"></i>
+                <span className="capitalize">Créer {page}</span>
+              </Link>)
+              :
+              (<>
+                {
+                  salleLinks.map(({ id, name }) => (
+                    <Link
+                      key={id}
+                      to={{
+                        pathname: createAction!,
+                      }}
+                      state={name.toLowerCase()}
+                      className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
+                    >
+                      <i className="icofont-plus text-white"></i>
+                      <span className="capitalize">Créer {name}</span>
+                    </Link>
+                  ))
+                }
+              </>)
+          }
+
+
         </div>
       </div>
 
       <div className={divclassName}>
-        <table className={tableclassName}>
+        <table className={`${tableclassName} my-2`}>
           <thead className={theadclassName}>
             {getHeaderGroups().map((headerGroup) => (
-              <tr key={headerGroup.id} className={trclassName}>
+              <tr key={headerGroup.id} className={`${trclassName}`}>
                 {headerGroup.headers.map((header) => {
                   return (
                     <th
                       key={header.id}
                       colSpan={header.colSpan}
                       {...{
-                        className: `${header.column.getCanSort()} ${thclassName}`,
+                        className: `${header.column.getCanSort()} ${thclassName} hover:underline cursor-pointer`,
                         onClick: header.column.getToggleSortingHandler(),
                       }}
                     >
@@ -231,6 +387,7 @@ const TableContainer = ({
                     </th>
                   );
                 })}
+                <th>Actions</th>
               </tr>
             ))}
           </thead>
@@ -249,6 +406,26 @@ const TableContainer = ({
                       </td>
                     );
                   })}
+                  <td className={tdclassName}>
+                    <div className="flex space-x-2">
+                      <button onClick={() => handleEdit(row.original)}>
+                        <div className="flex items-center justify-center hover:bg-gray-200 dark:hover:bg-orange-400 w-12 h-12 text-2xl border rounded-md border-black/10 text-black/80 dark:border-darkborder dark:text-muted">
+                          <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z" />
+                          </svg>
+
+                        </div>
+                      </button>
+
+                      <button onClick={() => handleDeleteClick(row.original)}>
+                        <div className="flex items-center justify-center hover:bg-gray-200 dark:hover:bg-red-400 w-12 h-12 text-2xl border rounded-md border-black/10 text-black/80 dark:border-darkborder dark:text-muted">
+                          <svg className="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z" />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
+                  </td>
                 </tr>
               );
             })}
@@ -273,8 +450,9 @@ const TableContainer = ({
         </table>
       </div>
 
+      {/* pagination */}
       {isPagination && (
-        <div className={PaginationClassName}>
+        <div className={`${PaginationClassName}`}>
           <ul className="inline-flex items-center gap-1">
             <li>
               <button
@@ -286,9 +464,8 @@ const TableContainer = ({
             </li>
             <li>
               <button
-                className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${
-                  !getCanPreviousPage() && "disabled"
-                }`}
+                className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${!getCanPreviousPage() && "disabled"
+                  }`}
                 onClick={previousPage}
               >
                 Prev
@@ -298,10 +475,9 @@ const TableContainer = ({
               <React.Fragment key={key}>
                 <li>
                   <button
-                    className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${
-                      getState().pagination.pageIndex === item &&
+                    className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${getState().pagination.pageIndex === item &&
                       "text-purple border-purple dark:text-purple dark:border-purple"
-                    }`}
+                      }`}
                     onClick={() => setPageIndex(item)}
                   >
                     {item + 1}

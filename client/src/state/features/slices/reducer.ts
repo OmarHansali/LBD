@@ -3,18 +3,12 @@ import { createSlice } from "@reduxjs/toolkit";
 
 // Importing constants
 import {
-    LAYOUT_MODE,
-    LAYOUT_DIRECTION,
-    LAYOUT_TYPE,
-    LAYOUT_TYPE_NAME
+    THEME_MODE,
 } from "../../../constants/layoutType";
 
 // Initial state of the LayoutSlice
 const defaultState = {
-    currentLayoutMode: LAYOUT_MODE.LIGHT,
-    currentLayoutDirection: LAYOUT_DIRECTION.LTR,
-    currentLayoutType: LAYOUT_TYPE.LG,
-    currentLayoutTypeName: LAYOUT_TYPE_NAME.VERTICAL
+    currentLayoutMode: THEME_MODE.LIGHT,
 };
 
 // Create the LayoutSlice
@@ -23,34 +17,20 @@ const layoutSlice = createSlice({
     initialState: defaultState,
     reducers: {
 
-        // Action to change the layout type
-        changeLayoutModeReducer(state, action) {
-            state.currentLayoutMode = action.payload;  // layout mode change
+        
+        toggleLayoutModeReducer(state) {
+            state.currentLayoutMode = state.currentLayoutMode === THEME_MODE.LIGHT ? THEME_MODE.DARK : THEME_MODE.LIGHT;
         },
 
-        changeLayoutDirectionReducer(state, action) {
-            state.currentLayoutDirection = action.payload;  // layout direction change
-        },
-
-        changeLayoutTypeReducer(state, action) {
-            state.currentLayoutType = action.payload;  // layout type change
-        },
-
-        changeLayoutTypeNameReducer(state, action) {
-            state.currentLayoutTypeName = action.payload;  // layout type name change
-        }
     }
 });
 
 // Destructure actions from layoutSlice
-const { changeLayoutModeReducer, changeLayoutDirectionReducer, changeLayoutTypeReducer, changeLayoutTypeNameReducer } = layoutSlice.actions;
+const { toggleLayoutModeReducer} = layoutSlice.actions;
 
 // Exporting individual actions
 export {
-    changeLayoutModeReducer,
-    changeLayoutDirectionReducer,
-    changeLayoutTypeReducer,
-    changeLayoutTypeNameReducer
+    toggleLayoutModeReducer,
 };
 
 // Exporting the reducer

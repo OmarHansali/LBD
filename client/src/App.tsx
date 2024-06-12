@@ -17,9 +17,21 @@ import RootLayout from "./client/component/layout/RootLayout";
 // --------------Admin Components------------------------
 import AdminLayout from "./admin/layout/AdminLayout";
 import AdminDashboard from "./admin/pages/Dashboard";
-import AdminReservations from "./admin/pages/Reservations";
+import AdminReservations from "./admin/pages/Reservation/Reservations";
 import AdminContacts from "./admin/pages/Contacts";
-import ManageUsers from "./admin/pages/Users";
+import ManageUsers from "./admin/pages/User/Users";
+import Profile from "./admin/pages/Profile";
+import EditInfo from "./admin/pages/User/EditUser";
+import AdminSalles from "./admin/pages/Salle/Salles";
+import CreateReservation from "./admin/pages/Reservation/CreateReservation";
+import EditReservation from "./admin/pages/Reservation/EditReservation";
+import CreateSalle from "./admin/pages/Salle/CreateSalle";
+import EditSalle from "./admin/pages/Salle/EditSalle";
+import Settings from "./admin/components/Settings";
+
+import AdminMaterials from "./admin/pages/Materials/Materials";
+import CreateMaterial from "./admin/pages/Materials/CreateMaterial";
+import EditMaterial from "./admin/pages/Materials/EditMaterial";
 
 function App() {
   return (
@@ -39,13 +51,33 @@ function App() {
           <Route path="/resource" element={<ResourcePage />} />
 
           <Route path="*" element={<NotFoundPage />} />
+
           //----------------------Admin section-----------------------------
 
           <Route path="admin" element={<AdminLayout />}>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path='dashboard' element={<AdminDashboard />} />
+
             <Route path='reservations' element={<AdminReservations />} />
-            <Route path='users' element={<ManageUsers />} />
+            <Route path='creer-reservation' element={<CreateReservation/>} />
+            <Route path='modifier-reservation' element={<EditReservation/>} />
+
+            <Route path='materiaux' element={<AdminMaterials />} />
+            <Route path='creer-materielle' element={<CreateMaterial/>} />
+            <Route path='modifier-materielle' element={<EditMaterial/>} />
+
+
+            <Route path='salles' element={<AdminSalles />} />
+            <Route path='creer-salle' element={<CreateSalle/>} />
+            <Route path='modifier-salle' element={<EditSalle/>} />
+
+            <Route path='utilisateurs' element={<ManageUsers />} />
+            <Route path='creer-utilisateur' element={<EditInfo/>} />
+            <Route path='modifier-utilisateur' element={<EditInfo/>} />
+
+            <Route path='profile' element={<Profile />} />
+            <Route path='modifier-profile' element={<Settings />} />
+
             <Route path='contacts' element={<AdminContacts />} />
           </Route>
         </Route>

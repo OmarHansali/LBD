@@ -37,7 +37,7 @@ const Fullscreen: React.FC = () => {
     <React.Fragment>
       <div className="h-5">
         <button
-          className="text-black dark:text-white/80"
+          className=" dark:text-white/80"
           onClick={toggleFullscreen}
         >
           {isFullscreen ? (
