@@ -105,12 +105,14 @@ The following routes are available for managing users:
 ```json
 {
   "number": "1",
-  "type": "fablab",
+  "type": "box",
   "capacity": 1,
   "availability": false,
-  "startHour": "2024-06-12T09:00:00.000Z",
-  "endHour": "2024-06-12T17:00:00.000Z"
+  "startHour": "2024-06-13T08:00:00Z",
+  "endHour": "2024-06-13T17:00:00Z",
+  "materielIds": [1, 2, 3]
 }
+
 
 ```
 
@@ -119,13 +121,21 @@ The following routes are available for managing users:
 ```json
 [
     {
-        "id": 1,
+        "id": 4,
         "number": "1",
         "type": "fablab",
         "capacity": 1,
         "availability": false,
-        "startHour": "2024-06-12T09:00:00.000Z",
-        "endHour": "2024-06-12T17:00:00.000Z"
+        "startHour": "2024-06-13T08:00:00.000Z",
+        "endHour": "2024-06-13T17:00:00.000Z",
+        "materiels": [
+            {
+                "id": 3,
+                "name": "Projector",
+                "quantity": 1,
+                "availability": true
+            }
+        ]
     }
 ]
 ```
@@ -142,7 +152,6 @@ The following routes are available for managing users:
     "name": "Projector",
     "quantity": 1,
     "availability": true,
-    "salleIds": [1, 2, 3]
 }
 ```
 
@@ -155,15 +164,6 @@ The following routes are available for managing users:
         "name": "Projector",
         "quantity": 1,
         "availability": true,
-        "salles": [
-            {
-                "id": 1,
-                "number": "1",
-                "type": "fablab",
-                "capacity": 1,
-                "availability": false
-            }
-        ]
     }
 ]
 ```
