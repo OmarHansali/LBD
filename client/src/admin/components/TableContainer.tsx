@@ -193,7 +193,8 @@ const TableContainer = ({
   }
 
   const handleEdit = (row: any) => {
-
+    console.log(row);
+    
     switch (page) {
       case "utilisateur":
         navigate('/admin/modifier-utilisateur', { state: { data: row } });
@@ -239,6 +240,21 @@ const TableContainer = ({
 
   }
 
+  const salleLinks = [
+    {
+      id: 1,
+      name: "Salle"
+    },
+    {
+      id: 2,
+      name: "Box"
+    },
+    {
+      id: 4,
+      name: "Fablab"
+    },
+  ]
+
 
 
   return (
@@ -264,6 +280,7 @@ const TableContainer = ({
 
       {/* Modal */}
       <div className="flex items-center justify-between gap-3 ">
+        <div className="flex items-center gap-2">
         {isSelect && (
           <div className="flex items-center space-x-2 rtl:space-x-reverse">
             <p>Afficher</p>
@@ -279,8 +296,7 @@ const TableContainer = ({
             </select>
           </div>
         )}
-
-        <div className="flex gap-1 items-center">
+          <div>
           <div>
             {isGlobalFilter && (
               <DebouncedInput
@@ -291,14 +307,42 @@ const TableContainer = ({
               />
             )}
           </div>
+          </div>
+        </div>
 
-          <Link
-            to={createAction!}
-            className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
-          >
-            <i className="icofont-plus text-white"></i>
-            <span className="capitalize">Créer {page}</span>
-          </Link>
+        <div className="flex gap-1 items-center">
+          
+
+          {
+            page != "salle" ? (
+              <Link
+                to={createAction!}
+                className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
+              >
+                <i className="icofont-plus text-white"></i>
+                <span className="capitalize">Créer {page}</span>
+              </Link>)
+              :
+              (<>
+                {
+                  salleLinks.map(({ id, name }) => (
+                    <Link
+                      key={id}
+                      to={{
+                        pathname: createAction!,
+                      }}
+                      state={name.toLowerCase()}
+                      className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
+                    >
+                      <i className="icofont-plus text-white"></i>
+                      <span className="capitalize">Créer {name}</span>
+                    </Link>
+                  ))
+                }
+              </>)
+          }
+
+
         </div>
       </div>
 

@@ -1,4 +1,5 @@
 import express from 'express'
+import cors from 'cors'
 import authRoute from './routes/authRoute';
 import userRoute from './routes/userRoute';
 import dotenv from 'dotenv';
@@ -10,6 +11,7 @@ const app = express()
 
 // Middleware to parse JSON bodies
 app.use(express.json());
+app.use(cors());
 
 // Log requests
 app.use((req, res, next) => {

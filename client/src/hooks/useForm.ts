@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react"
-import axios from 'axios'
+import Axios from "../api/axios"
 
 const useForm = (
     initialState: any,
@@ -59,7 +59,7 @@ const useForm = (
             //     config.headers = { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
             // }
             // ---------------send data ----------------------
-            const response = await axios(config);
+            const response = await Axios(config);
 
             // ------------------------------------------------
             if (response.status === 200) {

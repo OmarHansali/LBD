@@ -8,19 +8,20 @@ import NavigateBack from "./NavigateBack"
 import { MultiSelect } from "react-multi-select-component"
 
 interface iProps {
-    data?: iSalleType
+    data?: iSalleType,
+    page?: string
 }
 
 
-const SalleForm = ({ data }: iProps) => {
-    const { type, availability, capacity, material, number } = data || {}
+const SalleForm = ({ data, page }: iProps) => {
+    const { type ,availability, capacity, material, number } = data || {}
 
     const [mutableMaterials, setMutableMaterials] = useState((data && material) ? material.map((item) => ({ label: item, value: item })) : []);
 
     // api
 
     const initialState = {
-        type: data ? type : "",
+        type: data ? type : page,
         availability: data ? availability : "",
         capacity: data ? capacity : "",
         material: data ? mutableMaterials : [],
@@ -48,7 +49,7 @@ const SalleForm = ({ data }: iProps) => {
             <div className="flex items-center gap-10">
                 <NavigateBack />
                 <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
-                    {data != undefined ? "Modifier Salle" : "Créer une nouvelle salle"}
+                    {data != undefined ? `Modifier ${page ? page : type}` : `Créer une nouvelle ${page ? page : type}`}
                 </h2>
             </div>
             <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
@@ -56,7 +57,7 @@ const SalleForm = ({ data }: iProps) => {
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label>Salle Number</label>
+                            <label className="capitalize">{page ? page : type} Number</label>
                             <input
                                 type="text"
                                 className="form-input border"
@@ -66,22 +67,6 @@ const SalleForm = ({ data }: iProps) => {
                                 required
                             />
                         </div>
-                        <div className="space-y-2 w-full">
-                            <label>Salle Type</label>
-                            <select
-                                value={inputs['type']}
-                                onChange={(e) => handleChange("type", e.target.value)}
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-[12px] px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option disabled={data != undefined}>Choose Salle Type</option>
-                                <option selected={inputs['type'] == "salle"} value="salle">Salle</option>
-                                <option selected={inputs['type'] == "box"} value="box">Box</option>
-                                <option selected={inputs['type'] == "fablab"} value="fablab">Fablab</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className="grid grid-cols-3 col-span-2 gap-2 place-items-center">
-
                         <div className="space-y-2 w-full">
                             <label>Capacity</label>
                             <input
@@ -95,6 +80,11 @@ const SalleForm = ({ data }: iProps) => {
                                 required
                             />
                         </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 col-span-2 gap-2 place-items-center">
+
+
 
                         <div className="space-y-2 w-full">
                             <label>Availability</label>
