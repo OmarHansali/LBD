@@ -31,10 +31,23 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         // Create JWT token
         const token = jwt.sign({ userId: user.id }, process.env.JWT_SECRET!, {
-            expiresIn: '24h'
+            expiresIn: '24h' 
         });
 
-        res.send({ token });
+        const response = {
+            token,
+            user: {
+                id: user.id,
+                username: user.username,
+                role: user.role,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
+                CEN: user.CEN,
+                profile: user.profile,
+            }
+        };
+
+        res.send(response);
     } catch (error) {
         res.status(500).send('Internal server error');
     }
