@@ -1,5 +1,6 @@
 import express from 'express'
 import authRoute from './routes/authRoute';
+import userRoute from './routes/userRoute';
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -10,8 +11,17 @@ const app = express()
 // Middleware to parse JSON bodies
 app.use(express.json());
 
+// Log requests
+app.use((req, res, next) => {
+    console.log(`[${new Date().toISOString()}] ${req.method} ${req.originalUrl}`);
+    next();
+});
+
 // Use the routes defined in separate files 
 app.use('/auth', authRoute);
+
+app.use('/user', userRoute);
+
 
 // Error handling middleware
 app.use(errorHandler);
