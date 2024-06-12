@@ -23,20 +23,19 @@ export const sendVerificationEmail = async (email, username, password): Promise<
 // Create User
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { username, email, phoneNumber, role } = req.body;
+        const { username, email, phoneNumber, role, CEN } = req.body;
 
         // Check if the username or email already exists
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [
                     { username },
-                    { email },
                 ],
             },
         });
 
         if (existingUser) {
-            return res.status(400).json({ error: 'Username or email already exists' });
+            return res.status(400).json({ error: 'Username already exists' });
         }
 
         const password = generateRandomPassword();
@@ -51,6 +50,7 @@ export const createUser = async (req: Request, res: Response) => {
                 email,
                 phoneNumber,
                 role,
+                CEN,
             },
         });
 
