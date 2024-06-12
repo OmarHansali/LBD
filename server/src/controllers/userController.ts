@@ -23,7 +23,7 @@ export const sendVerificationEmail = async (email, username, password): Promise<
 // Create User
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { username, email, phoneNumber, role, CEN } = req.body;
+        const { username, email, phoneNumber, role, CEN, profile } = req.body;
 
         // Check if the username or email already exists
         const existingUser = await prisma.user.findFirst({
@@ -44,14 +44,15 @@ export const createUser = async (req: Request, res: Response) => {
 
         // Create the user
         const newUser = await prisma.user.create({
-            data: {
-                username,
-                password: hashedPassword,
-                email,
-                phoneNumber,
-                role,
-                CEN,
-            },
+          data: {
+            username,
+            password: hashedPassword,
+            email,
+            phoneNumber,
+            role,
+            CEN,
+            profile,
+          },
         });
 
         sendVerificationEmail(email, username, password);
@@ -96,17 +97,19 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
 export const updateUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const userId = parseInt(req.params.id);
-        const { username, password, email, phoneNumber, role } = req.body;
+        const { username,password, email, phoneNumber, role, CEN, profile } = req.body;
 
         const updatedUser = await prisma.user.update({
-            where: { id: userId },
-            data: {
-                username,
-                password, // You may want to hash the updated password again if it's provided
-                email,
-                phoneNumber,
-                role,
-            },
+          where: { id: userId },
+          data: {
+            username,
+            password, // You may want to hash the updated password again if it's provided
+            email,
+            phoneNumber,
+            role,
+            CEN,
+            profile,
+          },
         });
 
         res.json(updatedUser);
