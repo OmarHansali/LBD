@@ -8,60 +8,70 @@ export const usersData = [
         username: "tunia",
         email: "Global@gmail.com",
         phoneNumber: "+94993 930 30-3",
+        role: "user"
     },
     {
         id: 2,
         username: "barney",
         email: "barney.murray@gmail.com",
         phoneNumber: "+12345 678 90-2",
+        role: "user"
     },
     {
         id: 3,
         username: "ressie",
         email: "ressie.ruecker@gmail.com",
         phoneNumber: "+98765 432 10-3",
+        role: "user"
     },
     {
         id: 4,
         username: "teresa",
         email: "teresa.mertz@gmail.com",
         phoneNumber: "+45678 901 23-4",
+        role: "user"
     },
     {
         id: 5,
         username: "chelsey",
         email: "chelsey.hackett@gmail.com",
         phoneNumber: "+19283 746 59-5",
+        role: "user"
     },
     {
         id: 6,
         username: "tatyana",
         email: "tatyana.metz@gmail.com",
         phoneNumber: "+38475 123 67-6",
+        role: "user"
     },
     {
         id: 7,
         username: "oleta",
         email: "oleta.harvey@gmail.com",
         phoneNumber: "+19283 746 59-7",
+        role: "user"
     },
     {
         id: 8,
         username: "bette",
         email: "bette.haag@gmail.com",
         phoneNumber: "+10293 847 56-8",
+        role: "user"
     },
     {
         id: 9,
         username: "meda",
         email: "meda.ebert@gmail.com",
         phoneNumber: "+48576 291 34-9",
+        role: "user"
     },
     {
         id: 10,
         username: "elissa",
         email: "elissa.stroman@gmail.com",
         phoneNumber: "+57639 281 45-0",
+        role: "user"
     },
 ];
 

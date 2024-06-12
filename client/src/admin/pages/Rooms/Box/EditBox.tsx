@@ -1,15 +1,14 @@
 import { useLocation } from "react-router-dom"
-import SalleForm from "../../components/SalleForm";
+import RoomForm from "../../../components/RoomForm";
 
-
-const EditSalle = () => {
+const EditBox = () => {
     const location = useLocation();
     const { data } = location.state || {};
 
     return (
         <>
-            <SalleForm data={data} />
+            <RoomForm data={data} />
         </>
     )
 }
-export default EditSalle
+export default EditBox

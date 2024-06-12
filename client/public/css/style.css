@@ -1434,9 +1434,11 @@ button:focus-visible {
     color: rgb(106 105 245 / var(--tw-text-opacity));
 }
 
+/* hover point in sidebar */
 .sidebar ul.sub-menu li a:hover::before {
     position: absolute;
     top: 50%;
+    right: 10%;
     height: 0.375rem;
     width: 0.375rem;
     --tw-translate-y: -50%;
@@ -1470,7 +1472,7 @@ button:focus-visible {
     color: rgb(106 105 245 / var(--tw-text-opacity));
 }
 
-.sidebar ul.sub-menu li a.active::before {
+/* .sidebar ul.sub-menu li a.active::before {
     position: absolute;
     top: 50%;
     height: 0.375rem;
@@ -1481,7 +1483,7 @@ button:focus-visible {
     content: var(--tw-content);
     --tw-bg-opacity: 1;
     background-color: rgb(106 105 245 / var(--tw-bg-opacity));
-}
+} */
 
 .sidebar ul.sub-menu li a.active:where([dir="ltr"], [dir="ltr"] *)::before {
     content: var(--tw-content);
