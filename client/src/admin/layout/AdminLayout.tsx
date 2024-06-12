@@ -29,9 +29,9 @@ const AdminLayout = () => {
 
     useEffect(() => {
         // prevent a none admin users to access admin side
-        // if (!localStorage.getItem('user')) {
-        //     return navigate('/login')
-        // }
+        if (!localStorage.getItem('user')) {
+            return navigate('/login')
+        }
 
 
         if (currentThemeMode === THEME_MODE.DARK) {

@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import useForm from "../../hooks/useForm";
 import { iUserType } from "../constants/Types";
 import LoadingButton from "./LoadingButton";
 import NavigateBack from "./NavigateBack";
@@ -7,7 +9,22 @@ interface iProps {
 }
 
 const UserForm = ({ data }: iProps) => {
-    const { username, email, phoneNumber } = data || {}
+    const { id, username, email, phoneNumber, role } = data || {}
+
+    const initialValue : iUserType= {
+        username: data ? username : "",
+        role: data ? role : "",
+        email: data ? email : "",
+        phoneNumber: data ? phoneNumber : ""
+    }
+
+    const apiKey = data ? `/user/${id}` : "/user" 
+    const method = data ? "PUT" : "POST"
+    
+    const successMessage = data ? "L'utilisateur a été modifié avec succès" : "L'utilisateur a créé avec succès"
+    const errorMessage = data ? "Échec de la modification de l'utilisateur" : "Échec de la création de l'utilisateur"
+
+    const { inputs, handleChange, handleSubmit } = useForm(initialValue, apiKey, method, successMessage, errorMessage, true)
 
     return (
         <>
@@ -17,7 +34,9 @@ const UserForm = ({ data }: iProps) => {
                     {data != undefined ? "Edit User" : "Create New User"}
                 </h2>
             </div>
-            <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
+            <form 
+                onSubmit={handleSubmit}
+                className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
@@ -27,17 +46,19 @@ const UserForm = ({ data }: iProps) => {
                                 type="text"
                                 className="form-input border"
                                 placeholder="username"
-                                defaultValue={username}
+                                defaultValue={inputs['username']}
+                                onChange={(e) => handleChange('username', e.target.value)}
                                 required
                             />
                         </div>
                         <div className="space-y-2 w-full">
-                            <label>Your email</label>
+                            <label>Email</label>
                             <input
                                 type="email"
                                 className="form-input border"
                                 placeholder="Email"
-                                defaultValue={email}
+                                defaultValue={inputs['email']}
+                                onChange={(e) => handleChange('email', e.target.value)}
                                 required
                             />
                         </div>
@@ -45,52 +66,32 @@ const UserForm = ({ data }: iProps) => {
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label>Profession</label>
-                            <input
-                                type="text"
-                                className="form-input border"
-                                placeholder="Profession"
-                                defaultValue="Ui/Ux Designer"
-                                required
-                            />
+                            <label>Role</label>
+                            <select
+                                defaultValue={data ? inputs['role'] : ""}
+                                onChange={(e) => handleChange("role", e.target.value)}
+                                className="form-select">
+                                <option disabled={data as any}>Select Option</option>
+                                <option selected={data && data?.role == "user"} value={"user"}>User</option>
+                                <option selected={data &&data?.role == "admin"} value={"admin"}>Admin</option>
+                            </select>
                         </div>
                         <div className="space-y-2 w-full">
-                            <label>Location</label>
+                            <label>Phone Number</label>
                             <input
                                 type="text"
                                 className="form-input border"
-                                placeholder="Location"
-                                defaultValue="Canada"
+                                placeholder="Phone Number"
+                                defaultValue={inputs['phoneNumber']}
+                                onChange={(e) => handleChange('phoneNumber', e.target.value)}
                                 required
                             />
                         </div>
 
                     </div>
-                    <div className="grid grid-cols-2 col-span-2 gap-2">
-                        <div className="space-y-2 w-full">
-                            <label>Website</label>
-                            <input
-                                type="text"
-                                className="form-input border"
-                                placeholder="Website"
-                                defaultValue="websiteexample.com"
-                                required
-                            />
-                        </div>
-                        <div className="space-y-2 w-full">
-                            <label>Phone</label>
-                            <input
-                                type="phone"
-                                className="form-input border"
-                                placeholder="Phone"
-                                defaultValue={phoneNumber}
-                                required
-                            />
-                        </div>
-                    </div>
-                    <LoadingButton isLoading={false} text={ data ? "Update" : "Create"} />
+                    <LoadingButton isLoading={false} text={data ? "Update" : "Create"} />
                 </div>
-            </div>
+            </form>
         </>
     )
 }

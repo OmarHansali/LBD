@@ -1,22 +1,27 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react"
-import Axios from "../api/axios"
+import { useState } from "react";
+import Axios from "../services/axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 const useForm = (
     initialState: any,
     api: string,
     method: string,
+    toastSuccessMessage?: string,
+    toastErrorMessage?: string,
+    navigateBack?: boolean
     // hasFile = false,
     // isAuth = false,
     // logout = false
-
 ) => {
-
-    const [inputs, setInputs] = useState(initialState)
-    const [errors, setErrors] = useState({})
-    const [isLoading, setIsLoading] = useState(false)
-    const [message, setMessage] = useState('');
+    const [inputs, setInputs] = useState(initialState);
+    const [errors, setErrors] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [message, setMessage] = useState("");
     const [data, setData] = useState<any>();
+
+    const navigate = useNavigate()
 
     const handleChange = (name: string, value: string | number | boolean) => {
         setInputs((prevInputs: any) => ({
@@ -26,23 +31,22 @@ const useForm = (
 
         setErrors((prevErrors) => ({
             ...prevErrors,
-            [name]: '',
+            [name]: "",
         }));
     };
 
-
-
-    const handleSubmit = async (e: FormDataEvent) => {
+    const handleSubmit = async (e: any=null) => {
         e && e.preventDefault();
         setIsLoading(true);
+        const loadingToastId = toast.loading("Chargement...", { position: "top-right" });
 
         try {
             const config = {
                 method: method,
                 url: api,
                 data: inputs,
-                headers: { 'Content-Type': 'application/json' }
-            }
+                headers: { "Content-Type": "application/json" },
+            };
 
             // if (hasFile) {
             //     config.headers = { 'Content-Type': 'multipart/form-data' };
@@ -58,24 +62,35 @@ const useForm = (
             // if (isAuth) {
             //     config.headers = { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
             // }
+
             // ---------------send data ----------------------
             const response = await Axios(config);
 
             // ------------------------------------------------
-            if (response.status === 200) {
+
+            const successStatus = [200, 201, 202] as number[]
+
+            if (successStatus.includes(response.status)) {
                 setMessage(response.data.message);
                 setData(response);
+                toast.update(loadingToastId, {
+                    render: toastSuccessMessage || "Success!",
+                    type: "success",
+                    isLoading: false,
+                    autoClose: 3000,
+                    position: "top-right",
+                });
 
-                // if (logout && response) {
-                //     localStorage.clear()
-                //     window.location.reload()
-                // }
+                if (navigateBack) {
+                    setTimeout(() => {
+                        navigate(-1)
+                    }, 1000)
+                }
             }
-
         } catch (error: any) {
             const err = error?.response?.data?.errors;
-            let errorMessage = ''; // Define a variable to store the error message
-            setErrors(err)
+            let errorMessage = ""; // Define a variable to store the error message
+            setErrors(err);
 
             if (error.response) {
                 // The request was made and the server responded with a status code
@@ -108,13 +123,20 @@ const useForm = (
 
             // Set the error message in the message state variable
             setMessage(errorMessage);
+
+            toast.update(loadingToastId, {
+                render: toastErrorMessage || errorMessage,
+                type: "error",
+                isLoading: false,
+                autoClose: 3000,
+                position: "top-right",
+            });
         } finally {
             setIsLoading(false);
         }
+    };
 
-    }
-
-    return { inputs, errors, data, message, isLoading, handleChange, handleSubmit, setMessage }
-}
+    return { inputs, errors, data, message, isLoading, handleChange, handleSubmit, setMessage };
+};
 
 export default useForm;

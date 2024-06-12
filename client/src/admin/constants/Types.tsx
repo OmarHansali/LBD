@@ -1,8 +1,12 @@
 export interface iUserType {
+    id?:number,
     username?: string,
     phoneNumber?: string,
     email?: string,
     password?: string,
+    role?:string,
+    profile?:string,
+    CEN?: string
 }
 
 

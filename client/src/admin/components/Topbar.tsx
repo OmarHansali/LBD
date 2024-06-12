@@ -6,7 +6,7 @@ import Fullscreen from "./Fullscreen";
 import ProfileDropdown from "./ProfileDropdown";
 import NotificationDropdown from "./NotificationDropdown";
 
-const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
+const Topbar = ({ isDarkMode, toggleDarkMode }: any) => {
   return (
     <React.Fragment>
       <div className=" dark:bg-darklight dark:border-darkborder flex gap-4 lg:z-10 items-center justify-between px-4 h-[60px] border-b border-black/10 detached-topbar relative">

@@ -1,13 +1,16 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import Axios from "../../../api/axios";
+import Axios from "../../../services/axios";
+import { AxiosResponse } from "axios";
 
 const LoginForm = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false)
+
+  const navigate = useNavigate()
 
   const handleFormSubmit = async (e: any) => {
     setIsLoading(true)
@@ -24,8 +27,19 @@ const LoginForm = () => {
         username: userName,
         password: password
       })
-        .then((res) => {
-          console.log(res);
+        .then((res: AxiosResponse) => {
+          if (res.status == 200) {
+            if (res.data.user.role == "admin") {
+
+              localStorage.setItem("user", JSON.stringify(res.data.user))
+              localStorage.setItem("token", res.data.token)
+
+              toast.success("Signed In successfully!", { position: "top-right" });
+              setUserName("");
+              setPassword("");
+              navigate('/admin')
+            }
+          }
 
         }).finally(() => {
           setIsLoading(false)

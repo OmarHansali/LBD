@@ -15,6 +15,7 @@ import {
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import Modal from "./Modal/Index";
+import useForm from "../../hooks/useForm";
 
 // Column Filter
 const Filter = ({
@@ -169,6 +170,8 @@ const TableContainer = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
   // const [deleteApiKey, setDeleteApiKey] = useState<string>("")
 
+  
+
   let createAction
 
   // actions
@@ -231,11 +234,13 @@ const TableContainer = ({
     }
   };
 
+  let apiKey = ""
+
   const handleDeleteClick = (row: any) => {
     setIsModalOpen(true);
     switch (page) {
-      case "user":
-        console.log("Delete row in users:", row);
+      case "utilisateur":
+        apiKey = `/user/${row.id}`
         break;
 
       case "salle":
@@ -257,12 +262,17 @@ const TableContainer = ({
     }
   };
 
-  const deletProcess = () => {
-    // axios
-    setIsModalOpen(true)
-    console.log("start deleting");
+  const successMessage = "Utilisateur supprimé avec succès"
 
-  }
+  const { handleSubmit } = useForm({}, apiKey, "delete",successMessage)
+
+  // const deletProcess = () => {
+  //   // axios
+  //   setIsModalOpen(true)
+  //   handleSubmit()
+  //   console.log("start deleting");
+
+  // }
 
 
   return (
@@ -279,7 +289,7 @@ const TableContainer = ({
             setIsModalOpen(false)
             // setDeleteApiKey("")
           }}
-          onSubmit={deletProcess}
+          onSubmit={handleSubmit}
           sizeClass="relative w-full max-w-lg p-0 my-1 overflow-hidden bg-white border rounded-lg border-black/10 dark:bg-darklight dark:border-darkborder"
           spaceClass="py-4 px-5 space-y-4"
         />

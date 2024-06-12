@@ -50,7 +50,7 @@ const Settings = () => {
                                 />
                             </div>
                             <div className="space-y-2 md:col-span-2">
-                                <label>Your email</label>
+                                <label>Email</label>
                                 <input
                                     type="email"
                                     className="form-input"

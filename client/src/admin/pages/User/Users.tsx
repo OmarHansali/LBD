@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import TableContainer from "../../components/TableContainer";
-import { usersData } from "../../data/Data";
+import { iUserType } from "../../constants/Types";
+import LoadingPage from "../../components/LoadingPage";
+import Axios from "../../../services/axios";
 
 const Users = () => {
 
@@ -37,13 +40,34 @@ const Users = () => {
         },
     ];
 
+    const [users, setUsers] = useState<iUserType[]>([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(()=>{
+        const fetchData = async () => {
+            setIsLoading(true)
+            await Axios.get("/user")
+                .then((res)=>{
+                    setUsers((res.data).filter((data: iUserType) => data.role != "admin"))
+                    
+                })
+                .finally(()=>{
+                    setIsLoading(false)
+                })
+        }
+
+        fetchData()
+        
+    }, [])
+
 
     return (
         <>
             <h1 className="header capitalize">gérer les utilisateurs</h1>
+            <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}
-                data={usersData}
+                data={users}
                 isGlobalFilter={true}
                 customPageSize={5}
                 isSelect={true}

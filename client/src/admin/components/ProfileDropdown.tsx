@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import user from "/assets/images/user.png";
 import { Link } from "react-router-dom";
+import loggedUser from "../../services/LoggedUser";
 
 const ProfileDropdown = () => {
   // dropdown
@@ -31,8 +32,11 @@ const ProfileDropdown = () => {
     };
   }, [isDropdownOpen, toggleOpen]);
 
+  const { role, username } = loggedUser
+
   return (
-    <React.Fragment>
+    <>
+      <div className="inline-flex items-center rounded-full text-xs justify-center px-1.5 py-0.5 bg-danger text-white capitalize">{role}</div>
       <div className="profile" ref={dropdownRef}>
         <button
           type="button"
@@ -49,8 +53,9 @@ const ProfileDropdown = () => {
             alt="Header Avatar"
           />
           <span className="hidden fw-medium xl:block font-thin dark:text-white/80">
-            Stevens L.
+            {username}
           </span>
+
           <svg
             className="w-4 h-4"
             width="32"
@@ -66,9 +71,9 @@ const ProfileDropdown = () => {
           </svg>
         </button>
 
-        <ul 
+        <ul
           className={`dropdown -ml-14 mt-2 ${isDropdownOpen ? "visible" : "hidden"}`}
-          >
+        >
           <li>
             <Link to="/admin/profile" className="flex items-center gap-2">
               <svg
@@ -135,7 +140,7 @@ const ProfileDropdown = () => {
           </li>
         </ul>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 
