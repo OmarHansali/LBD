@@ -4,26 +4,28 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // Create Salle
-export const createSalle = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { number, type, capacity, availability } = req.body;
+export const createSalle = async (req: Request, res: Response) => {
+  try {
+    const { number, type, capacity, availability, startHour, endHour } =
+      req.body;
 
-        // Create the salle
-        const newSalle = await prisma.salle.create({
-            data: {
-                number,
-                type,
-                capacity,
-                availability,
-            },
-        });
+    // Create a new Salle instance
+    const newSalle = await prisma.salle.create({
+      data: {
+        number,
+        type,
+        capacity,
+        availability,
+        startHour,
+        endHour,
+      },
+    });
 
-        // Send the response
-        res.status(201).json(newSalle);
-    } catch (error) {
-        console.error('Error creating salle:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+    res.status(201).json(newSalle);
+  } catch (error) {
+    console.error("Error creating Salle:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
 
 // Read Salles

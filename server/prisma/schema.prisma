@@ -46,6 +46,8 @@ model Salle {
   type         String
   capacity     Int
   availability Boolean
+  startHour    DateTime
+  endHour      DateTime
 
   // Define relation with Reservation
   reservations Reservation[]
