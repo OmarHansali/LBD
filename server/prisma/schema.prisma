@@ -7,53 +7,62 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model material {
-  id        Int       @unique(map: "Material_id_key") @default(autoincrement())
-  name      String
-  quantity  Int
-  createdAt DateTime? @default(now())
-  updatedAt DateTime?
-  salle     salle[]
-}
-
-model reservation {
-  id        Int    @unique(map: "Reservation_id_key") @default(autoincrement())
-  userId    Int?
-  salleId   Int?
-  startDate String
-  endDate   String
-  duration  Int?
-  salle     salle? @relation(fields: [salleId], references: [id], onDelete: Cascade, map: "Reservation_salleId_fkey")
-  user      user?  @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Reservation_userId_fkey")
-
-  @@index([salleId], map: "Reservation_salleId_fkey")
-  @@index([userId], map: "Reservation_userId_fkey")
-}
-
-model salle {
-  id           Int           @unique(map: "Salle_id_key") @default(autoincrement())
-  materialId   Int
-  salleNumber  String?
-  capacity     Int
-  startingHour String?
-  closingHour  String?
-  availablity  Boolean
-  reservation  reservation[]
-  material     material      @relation(fields: [materialId], references: [id], onDelete: Cascade, map: "Salle_materialId_fkey")
-
-  @@index([materialId], map: "idx_materialId")
-}
-
-model user {
-  id          Int           @unique(map: "User_id_key") @default(autoincrement())
-  username    String        @unique
+// User model
+model User {
+  id          Int       @id @unique(map: "User_id_key") @default(autoincrement())
+  username    String    @unique
   password    String
   role        String
-  email       String        @unique
+  email       String    @unique
   phoneNumber String?
   CEN         String?
   profile     String?
-  createdAt   DateTime?     @default(now())
+  createdAt   DateTime? @default(now())
   updatedAt   DateTime?
-  reservation reservation[]
+
+  // Define the relation with Reservation
+  reservations Reservation[]
 }
+
+// Reservation model
+model Reservation {
+  id              Int      @id @unique(map: "Reservation_id_key") @default(autoincrement())
+  userId          Int?
+  salleId         Int?
+  dateReservation DateTime
+  heureReservation String
+  duration        Int
+  code            Int      @unique
+  // Change the type of `code` to Int and add unique constraint
+
+  // Define relations with User and Salle
+  user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  salle           Salle?   @relation(fields: [salleId], references: [id], onDelete: SetNull)
+}
+
+// Salle model
+model Salle {
+  id           Int       @id @unique(map: "Salle_id_key") @default(autoincrement())
+  number       String
+  type         String
+  capacity     Int
+  availability Boolean
+
+  // Define relation with Reservation
+  reservations Reservation[]
+
+  // Define a many-to-many relation with Materiel
+  materiels    Materiel[] @relation("SalleMateriel")
+}
+
+// Materiel model
+model Materiel {
+  id           Int       @id @unique(map: "Materiel_id_key") @default(autoincrement())
+  name         String
+  quantity     Int
+  availability Boolean
+
+  // Define a many-to-many relation with Salle
+  salles       Salle[]   @relation("SalleMateriel")
+}
+
