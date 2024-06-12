@@ -46,10 +46,10 @@ model salle {
 
 model user {
   id          Int           @unique(map: "User_id_key") @default(autoincrement())
-  username    String
+  username    String        @unique
   password    String
   role        String
-  email       String
+  email       String        @unique
   phoneNumber String?
   CEN         String?
   profile     String?
