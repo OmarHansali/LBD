@@ -13,7 +13,6 @@ CREATE TABLE `User` (
 
     UNIQUE INDEX `User_id_key`(`id`),
     UNIQUE INDEX `User_username_key`(`username`),
-    UNIQUE INDEX `User_email_key`(`email`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
@@ -38,6 +37,8 @@ CREATE TABLE `Salle` (
     `type` VARCHAR(191) NOT NULL,
     `capacity` INTEGER NOT NULL,
     `availability` BOOLEAN NOT NULL,
+    `startHour` DATETIME(3) NOT NULL,
+    `endHour` DATETIME(3) NOT NULL,
 
     UNIQUE INDEX `Salle_id_key`(`id`),
     PRIMARY KEY (`id`)

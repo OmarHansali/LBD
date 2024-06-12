@@ -4,32 +4,47 @@ import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
 
 // Create Salle
-export const createSalle = async (req: Request, res: Response): Promise<void> => {
-    try {
-        const { number, type, capacity, availability } = req.body;
+// Create Salle
+export const createSalle = async (req: Request, res: Response) => {
+  try {
+    const { number, type, capacity, availability, startHour, endHour, materielIds } = req.body;
 
-        // Create the salle
-        const newSalle = await prisma.salle.create({
-            data: {
-                number,
-                type,
-                capacity,
-                availability,
-            },
-        });
+    // Create a new Salle instance
+    const newSalle = await prisma.salle.create({
+      data: {
+        number,
+        type,
+        capacity,
+        availability,
+        startHour,
+        endHour,
+        materiels: {
+          connect: materielIds.map((materielId: number) => ({
+            id: materielId,
+          })),
+        },
+      },
+      include: {
+        materiels: true, // Include associated Materiels
+      },
+    });
 
-        // Send the response
-        res.status(201).json(newSalle);
-    } catch (error) {
-        console.error('Error creating salle:', error);
-        res.status(500).json({ error: 'Internal server error' });
-    }
+    res.status(201).json(newSalle);
+  } catch (error) {
+    console.error("Error creating Salle:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 };
+
 
 // Read Salles
 export const getSalles = async (req: Request, res: Response): Promise<void> => {
     try {
-        const salles = await prisma.salle.findMany();
+        const salles = await prisma.salle.findMany({
+            include: {
+                materiels: true,
+            },
+        });
         res.json(salles);
     } catch (error) {
         console.error('Error getting salles:', error);
@@ -37,12 +52,16 @@ export const getSalles = async (req: Request, res: Response): Promise<void> => {
     }
 };
 
+
 // Read Salle by ID
 export const getSalleById = async (req: Request, res: Response): Promise<void> => {
     try {
         const salleId = parseInt(req.params.id);
         const salle = await prisma.salle.findUnique({
             where: { id: salleId },
+            include: {
+                materiels: true,
+            },
         });
         if (!salle) {
             res.status(404).json({ error: 'Salle not found' });
@@ -55,20 +74,31 @@ export const getSalleById = async (req: Request, res: Response): Promise<void> =
     }
 };
 
+
 // Update Salle
 export const updateSalle = async (req: Request, res: Response): Promise<void> => {
     try {
         const salleId = parseInt(req.params.id);
-        const { number, type, capacity, availability } = req.body;
+        const { number, type, capacity, availability, startHour, endHour, materielIds } = req.body;
 
         const updatedSalle = await prisma.salle.update({
-            where: { id: salleId },
-            data: {
-                number,
-                type,
-                capacity,
-                availability,
+          where: { id: salleId },
+          data: {
+            number,
+            type,
+            capacity,
+            availability,
+            startHour: new Date(startHour),
+            endHour: new Date(endHour),
+            materiels: {
+              set: materielIds.map((materielId: number) => ({
+                id: materielId,
+              })),
             },
+          },
+          include: {
+            materiels: true, // Include associated Materiels
+          },
         });
 
         res.json(updatedSalle);
@@ -77,6 +107,7 @@ export const updateSalle = async (req: Request, res: Response): Promise<void> =>
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 // Delete Salle
 export const deleteSalle = async (req: Request, res: Response): Promise<void> => {

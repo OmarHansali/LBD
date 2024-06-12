@@ -58,12 +58,14 @@ The following routes are available for managing users:
 
 ```json
 {
-    "username": "new_user",
-    "password": "new_password",
-    "role": "user",
-    "email": "new_user@example.com",
-    "phoneNumber": "1234567890"
+    "username": "user1",
+    "email": "allabouch2004@gmail.com",
+    "phoneNumber": "9876543210",
+    "role": "admin",
+    "CEN": "12345",
+    "profile": "https://srt.sdf.com/pic.png"
 }
+
 ```
 
 ### Response (GET /user)
@@ -72,24 +74,26 @@ The following routes are available for managing users:
 [
     {
         "id": 1,
-        "username": "example_user",
-        "role": "user",
-        "email": "example@example.com",
-        "phoneNumber": "1234567890",
-        "CEN": null,
-        "profile": null,
-        "createdAt": "2024-06-12T14:56:00.323Z",
+        "username": "user",
+        "password": "$2b$10$0O3ecQexd1eJys./u8SwAulty7Saak7swPF/Pdnd0C/Xv15GNGmXi",
+        "role": "admin",
+        "email": "allabouch2004@gmail.com",
+        "phoneNumber": "9876543210",
+        "CEN": "12345",
+        "profile": "https://srt.sdf.com/pic.png",
+        "createdAt": "2024-06-12T18:43:35.393Z",
         "updatedAt": null
     },
     {
         "id": 2,
-        "username": "another_user",
-        "role": "user",
-        "email": "another@example.com",
+        "username": "user1",
+        "password": "$2b$10$vVt09xZNegG/W11wo0FZzeSfTrS3GSzvCPGgm815m.GFSZ3utI8rm",
+        "role": "admin",
+        "email": "allabouch2004@gmail.com",
         "phoneNumber": "9876543210",
-        "CEN": null,
-        "profile": null,
-        "createdAt": "2024-06-12T15:00:00.323Z",
+        "CEN": "12345",
+        "profile": "https://srt.sdf.com/pic.png",
+        "createdAt": "2024-06-12T18:44:12.917Z",
         "updatedAt": null
     }
 ]
@@ -105,10 +109,15 @@ The following routes are available for managing users:
 ```json
 {
   "number": "1",
-  "type": "fablab",
+  "type": "box",
   "capacity": 1,
-  "availability": false
+  "availability": false,
+  "startHour": "2024-06-13T08:00:00Z",
+  "endHour": "2024-06-13T17:00:00Z",
+  "materielIds": [1, 2, 3]
 }
+
+
 ```
 
 ### Response (GET /salle)
@@ -116,11 +125,21 @@ The following routes are available for managing users:
 ```json
 [
     {
-        "id": 1,
+        "id": 4,
         "number": "1",
         "type": "fablab",
         "capacity": 1,
-        "availability": false
+        "availability": false,
+        "startHour": "2024-06-13T08:00:00.000Z",
+        "endHour": "2024-06-13T17:00:00.000Z",
+        "materiels": [
+            {
+                "id": 3,
+                "name": "Projector",
+                "quantity": 1,
+                "availability": true
+            }
+        ]
     }
 ]
 ```
@@ -137,7 +156,6 @@ The following routes are available for managing users:
     "name": "Projector",
     "quantity": 1,
     "availability": true,
-    "salleIds": [1, 2, 3]
 }
 ```
 
@@ -150,15 +168,6 @@ The following routes are available for managing users:
         "name": "Projector",
         "quantity": 1,
         "availability": true,
-        "salles": [
-            {
-                "id": 1,
-                "number": "1",
-                "type": "fablab",
-                "capacity": 1,
-                "availability": false
-            }
-        ]
     }
 ]
 ```
