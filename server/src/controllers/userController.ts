@@ -1,13 +1,29 @@
 import { Request, Response } from 'express';
 import { PrismaClient } from '@prisma/client';
 import bcrypt from 'bcrypt';
+import crypto from 'crypto';
+import { sendEmail } from '../service/sendEmail';
 
 const prisma = new PrismaClient();
+
+// Generate random password
+const generateRandomPassword = () => {
+    return crypto.randomBytes(3).toString('hex');
+};
+
+export const sendVerificationEmail = async (email, username, password): Promise<void> => {
+
+    try {
+        await sendEmail(email , username, password);
+    } catch (error) {
+        console.error('Error sending verification email:', error);
+    }
+};
 
 // Create User
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { username, password, email, phoneNumber, role } = req.body;
+        const { username, email, phoneNumber, role } = req.body;
 
         // Check if the username or email already exists
         const existingUser = await prisma.user.findFirst({
@@ -23,6 +39,7 @@ export const createUser = async (req: Request, res: Response) => {
             return res.status(400).json({ error: 'Username or email already exists' });
         }
 
+        const password = generateRandomPassword();
         // Hash the password
         const hashedPassword = await bcrypt.hash(password, 10);
 
@@ -37,6 +54,7 @@ export const createUser = async (req: Request, res: Response) => {
             },
         });
 
+        sendVerificationEmail(email, username, password);
         // Send the response
         res.status(201).json(newUser);
     } catch (error) {
