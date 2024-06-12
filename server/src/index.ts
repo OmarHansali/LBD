@@ -2,6 +2,9 @@ import express from 'express'
 import cors from 'cors'
 import authRoute from './routes/authRoute';
 import userRoute from './routes/userRoute';
+import salleRoute from './routes/salleRoute';
+import reservationRoute from './routes/reservationRoute';
+import materielRoute from './routes/materielRoute';
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -23,6 +26,12 @@ app.use((req, res, next) => {
 app.use('/auth', authRoute);
 
 app.use('/user', userRoute);
+
+app.use('/salle', salleRoute);
+
+app.use('/materiel', materielRoute);
+
+app.use('/reservation', reservationRoute);
 
 
 // Error handling middleware

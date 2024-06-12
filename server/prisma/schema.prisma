@@ -32,8 +32,7 @@ model Reservation {
   dateReservation DateTime
   heureReservation String
   duration        Int
-  code            Int      @unique
-  // Change the type of `code` to Int and add unique constraint
+  code            Int      
 
   // Define relations with User and Salle
   user            User?    @relation(fields: [userId], references: [id], onDelete: SetNull)

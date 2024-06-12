@@ -28,7 +28,6 @@ CREATE TABLE `Reservation` (
     `code` INTEGER NOT NULL,
 
     UNIQUE INDEX `Reservation_id_key`(`id`),
-    UNIQUE INDEX `Reservation_code_key`(`code`),
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 
