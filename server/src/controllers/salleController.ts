@@ -61,7 +61,7 @@ export const getSalleById = async (req: Request, res: Response): Promise<void> =
 export const updateSalle = async (req: Request, res: Response): Promise<void> => {
     try {
         const salleId = parseInt(req.params.id);
-        const { number, type, capacity, availability } = req.body;
+        const { number, type, capacity, availability, startHour, endHour } = req.body;
 
         const updatedSalle = await prisma.salle.update({
             where: { id: salleId },
@@ -70,6 +70,8 @@ export const updateSalle = async (req: Request, res: Response): Promise<void> =>
                 type,
                 capacity,
                 availability,
+                startHour: new Date(startHour),
+                endHour: new Date(endHour),
             },
         });
 

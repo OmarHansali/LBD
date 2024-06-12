@@ -107,8 +107,11 @@ The following routes are available for managing users:
   "number": "1",
   "type": "fablab",
   "capacity": 1,
-  "availability": false
+  "availability": false,
+  "startHour": "2024-06-12T09:00:00.000Z",
+  "endHour": "2024-06-12T17:00:00.000Z"
 }
+
 ```
 
 ### Response (GET /salle)
@@ -120,7 +123,9 @@ The following routes are available for managing users:
         "number": "1",
         "type": "fablab",
         "capacity": 1,
-        "availability": false
+        "availability": false,
+        "startHour": "2024-06-12T09:00:00.000Z",
+        "endHour": "2024-06-12T17:00:00.000Z"
     }
 ]
 ```
