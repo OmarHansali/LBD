@@ -16,12 +16,14 @@ export interface iSalleType {
     material: [],
     number: string,
     capacity: number,
-    availability: string
+    availability: string,
+    startHour?: string,
+    endHour?: string
 }
 
 export interface iMaterialType {
     id?: number,
-    material: string,
+    name: string,
     quantity: number | null,
     availability?: boolean
     createdAt?: string

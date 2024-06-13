@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useForm from "../../hooks/useForm"
-import { iSalleType } from "../constants/Types"
-import { materials } from "../data/Data"
+import { iMaterialType, iSalleType } from "../constants/Types"
 import LoadingButton from "./LoadingButton"
 import NavigateBack from "./NavigateBack"
 import { MultiSelect } from "react-multi-select-component"
+import Axios from "../../services/axios"
 
 interface iProps {
     data?: iSalleType,
@@ -14,7 +14,27 @@ interface iProps {
 
 
 const RoomForm = ({ data, page }: iProps) => {
-    const { type, availability, capacity, material, number } = data || {}
+
+    const [materiels, setMateriels] = useState<iMaterialType[]>([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true)
+            await Axios.get("/materiel")
+                .then((res) => {
+                    setMateriels((res.data))
+                })
+                .finally(() => {
+                    setIsLoading(false)
+                })
+        }
+
+        fetchData()
+    }, [])
+
+
+    const { id, type, availability, capacity, material, number, startHour, endHour } = data || {}
 
     const [mutableMaterials, setMutableMaterials] = useState((data && material) ? material.map((item) => ({ label: item, value: item })) : []);
 
@@ -24,24 +44,32 @@ const RoomForm = ({ data, page }: iProps) => {
         type: data ? type : page,
         availability: data ? availability : "",
         capacity: data ? capacity : "",
-        material: data ? mutableMaterials : [],
+        materielIds: data ? mutableMaterials : [],
         number: data ? number : "",
+        startHour: data ? startHour : "",
+        endHour: data ? endHour : ""
     }
 
-    const options = materials.map(material => ({
-        label: material.material,
-        value: material.material,
+    const options = materiels && materiels.map(materiel => ({
+        label: materiel.name,
+        value: materiel.id,
     }));
 
 
     const handleMaterialChange = (selectedOptions: any) => {
         setMutableMaterials(selectedOptions);
-        handleChange("material", selectedOptions.map((option: any) => option.value));
+        handleChange("materielIds", selectedOptions.map((option: any) => option.value));
     };
 
-    const { inputs, handleChange, isLoading } = useForm(initialState, "", "PUT")
+    const apiKey = data ? `/salle/${id}` : "/salle"
+    const method = data ? "PUT" : "POST"
 
-    console.log(inputs)
+    const successMessage = data ? `${ type == "salle" ? "La salle ": type } a été modifié avec succès` : `${page == "salle" ? "La salle ": page} a créé avec succès`
+    const errorMessage = data ? `Échec de la modification de ${ type == "salle" ? "La salle ": type }` : `Échec de la création de ${page == "salle" ? "La salle ": page}`
+
+    const { inputs, handleChange, handleSubmit } = useForm(initialState, apiKey, method,successMessage, errorMessage, true)
+
+
 
 
     return (
@@ -53,7 +81,9 @@ const RoomForm = ({ data, page }: iProps) => {
                 </h2>
             </div>
             <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                <form className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <form
+                    onSubmit={handleSubmit}
+                    className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
@@ -105,6 +135,7 @@ const RoomForm = ({ data, page }: iProps) => {
                                 value={mutableMaterials}
                                 onChange={handleMaterialChange}
                                 labelledBy="select"
+                                isLoading={isLoading}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             />
 
@@ -118,9 +149,9 @@ const RoomForm = ({ data, page }: iProps) => {
                             <input
                                 type="time"
                                 className="form-input border"
-                                placeholder="Start Date"
-                                value={inputs['startDate']}
-                                onChange={(e) => handleChange("startDate", e.target.value)}
+                                placeholder="Starting Hour"
+                                value={inputs['startHour']}
+                                onChange={(e) => handleChange("startHour", e.target.value)}
                                 required
                             />
                         </div>
@@ -130,9 +161,9 @@ const RoomForm = ({ data, page }: iProps) => {
                             <input
                                 type="time"
                                 className="form-input border"
-                                placeholder="End Date"
-                                value={inputs['endDate']}
-                                onChange={(e) => handleChange("endDate", e.target.value)}
+                                placeholder="Ending Hour"
+                                value={inputs['endHour']}
+                                onChange={(e) => handleChange("endHour", e.target.value)}
                                 required
                             />
                         </div>

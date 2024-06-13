@@ -242,26 +242,30 @@ const TableContainer = ({
         setDeleteApiKey(`/user/${row.id}`)
         break;
 
+      case "matérielle":
+        setDeleteApiKey(`/materiel/${row.id}`)
+        break;
+
       case "salle":
-        console.log("Delete row in salles:", row);
+        setDeleteApiKey(`/salle/${row.id}`)
         break;
 
       case "box":
-        console.log("Delete row in box:", row);
+        setDeleteApiKey(`/salle/${row.id}`)
         break;
 
       case "fablab":
-        console.log("Delete row in fablab:", row);
+        setDeleteApiKey(`/salle/${row.id}`)
         break;
 
       case "reservation":
-        console.log("Delete row in reservations:", row);
+        setDeleteApiKey(`/reservation/${row.id}`)
         break;
 
     }
   };
 
-  const successMessage = "Utilisateur supprimé avec succès"
+  const successMessage = `${page} supprimé avec succès`
 
   const { handleSubmit } = useForm({}, deleteApiKey, "delete", successMessage)
 

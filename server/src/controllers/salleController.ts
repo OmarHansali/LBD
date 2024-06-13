@@ -14,8 +14,8 @@ export const createSalle = async (req: Request, res: Response) => {
       data: {
         number,
         type,
-        capacity,
-        availability,
+        capacity: Number(capacity),
+        availability: availability == "yes" ? true : false,
         startHour,
         endHour,
         materiels: {
@@ -88,8 +88,8 @@ export const updateSalle = async (req: Request, res: Response): Promise<void> =>
             type,
             capacity,
             availability,
-            startHour: new Date(startHour),
-            endHour: new Date(endHour),
+            startHour: startHour,
+            endHour: endHour,
             materiels: {
               set: materielIds.map((materielId: number) => ({
                 id: materielId,

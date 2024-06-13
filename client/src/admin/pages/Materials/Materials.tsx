@@ -15,20 +15,14 @@ const Materials = () => {
             enableSorting: true,
         },
         {
-            header: "Material",
-            accessorKey: "material",
+            header: "Materiel",
+            accessorKey: "name",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
             header: "Quantity",
             accessorKey: "quantity",
-            enableColumnFilter: false,
-            enableSorting: true,
-        },
-        {
-            header: "Created At",
-            accessorKey: "createdAt",
             enableColumnFilter: false,
             enableSorting: true,
         },

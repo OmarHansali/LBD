@@ -12,7 +12,7 @@ export const createMateriel = async (req: Request, res: Response)=> {
             data: {
                 name,
                 quantity,
-                availability,
+                availability: availability == "yes" ? true : false,
             },
         });
 

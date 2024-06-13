@@ -15,7 +15,7 @@ const MaterialForm = ({ data }: iProps) => {
     const initialState = {
         name: data ? material : "",
         availability: data ? availability : null,
-        quantity: data ? Number(quantity) : 0,
+        quantity: data ? Number(quantity) : null,
     }
 
 
