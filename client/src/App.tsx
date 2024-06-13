@@ -64,45 +64,45 @@ function App() {
           <Route path="*" element={<NotFoundPage />} />
 
           //----------------------Admin section-----------------------------
-
-          <Route path="admin" element={<AdminLayout />}>
+          <Route path="admin"  element={<AdminLayout />}>
             <Route index element={<Navigate to="dashboard" replace />} />
             <Route path='dashboard' element={<AdminDashboard />} />
 
             <Route path='reservations' element={<AdminReservations />} />
-            <Route path='creer-reservation' element={<CreateReservation/>} />
-            <Route path='modifier-reservation' element={<EditReservation/>} />
+            <Route path='creer-reservation' element={<CreateReservation />} />
+            <Route path='modifier-reservation' element={<EditReservation />} />
 
             <Route path='materiaux' element={<AdminMaterials />} />
-            <Route path='creer-materielle' element={<CreateMaterial/>} />
-            <Route path='modifier-materielle' element={<EditMaterial/>} />
+            <Route path='creer-materielle' element={<CreateMaterial />} />
+            <Route path='modifier-materielle' element={<EditMaterial />} />
 
             {/* --------------rooms------------------------- */}
             <Route path='salles' element={<AdminSalles />} />
-            <Route path='creer-salle' element={<CreateSalle/>} />
-            <Route path='modifier-salle' element={<EditSalle/>} />
+            <Route path='creer-salle' element={<CreateSalle />} />
+            <Route path='modifier-salle' element={<EditSalle />} />
 
 
             <Route path='boxes' element={<Boxes />} />
-            <Route path='creer-box' element={<CreateBox/>} />
-            <Route path='modifier-box' element={<EditBox/>} />
+            <Route path='creer-box' element={<CreateBox />} />
+            <Route path='modifier-box' element={<EditBox />} />
 
 
             <Route path='fablabs' element={<Fablabs />} />
-            <Route path='creer-fablab' element={<CreateFablab/>} />
-            <Route path='modifier-fablab' element={<EditFablab/>} />
+            <Route path='creer-fablab' element={<CreateFablab />} />
+            <Route path='modifier-fablab' element={<EditFablab />} />
 
             {/* ------------------------------------------------ */}
 
             <Route path='utilisateurs' element={<ManageUsers />} />
-            <Route path='creer-utilisateur' element={<EditInfo/>} />
-            <Route path='modifier-utilisateur' element={<EditInfo/>} />
+            <Route path='creer-utilisateur' element={<EditInfo />} />
+            <Route path='modifier-utilisateur' element={<EditInfo />} />
 
             <Route path='profile' element={<Profile />} />
             <Route path='modifier-profile' element={<Settings />} />
 
             <Route path='contacts' element={<AdminContacts />} />
           </Route>
+
         </Route>
       </Routes>
     </Router>
