@@ -55,6 +55,9 @@ const Reservations = () => {
             setIsLoading(true)
             const response = await Axios.get("/reservation")
 
+            console.log(response);
+            
+
             const mappedData = response.data.map((reservation: any )=> ({
                 ...reservation,
                 username: reservation.user.username,

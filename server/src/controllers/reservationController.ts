@@ -116,11 +116,11 @@ export const updateReservation = async (req: Request, res: Response): Promise<vo
         const updatedReservation = await prisma.reservation.update({
             where: { id: reservationId },
             data: {
-                userId,
-                salleId,
+                userId: Number(userId),
+                salleId: Number(salleId),
                 dateReservation,
                 heureReservation,
-                duration,
+                duration: Number(duration),
                 code,
             },
         });
