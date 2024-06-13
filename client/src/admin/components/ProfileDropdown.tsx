@@ -105,7 +105,7 @@ const ProfileDropdown = () => {
                   fill="currentColor"
                 ></path>
               </svg>
-              Settings
+              Paramètres
             </Link>
           </li>
           <li>
@@ -140,7 +140,7 @@ const ProfileDropdown = () => {
                   fill="currentColor"
                 ></path>
               </svg>
-              Sign Out
+              Se déconnecter
             </button>
           </li>
         </ul>

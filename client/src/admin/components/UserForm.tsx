@@ -41,11 +41,11 @@ const UserForm = ({ data }: iProps) => {
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label>Username</label>
+                            <label>Nom d'utilisateur</label>
                             <input
                                 type="text"
                                 className="form-input border"
-                                placeholder="username"
+                                placeholder="Nom d'utilisateur"
                                 defaultValue={inputs['username']}
                                 onChange={(e) => handleChange('username', e.target.value)}
                                 required
@@ -66,7 +66,7 @@ const UserForm = ({ data }: iProps) => {
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label>Role</label>
+                            <label>Rôle</label>
                             <select
                                 defaultValue={data ? inputs['role'] : ""}
                                 onChange={(e) => handleChange("role", e.target.value)}
@@ -77,11 +77,11 @@ const UserForm = ({ data }: iProps) => {
                             </select>
                         </div>
                         <div className="space-y-2 w-full">
-                            <label>Phone Number</label>
+                            <label>Numéro de téléphone</label>
                             <input
                                 type="text"
                                 className="form-input border"
-                                placeholder="Phone Number"
+                                placeholder="Numéro de téléphone"
                                 defaultValue={inputs['phoneNumber']}
                                 onChange={(e) => handleChange('phoneNumber', e.target.value)}
                                 required

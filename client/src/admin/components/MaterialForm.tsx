@@ -10,10 +10,10 @@ interface iProps {
 
 const MaterialForm = ({ data }: iProps) => {
 
-    const { id, material, quantity, availability } = data || {}
+    const { id, name, quantity, availability } = data || {}
 
     const initialState = {
-        name: data ? material : "",
+        name: data ? name : "",
         availability: data ? availability : null,
         quantity: data ? Number(quantity) : null,
     }
@@ -47,36 +47,36 @@ const MaterialForm = ({ data }: iProps) => {
 
                 <div className="grid grid-cols-2 col-span-2 gap-4">
                     <div className="space-y-2 w-full">
-                        <label>Material Name</label>
+                        <label>Nom du matériau</label>
                         <input
                             type="text"
                             className="form-input border"
-                            placeholder="Material Name"
+                            placeholder="Nom du matériau"
                             value={inputs['name']}
                             onChange={(e) => handleChange("name", e.target.value)}
                             required
                         />
                     </div>
                     <div className="space-y-2 w-full">
-                        <label>Quantity</label>
+                        <label>Quantité</label>
                         <input
                             type="number"
                             className="form-input border"
-                            placeholder="Quantity"
+                            placeholder="Quantité"
                             value={inputs['quantity']}
                             onChange={(e) => handleChange("quantity", Number(e.target.value))}
                             required
                         />
                     </div>
                     <div className="space-y-2 w-full">
-                        <label>Availability</label>
+                        <label>Disponibilité</label>
                         <select
                             value={inputs['availability']}
                             onChange={(e) => handleChange("availability", e.target.value)}
                             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-[12px] px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option disabled={data != undefined}>Choose availability</option>
-                            <option selected={inputs['availability'] == true} value={'yes'}>Yes</option>
-                            <option selected={inputs['availability'] == false} value={'no'}>No</option>
+                            <option disabled={data != undefined}>Choisir la disponibilité</option>
+                            <option selected={inputs['availability'] == true} value={'yes'}>Oui</option>
+                            <option selected={inputs['availability'] == false} value={'no'}>Non</option>
                         </select>
                     </div>
                 </div>

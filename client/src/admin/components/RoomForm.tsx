@@ -89,22 +89,22 @@ const RoomForm = ({ data, page }: iProps) => {
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label className="capitalize">{type ? type : page} Number</label>
+                            <label className="capitalize">Numéro de {type ? type : page}</label>
                             <input
                                 type="text"
                                 className="form-input border"
-                                placeholder="Salle Number"
+                                placeholder={`Numéro de ${type ? type : page}`}
                                 value={inputs['number']}
                                 onChange={(e) => handleChange("number", e.target.value)}
                                 required
                             />
                         </div>
                         <div className="space-y-2 w-full">
-                            <label>Capacity</label>
+                            <label>Capacité de {type ? type : page}</label>
                             <input
                                 type="number"
                                 className="form-input border"
-                                placeholder="Capacity"
+                                placeholder={`Capacité de ${type ? type : page}`}
                                 value={inputs['capacity']}
                                 min={6}
                                 max={30}
@@ -119,19 +119,19 @@ const RoomForm = ({ data, page }: iProps) => {
 
 
                         <div className="space-y-2 w-full">
-                            <label>Availability</label>
+                            <label>Disponibilité</label>
                             <select
                                 value={inputs['availability']}
                                 onChange={(e) => handleChange("availability", e.target.value)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-[12px] px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option disabled={data != undefined}>Choose availability</option>
-                                <option selected={inputs['availability'] == true} value="yes">Yes</option>
-                                <option selected={inputs['availability'] == false} value="no">No</option>
+                                <option disabled={data != undefined}>Choisir la disponibilité</option>
+                                <option selected={inputs['availability'] == true} value="yes">Oui</option>
+                                <option selected={inputs['availability'] == false} value="no">Non</option>
                             </select>
                         </div>
 
                         <div className="space-y-2 w-full">
-                            <label>Material</label>
+                            <label>Matériaux</label>
                             <MultiSelect
                                 options={options}
                                 value={mutableMaterials}
@@ -147,11 +147,11 @@ const RoomForm = ({ data, page }: iProps) => {
                     <div className="grid grid-cols-2 col-span-2 gap-2">
 
                         <div className="space-y-2 w-full">
-                            <label>Starting Hour</label>
+                            <label>Heure de départ</label>
                             <input
                                 type="time"
                                 className="form-input border"
-                                placeholder="Starting Hour"
+                                placeholder="Heure de départ"
                                 value={inputs['startHour']}
                                 onChange={(e) => handleChange("startHour", e.target.value)}
                                 required
@@ -159,11 +159,11 @@ const RoomForm = ({ data, page }: iProps) => {
                         </div>
 
                         <div className="space-y-2 w-full">
-                            <label>Ending Hour</label>
+                            <label>Heure de fin</label>
                             <input
                                 type="time"
                                 className="form-input border"
-                                placeholder="Ending Hour"
+                                placeholder="Heure de fin"
                                 value={inputs['endHour']}
                                 onChange={(e) => handleChange("endHour", e.target.value)}
                                 required

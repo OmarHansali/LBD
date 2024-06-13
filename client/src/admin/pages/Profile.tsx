@@ -1,14 +1,15 @@
 
 import user from "../../../public/assets/images/user.png";
 import img2 from "../../../public/assets/images/images-2.jpg";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import loggedUser from "../../services/LoggedUser";
 
 const Profile = () => {
-    const navigate = useNavigate()
+    const { username, role, profile } = loggedUser
 
-    const handleEditProfile = () => {
-        navigate('/admin/edit-profile', { state: { data: {} } });
-    }
+    // const handleEditProfile = () => {
+    //     navigate('/admin/modifier-profile', { state: { data: loggedUser } });
+    // }
 
     return (
         <>
@@ -23,32 +24,32 @@ const Profile = () => {
                             <div className="flex items-center justify-between gap-5">
                                 <div className="relative w-32 h-32">
                                     <img
-                                        src={user}
+                                        src={profile ? profile : user}
                                         className="border-8 rounded-full border-light/50"
                                         alt=""
                                     />
                                     <span className="absolute w-5 h-5 rounded-full bg-success bottom-2 ltr:right-4 rtl:left-4"></span>
                                 </div>
                                 <div>
-                                    <button
-                                        onClick={handleEditProfile}
+                                    <Link
+                                        to={"/admin/modifier-profile"}
                                         className="btn bg-purple border border-purple rounded-md text-white transition-all duration-300 hover:bg-purple/[0.85] hover:border-purple/[0.85]"
                                     >
-                                        Edit
-                                    </button>
+                                        Modifier
+                                    </Link>
                                 </div>
                             </div>
                             <div className="flex flex-col items-start justify-between md:flex-row gap-7">
                                 <div className="mt-4 shrink-0">
                                     <div>
                                         <h5 className="text-xl font-bold dark:text-white">
-                                            Stevens Laurie
+                                            {username}
                                         </h5>
                                         <p className="text-muted dark:text-darkmuted">
-                                            Ui/Ux Designer
+                                            {role}
                                         </p>
                                     </div>
-                                    <div className="flex flex-wrap items-start gap-5 mt-7">
+                                    {/* <div className="flex flex-wrap items-start gap-5 mt-7">
                                         <div>
                                             <p className="text-base font-bold dark:text-white">148</p>
                                             <p className="text-muted dark:text-darkmuted">Posts</p>
@@ -67,11 +68,11 @@ const Profile = () => {
                                                 Following
                                             </p>
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                                 <div className="mt-4">
-                                    <h3 className="text-xl font-bold dark:text-white">
-                                        About Me
+                                    <h3 className="text-xl font-bold dark:text-white first-letter:uppercase">
+                                        à propos
                                     </h3>
                                     <p className="max-w-4xl mt-5 text-base text-muted dark:text-darkmuted">
                                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
@@ -84,7 +85,7 @@ const Profile = () => {
                             </div>
                             <div className="mt-12">
                                 <h3 className="mb-4 text-xl font-bold dark:text-white">
-                                    Follow me on
+                                    Suivez-moi sur
                                 </h3>
                                 <ul className="flex flex-wrap items-center gap-5">
                                     <li>

@@ -1,14 +1,11 @@
-import { useLocation } from "react-router-dom";
 import user from "../../../public/assets/images/user.png"
+import loggedUser from "../../services/LoggedUser";
 import NavigateBack from "./NavigateBack";
 
 
 const Settings = () => {
-    const location = useLocation();
-    const { data } = location.state || {};
-    
-    console.log("data:", data);
-    
+
+    const { email, phoneNumber, CEN, username, profile, role } = loggedUser
     return (
         <>
             <NavigateBack />
@@ -16,29 +13,9 @@ const Settings = () => {
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                         <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
-                            User Details
+                            Détails de l'utilisateur
                         </h2>
                         <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                            {/* <div className="space-y-2">
-                                <label>First Name</label>
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    placeholder="First Name"
-                                    defaultValue="Stevens"
-                                    required
-                                />
-                            </div> */}
-                            {/* <div className="space-y-2">
-                                <label>Username</label>
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    placeholder="Username"
-                                    defaultValue={username}
-                                    required
-                                />
-                            </div> */}
                             <div className="space-y-2 md:col-span-2">
                                 <label>Username</label>
                                 <input
@@ -119,7 +96,7 @@ const Settings = () => {
 
                     <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                         <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
-                            Your Photo
+                            Photo Profile
                         </h2>
                         <div className="grid grid-cols-1 gap-4">
                             <div className="flex items-center gap-4">
@@ -130,10 +107,10 @@ const Settings = () => {
                                 />
                                 <div>
                                     <h5 className="text-lg font-bold dark:text-white">
-                                        Stevens Laurie
+                                        {username}
                                     </h5>
                                     <p className="text-muted mt-0.5 dark:text-darkmuted">
-                                        Ui/Ux Designer
+                                        { role }
                                     </p>
                                 </div>
                             </div>
