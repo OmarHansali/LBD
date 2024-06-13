@@ -10,9 +10,13 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
     try {
         // Find user by email
-        const user = await prisma.user.findUnique({
+        const user = await prisma.user.findFirst({
             where: { username }
         });
+
+        console.log(password);
+        
+        
 
         if (!user) {
             res.status(401).send('Invalid user');
@@ -21,6 +25,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
 
         // Check password
         const isPasswordValid = await bcrypt.compare(password, user.password);
+        
         if (!isPasswordValid) {
             res.status(401).send('Invalid username or password');
             return;

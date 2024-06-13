@@ -10,7 +10,7 @@ const LoginForm = () => {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false)
 
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
 
   const handleFormSubmit = async (e: any) => {
     setIsLoading(true)
@@ -28,6 +28,8 @@ const LoginForm = () => {
         password: password
       })
         .then((res: AxiosResponse) => {
+          console.log(res);
+          
           if (res.status == 200) {
             if (res.data.user.role == "admin") {
 
@@ -37,7 +39,7 @@ const LoginForm = () => {
               toast.success("Signed In successfully!", { position: "top-right" });
               setUserName("");
               setPassword("");
-              navigate('/admin')
+              window.location.href = "/admin"
             }
           }
 
