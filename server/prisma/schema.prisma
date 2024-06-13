@@ -29,7 +29,7 @@ model Reservation {
   id              Int      @id @unique(map: "Reservation_id_key") @default(autoincrement())
   userId          Int?
   salleId         Int?
-  dateReservation DateTime
+  dateReservation String
   heureReservation String
   duration        Int
   code            Int      

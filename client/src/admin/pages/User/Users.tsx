@@ -15,13 +15,13 @@ const Users = () => {
             enableSorting: true,
         },
         {
-            header: "Username",
+            header: "Nom d'utilisateur",
             accessorKey: "username",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Role",
+            header: "Rôle",
             accessorKey: "role",
             enableColumnFilter: false,
             enableSorting: true,
@@ -33,7 +33,7 @@ const Users = () => {
             enableSorting: true,
         },
         {
-            header: "Phone Number",
+            header: "Numéro de téléphone",
             accessorKey: "phoneNumber",
             enableColumnFilter: false,
             enableSorting: true,

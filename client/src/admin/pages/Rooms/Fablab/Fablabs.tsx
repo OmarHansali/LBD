@@ -15,61 +15,64 @@ const Fablabs = () => {
             enableColumnFilter: false,
             enableSorting: true,
         },
-        // {
-        //     header: "Type",
-        //     accessorKey: "type",
-        //     enableColumnFilter: false,
-        //     enableSorting: true,
-        // },
         {
-            header: "Number",
+            header: "Materiels",
+            accessorKey: "materielNames",
+            enableColumnFilter: false,
+            enableSorting: true,
+        },
+        {
+            header: "№ chambre",
             accessorKey: "number",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Starting Hour",
+            header: "Heure de départ",
             accessorKey: "startHour",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Ending Hour",
+            header: "Heure de fin",
             accessorKey: "endHour",
             enableColumnFilter: false,
             enableSorting: true,
         },
 
         {
-            header: "Capacity",
+            header: "Capacité",
             accessorKey: "capacity",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Availability",
-            accessorKey: "availability",
+            header: "Disponibilité",
+            accessorKey: "dispo",
             enableColumnFilter: false,
             enableSorting: true,
         },
     ];
-
     const [fablabs, setFablabs] = useState<iSalleType[]>([])
     const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
-            await Axios.get("/salle")
-                .then((res) => {
-                    setFablabs((res.data).filter((salle: iSalleType) => salle.type == "fablab"))
-                })
-                .finally(() => {
-                    setIsLoading(false)
-                })
+            const response = await Axios.get("/salle")
+            const mappedData = response.data.map((salle: any) => {
+                const materielNames = salle.materiels.map((materiel: any) => materiel.name).join(", ");
+                return {
+                    ...salle,
+                    materielNames,
+                    dispo: salle.availability == true ? "Oui" : "Non"
+                };
+            });
+            setFablabs(mappedData.filter((salle: iSalleType) => salle.type == "fablab"))
         }
 
         fetchData()
+        setIsLoading(false)
     }, [])
 
     return (

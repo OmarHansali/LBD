@@ -34,10 +34,12 @@ const RoomForm = ({ data, page }: iProps) => {
     }, [])
 
 
-    const { id, type, availability, capacity, material, number, startHour, endHour } = data || {}
+    const { id, type, availability, capacity, materiels : dataMateriels, number, startHour, endHour } = data || {}
 
-    const [mutableMaterials, setMutableMaterials] = useState((data && material) ? material.map((item) => ({ label: item, value: item })) : []);
+    const [mutableMaterials, setMutableMaterials] = useState((data && dataMateriels) ? dataMateriels.map((item: iMaterialType) => ({ label: item.name, value: item.id })) : []);
 
+        console.log(mutableMaterials);
+        
     // api
 
     const initialState = {
@@ -54,7 +56,7 @@ const RoomForm = ({ data, page }: iProps) => {
         label: materiel.name,
         value: materiel.id,
     }));
-
+    
 
     const handleMaterialChange = (selectedOptions: any) => {
         setMutableMaterials(selectedOptions);

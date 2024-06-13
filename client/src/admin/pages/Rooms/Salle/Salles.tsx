@@ -15,63 +15,70 @@ const Salles = () => {
             enableColumnFilter: false,
             enableSorting: true,
         },
-        // {
-        //     header: "Type",
-        //     accessorKey: "type",
-        //     enableColumnFilter: false,
-        //     enableSorting: true,
-        // },
         {
-            header: "Number",
+            header: "Materiels",
+            accessorKey: "materielNames",
+            enableColumnFilter: false,
+            enableSorting: true,
+        },
+        {
+            header: "№ chambre",
             accessorKey: "number",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Starting Hour",
+            header: "Heure de départ",
             accessorKey: "startHour",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Ending Hour",
+            header: "Heure de fin",
             accessorKey: "endHour",
             enableColumnFilter: false,
             enableSorting: true,
         },
-        
+
         {
-            header: "Capacity",
+            header: "Capacité",
             accessorKey: "capacity",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Availability",
-            accessorKey: "availability",
+            header: "Disponibilité",
+            accessorKey: "dispo",
             enableColumnFilter: false,
             enableSorting: true,
         },
     ];
 
-    const [salles, setSalles] = useState<iSalleType[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [salles, setSalles] = useState<iSalleType[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
-            await Axios.get("/salle")
-                .then((res) => {
-                    setSalles((res.data).filter((salle: iSalleType) => salle.type == "salle"))
-                })
-                .finally(() => {
-                    setIsLoading(false)
-                })
+            const response = await Axios.get("/salle")
+            const mappedData = response.data.map((salle: iSalleType) => {
+                const materielNames = salle.materiels.map((materiel: any) => materiel.name).join(", ");
+                return {
+                    ...salle,
+                    materielNames,
+                    dispo: salle.availability == true ? "Oui" : "Non"
+                };
+            });
+            setSalles(mappedData.filter((salle: iSalleType) => salle.type == "salle"))
         }
 
         fetchData()
+        setIsLoading(false)
     }, [])
 
+
+    console.log(salles);
+    
     return (
         <>
             <h1 className="header capitalize">Gérer les salles</h1>

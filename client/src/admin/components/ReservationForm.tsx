@@ -1,12 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useForm from "../../hooks/useForm"
-import { iReservationType } from "../constants/Types"
-import { materials, sallesType, usersData } from "../data/Data"
+import { iReservationType, iSalleType, iUserType } from "../constants/Types"
 import LoadingButton from "./LoadingButton"
 import NavigateBack from "./NavigateBack"
-import { MultiSelect } from "react-multi-select-component"
+import Axios from "../../services/axios"
 
 interface iProps {
     data?: iReservationType
@@ -14,13 +13,49 @@ interface iProps {
 
 
 const ReservationForm = ({ data }: iProps) => {
-    const { userId, salleId, startDate, endDate, material, duration } = data || {}
+    const { id, userId, salleId, dateReservation, heureReservation, duration } = data || {}
 
-    const convertDate = (str: any) => {
-        return new Date(str as any).toISOString().split('T')[0]
-    }
-    const [mutableMaterials, setMutableMaterials] = useState((data && material) ? material.map((item) => ({ label: item, value: item })) : []);
 
+    const [users, setUsers] = useState<iUserType[]>([])
+    const [salles, setSalles] = useState<iSalleType[]>([])
+    const [minDate, setMinDate] = useState('');
+
+    useEffect(() => {
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        setMinDate(`${year}-${month}-${day}`);
+    }, []);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await Axios.get("/user")
+                .then((res) => {
+                    setUsers((res.data).filter((data: iUserType) => data.role != "admin"))
+
+                })
+        }
+
+        fetchData()
+    }, [])
+
+
+    useEffect(() => {
+        const fetchData = async () => {
+            await Axios.get("/salle")
+                .then((res) => {
+                    setSalles((res.data))
+                })
+        }
+
+        fetchData()
+    }, [])
+
+
+    // const convertDate = (str: any) => {
+    //     return new Date(str as any).toISOString().split('T')[0]
+    // }
     const [durationAsString, setDurationAsString] = useState<string | null>(null)
 
     const handleDurationConversion = (value: string) => {
@@ -41,26 +76,21 @@ const ReservationForm = ({ data }: iProps) => {
     const initialState = {
         userId: data ? userId : null,
         salleId: data ? salleId : null,
-        startDate: data ? convertDate(startDate) : null,
-        endDate: data ? convertDate(endDate) : null,
+        dateReservation: data ? dateReservation : null,
+        heureReservation: data ? heureReservation : null,
         duration: data ? duration : null,
-        material: data ? mutableMaterials : [],
     }
 
-    const options = materials.map(material => ({
-        label: material.material,
-        value: material.material,
-    }));
 
 
-    const handleMaterialChange = (selectedOptions: any) => {
-        setMutableMaterials(selectedOptions);
-        handleChange("material", selectedOptions.map((option: any) => option.value));
-    };
 
-    const { inputs, handleChange, isLoading } = useForm(initialState, "", "PUT")
+    const apiKey = data ? `/reservation/${id}` : "/reservation"
+    const method = data ? "PUT" : "POST"
 
-    console.log(inputs);
+    const successMessage = data ? "Le reservation a été modifié avec succès" : "Le reservation a créé avec succès"
+    const errorMessage = data ? "Échec de la modification de le reservation" : "Échec de la création de reservation"
+
+    const { inputs, handleChange, handleSubmit, isLoading } = useForm(initialState, apiKey, method, successMessage, errorMessage, true)
 
 
     return (
@@ -72,19 +102,21 @@ const ReservationForm = ({ data }: iProps) => {
                 </h2>
             </div>
             <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                <form className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                <form
+                    onSubmit={handleSubmit}
+                    className="grid grid-cols-1 gap-4 md:grid-cols-2">
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label>User</label>
+                            <label>Utilisateur</label>
                             <select
                                 value={inputs['userId']}
                                 onChange={(e) => handleChange("userId", e.target.value)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-[12px] px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
                             >
-                                <option value="" disabled={data != undefined} >Choose User</option>
-                                {usersData.map((user) => (
+                                <option value="" disabled={data != undefined} >Choisir un utilisateur</option>
+                                {users && users.map((user) => (
                                     <option key={user.id} value={user.id}>
                                         {user.username}
                                     </option>
@@ -92,22 +124,22 @@ const ReservationForm = ({ data }: iProps) => {
                             </select>
                         </div>
                         <div className="space-y-2 w-full">
-                            <label>Salle</label>
+                            <label>Chambre</label>
                             <select
                                 value={inputs['salleId']}
                                 onChange={(e) => handleChange("salleId", e.target.value)}
                                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-md focus:ring-blue-500 focus:border-blue-500 block w-full py-[12px] px-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 required
                             >
-                                <option disabled={data != undefined}>Choose Salle Type</option>
+                                <option disabled={data != undefined}>Choisissez le chambre</option>
                                 {
-                                    sallesType.map((salle) => (
+                                    salles.map((salle) => (
                                         <option
                                             key={salle.id}
                                             selected={inputs['salleId'] && inputs['salleId'] == salle.type}
                                             value={salle.id}
                                         >
-                                            {salle.type}
+                                            {salle.type}: {salle.number}
                                         </option>
                                     ))
                                 }
@@ -118,25 +150,26 @@ const ReservationForm = ({ data }: iProps) => {
                     <div className="grid grid-cols-2 col-span-2 gap-2">
 
                         <div className="space-y-2 w-full">
-                            <label>Start Date</label>
+                            <label>Date de Reservation</label>
                             <input
                                 type="date"
                                 className="form-input border"
-                                placeholder="Start Date"
-                                value={inputs['startDate']}
-                                onChange={(e) => handleChange("startDate", e.target.value)}
+                                placeholder="Date de Reservation"
+                                value={inputs['dateReservation']}
+                                onChange={(e) => handleChange("dateReservation", e.target.value)}
+                                min={minDate}
                                 required
                             />
                         </div>
 
                         <div className="space-y-2 w-full">
-                            <label>End Date</label>
+                            <label>Heure de Reservation</label>
                             <input
-                                type="date"
+                                type="time"
                                 className="form-input border"
-                                placeholder="End Date"
-                                value={inputs['endDate']}
-                                onChange={(e) => handleChange("endDate", e.target.value)}
+                                placeholder="Heure de Reservation"
+                                value={inputs['heureReservation']}
+                                onChange={(e) => handleChange("heureReservation", e.target.value)}
                                 required
                             />
                         </div>
@@ -169,17 +202,6 @@ const ReservationForm = ({ data }: iProps) => {
                             </div>
                         </div>
 
-                        <div className="space-y-2 w-full">
-                            <label>Material</label>
-                            <MultiSelect
-                                options={options}
-                                value={mutableMaterials}
-                                onChange={handleMaterialChange}
-                                labelledBy="Select"
-                                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-0.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            />
-
-                        </div>
                     </div>
                     <LoadingButton isLoading={isLoading} text={data ? "Update" : "Create"} />
                 </form>

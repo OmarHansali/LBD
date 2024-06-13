@@ -86,7 +86,7 @@ export const updateSalle = async (req: Request, res: Response): Promise<void> =>
           data: {
             number,
             type,
-            capacity,
+            capacity: Number(capacity),
             availability,
             startHour: startHour,
             endHour: endHour,

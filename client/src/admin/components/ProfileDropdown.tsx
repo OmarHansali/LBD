@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useCallback, useEffect, useRef, useState } from "react";
-import user from "/assets/images/user.png";
+import user from "/assets/images/profile.png";
 import { Link } from "react-router-dom";
 import loggedUser from "../../services/LoggedUser";
 
@@ -32,7 +32,11 @@ const ProfileDropdown = () => {
     };
   }, [isDropdownOpen, toggleOpen]);
 
-  const { role, username } = loggedUser
+  const { role, username, profile } = loggedUser
+
+  const handleLogout = () => {
+    localStorage.clear()
+  }
 
   return (
     <>
@@ -49,7 +53,7 @@ const ProfileDropdown = () => {
         >
           <img
             className="rounded-full h-7 w-7 ltr:xl:mr-2 rtl:xl:ml-2"
-            src={user}
+            src={profile ? profile : user}
             alt="Header Avatar"
           />
           <span className="hidden fw-medium xl:block font-thin dark:text-white/80">
@@ -120,10 +124,11 @@ const ProfileDropdown = () => {
             </Link>
           </li>
           <li className="block h-px my-1 dark:bg-darkborder"></li>
-          <li>
-            <Link
-              to="/auth-logout"
-              className="flex items-center gap-2 dark:text-white"
+
+          <li className="hover:bg-red-100">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 dark:text-white w-full"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -136,7 +141,7 @@ const ProfileDropdown = () => {
                 ></path>
               </svg>
               Sign Out
-            </Link>
+            </button>
           </li>
         </ul>
       </div>
