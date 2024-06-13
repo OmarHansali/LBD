@@ -6,7 +6,7 @@ interface ModalProps {
   onDiscard: () => void;
   sizeClass: string;
   spaceClass: string;
-  onSubmit: () => void
+  onSubmit: any
 }
 
 const Modal = ({ title, content, onDiscard, divClass, sizeClass, spaceClass, onSubmit }: ModalProps) => {

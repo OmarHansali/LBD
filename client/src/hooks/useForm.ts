@@ -35,7 +35,7 @@ const useForm = (
         }));
     };
 
-    const handleSubmit = async (e: any=null) => {
+    const handleSubmit = async (e: any) => {
         e && e.preventDefault();
         setIsLoading(true);
         const loadingToastId = toast.loading("Chargement...", { position: "top-right" });
@@ -65,6 +65,8 @@ const useForm = (
 
             // ---------------send data ----------------------
             const response = await Axios(config);
+            console.log(response);
+
 
             // ------------------------------------------------
 
@@ -84,7 +86,7 @@ const useForm = (
                 if (navigateBack) {
                     setTimeout(() => {
                         navigate(-1)
-                    }, 1000)
+                    }, 900)
                 }
             }
         } catch (error: any) {

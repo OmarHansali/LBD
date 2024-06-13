@@ -94,7 +94,7 @@ interface TableContainerProps {
   isPagination: boolean;
   PaginationClassName?: string;
   SearchPlaceholder?: string;
-  page: string
+  page: string,
 }
 
 const TableContainer = ({
@@ -113,7 +113,7 @@ const TableContainer = ({
   customPageSize,
   isGlobalFilter,
   PaginationClassName,
-  page
+  page,
 
 }: TableContainerProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -167,10 +167,9 @@ const TableContainer = ({
 
   const navigate = useNavigate()
   // modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [deleteApiKey, setDeleteApiKey] = useState<string>("")
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [deleteApiKey, setDeleteApiKey] = useState<string>("")
 
-  
 
   let createAction
 
@@ -234,13 +233,13 @@ const TableContainer = ({
     }
   };
 
-  let apiKey = ""
+  // let apiKey = ""
 
   const handleDeleteClick = (row: any) => {
     setIsModalOpen(true);
     switch (page) {
       case "utilisateur":
-        apiKey = `/user/${row.id}`
+        setDeleteApiKey(`/user/${row.id}`)
         break;
 
       case "salle":
@@ -264,21 +263,17 @@ const TableContainer = ({
 
   const successMessage = "Utilisateur supprimé avec succès"
 
-  const { handleSubmit } = useForm({}, apiKey, "delete",successMessage)
+  const { handleSubmit } = useForm({}, deleteApiKey, "delete", successMessage)
 
-  // const deletProcess = () => {
-  //   // axios
-  //   setIsModalOpen(true)
-  //   handleSubmit()
-  //   console.log("start deleting");
-
-  // }
+  const onContinue = async () => {
+    await handleSubmit(null)
+    window.location.reload()
+  }
 
 
   return (
     <Fragment>
       {/* Modal */}
-
       {
         isModalOpen &&
         <Modal
@@ -287,9 +282,8 @@ const TableContainer = ({
           content={`Are you sure that you to delete this ${page} ?`}
           onDiscard={() => {
             setIsModalOpen(false)
-            // setDeleteApiKey("")
           }}
-          onSubmit={handleSubmit}
+          onSubmit={onContinue}
           sizeClass="relative w-full max-w-lg p-0 my-1 overflow-hidden bg-white border rounded-lg border-black/10 dark:bg-darklight dark:border-darkborder"
           spaceClass="py-4 px-5 space-y-4"
         />

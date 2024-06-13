@@ -43,21 +43,20 @@ const Users = () => {
     const [users, setUsers] = useState<iUserType[]>([])
     const [isLoading, setIsLoading] = useState(false)
 
-    useEffect(()=>{
+    useEffect(() => {
         const fetchData = async () => {
             setIsLoading(true)
             await Axios.get("/user")
-                .then((res)=>{
+                .then((res) => {
                     setUsers((res.data).filter((data: iUserType) => data.role != "admin"))
-                    
+
                 })
-                .finally(()=>{
+                .finally(() => {
                     setIsLoading(false)
                 })
         }
 
         fetchData()
-        
     }, [])
 
 

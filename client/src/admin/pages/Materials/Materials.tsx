@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import TableContainer from "../../components/TableContainer";
-import { materials } from "../../data/Data";
+import { iMaterialType } from "../../constants/Types";
+import Axios from "../../../services/axios";
+import LoadingPage from "../../components/LoadingPage";
 
 const Materials = () => {
 
@@ -31,10 +34,29 @@ const Materials = () => {
         },
     ];
 
+    const [materials, setMaterials] = useState<iMaterialType[]>([])
+    const [isLoading, setIsLoading] = useState(false)
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true)
+            await Axios.get("/materiel")
+                .then((res) => {
+                    setMaterials((res.data))
+                })
+                .finally(() => {
+                    setIsLoading(false)
+                })
+        }
+
+        fetchData()
+    }, [])
+
 
     return (
         <>
             <h1 className="header capitalize">Gérer les matériaux</h1>
+            <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}
                 data={materials}

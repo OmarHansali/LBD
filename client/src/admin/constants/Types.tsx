@@ -23,6 +23,7 @@ export interface iMaterialType {
     id?: number,
     material: string,
     quantity: number | null,
+    availability?: boolean
     createdAt?: string
 }
 
