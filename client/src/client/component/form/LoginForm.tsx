@@ -29,17 +29,19 @@ const LoginForm = () => {
       })
         .then((res: AxiosResponse) => {
           console.log(res);
-          
+
           if (res.status == 200) {
+            localStorage.setItem("user", JSON.stringify(res.data.user))
+            localStorage.setItem("token", res.data.token)
+
             if (res.data.user.role == "admin") {
-
-              localStorage.setItem("user", JSON.stringify(res.data.user))
-              localStorage.setItem("token", res.data.token)
-
               toast.success("Signed In successfully!", { position: "top-right" });
               setUserName("");
               setPassword("");
               window.location.href = "/admin"
+            }
+            else {
+              window.location.href = "/"
             }
           }
 
