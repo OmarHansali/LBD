@@ -40,8 +40,8 @@ const Users = () => {
         },
     ];
 
-    const [users, setUsers] = useState<iUserType[]>([])
     const [isLoading, setIsLoading] = useState(false)
+    const [users, setUsers] = useState<iUserType[]>([])
 
     useEffect(() => {
         const fetchData = async () => {
