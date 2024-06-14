@@ -219,6 +219,7 @@ The following routes are available for managing users:
         }
     }
 ]
+```
 
 ## Contact Routes
 
