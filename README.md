@@ -219,3 +219,39 @@ The following routes are available for managing users:
         }
     }
 ]
+
+## Contact Routes
+
+- `POST /contact`: Create a new contact.
+- `GET /contact`: Get all contact.
+- `POST /contact`: Create a new contact.
+- `PUT /contact/:id`: Update contact by ID.
+- `DELETE /contact/:id`: Delete contact by ID.
+
+### Request (POST /contact)
+
+```json
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "object": "Inquiry about services",
+  "body": "I would like to know more about your services.",
+  "seen": false
+}
+
+```
+
+### Contact (GET /contact)
+
+```json
+[
+  {
+    "id": 1,
+    "name": "John Doe",
+    "email": "johndoe@example.com",
+    "object": "Inquiry about services",
+    "body": "I would like to know more about your services.",
+    "seen": false
+  }
+]
+
