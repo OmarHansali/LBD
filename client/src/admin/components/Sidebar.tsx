@@ -8,8 +8,19 @@ import logolight from "/assets/images/logos/logo_1.png";
 // import logoicon from "/assets/images/logo-icon.svg";
 import { sidebarData } from "../../constants/SidebarLinks";
 import { useSelector } from "react-redux";
+import { CloseIcon } from "./icons/SVGIcons";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../state/features/slices/sideBar";
 
 const Sidebar = (isSidebarSize: any) => {
+
+    const isSidebarOpen = useSelector((state: any) => state.sidebar);
+    const dispatch = useDispatch()
+
+    const handleToggle = () => {
+        dispatch(toggleSidebar());
+    };
+
 
     const location = useLocation();
     const storedData = localStorage.getItem("activeMenu");
@@ -31,7 +42,16 @@ const Sidebar = (isSidebarSize: any) => {
     return (
         <React.Fragment>
             <nav className="sidebar fixed z-[9999] flex-none w-[240px] ltr:border-r rtl:border-l dark:bg-darkborder border-black/10 transition-all duration-300 overflow-hidden">
-                <div className="h-full dark:bg-darklight border-r-[1px] sm:hidden xs:hidden lg:block">
+                {
+                    isSidebarOpen && 
+                    <div className="absolute hover:text-gray-400 right-2 top-2 xs:block sm:block  md:hidden lg:hidden">
+                        <CloseIcon fontSize={30} onClick={handleToggle}/>
+                    </div>
+                }
+                <div
+                    className="h-full bg-white dark:bg-darklight border-r-[1px] sm:hidden xs:hidden lg:block"
+                    style={{ display: isSidebarOpen ? 'block' : 'none' }}
+                >
                     <div className="py-4 flex justify-center">
                         <Link to="/admin/dashboard" className="w-full main-logo">
                             {/* dark:hidden */}
