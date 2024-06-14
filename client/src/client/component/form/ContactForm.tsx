@@ -70,7 +70,7 @@ const ContactForm = () => {
           />
         </div>
 
-        <div className="col-6 col-xxs-12">
+        <div className="col-12 col-xxs-12">
           <input
             type="text"
             name="stud-object"
