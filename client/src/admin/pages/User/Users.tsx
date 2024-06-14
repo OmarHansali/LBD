@@ -62,7 +62,7 @@ const Users = () => {
 
     return (
         <>
-            <h1 className="header capitalize">gérer les utilisateurs</h1>
+            <h1 className="header capitalize dark:text-white">gérer les utilisateurs</h1>
             <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}

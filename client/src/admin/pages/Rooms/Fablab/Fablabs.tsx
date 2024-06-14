@@ -77,7 +77,7 @@ const Fablabs = () => {
 
     return (
         <>
-            <h1 className="header capitalize">Gérer les fablabs</h1>
+            <h1 className="header capitalize dark:text-white">Gérer les fablabs</h1>
             <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}

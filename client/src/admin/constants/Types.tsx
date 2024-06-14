@@ -9,7 +9,6 @@ export interface iUserType {
     CEN?: string
 }
 
-
 export interface iSalleType {
     id?: number,
     type: string,
@@ -40,15 +39,10 @@ dateReservation: string,
 }
 
 export interface iContactProps {
-    id: number | string;
-    username: string;
-    profile: string;
+    id: number;
+    name: string;
     email: string;
-    messages: [
-        {
-            createdAt: string;
-            title: string;
-            content: string;
-        }
-    ]
+    object: string;
+    body: string,
+    seen: boolean,
 }

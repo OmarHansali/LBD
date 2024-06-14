@@ -75,7 +75,7 @@ const Reservations = () => {
 
     return (
         <>
-            <h1 className="header capitalize">Gérer les Reservations</h1>
+            <h1 className="header capitalize dark:text-white">Gérer les Reservations</h1>
             <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}

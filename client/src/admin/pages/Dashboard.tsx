@@ -27,7 +27,7 @@ const Dashboard = () => {
 
     return (
         <>
-            <h1 className="header mb-3">Dashboard</h1>
+            <h1 className="header mb-3 dark:text-white">Dashboard</h1>
             <div className="space-y-4 flex flex-col gap-1 md:gap-10">
                 <div className="grid lg:grid-cols-4 md:grid-cols-4 gap-2 h-28">
                     <StatisticsCard text="Nombre total d'utilisateurs" title="utilisateurs" number={countData(users)} />

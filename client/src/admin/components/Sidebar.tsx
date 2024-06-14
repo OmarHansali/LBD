@@ -70,7 +70,7 @@ const Sidebar = (isSidebarSize: any) => {
                                                 <li className="menu nav-item">
                                                     <Link
                                                         to="#"
-                                                        className={`items-center justify-between text-black nav-link group ${activeMenu === key ||
+                                                        className={`items-center justify-between text-blac nav-link group ${activeMenu === key ||
                                                             item.subItems.some(
                                                                 (subitem: any) =>
                                                                     location.pathname === subitem.link
@@ -115,7 +115,7 @@ const Sidebar = (isSidebarSize: any) => {
                                                     display:
                                                         isSidebarSize && activeMenu === key ? "" : "none",
                                                 }}
-                                                className="flex flex-col gap-1 text-black sub-menu ml-5 dark:text-white/60"
+                                                className="flex flex-col gap-1 sub-menu ml-5 dark:text-white/80"
                                             >
                                                 {item.subItems.map((subitem: any, subkey: any) => (
                                                     <React.Fragment key={subkey}>

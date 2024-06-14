@@ -5,6 +5,7 @@ import {
   getContactById,
   updateContact,
   deleteContact,
+  updateSeenProperty,
 } from "../controllers/contactController";
 
 const router = express.Router();
@@ -20,6 +21,9 @@ router.get("/:id", getContactById);
 
 // Update Contact
 router.put("/:id", updateContact);
+
+// toggle visiblity of all seen contacts
+router.patch("/", updateSeenProperty);
 
 // Delete Contact
 router.delete("/:id", deleteContact);

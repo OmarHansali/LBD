@@ -75,4 +75,5 @@ model Contact {
   object  String
   body    String
   seen    Boolean @default(false)
+  createdAt   DateTime? @default(now())
 }

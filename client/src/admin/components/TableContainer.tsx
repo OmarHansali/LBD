@@ -299,7 +299,7 @@ const TableContainer = ({
         <div className="flex items-center gap-2">
           {isSelect && (
             <div className="flex items-center space-x-2 rtl:space-x-reverse">
-              <p>Afficher</p>
+              <p className="dark:text-white">Afficher</p>
               <select
                 className="form-select !w-20"
                 onClick={(event: any) => setPageSize(event.target.value)}
@@ -446,10 +446,10 @@ const TableContainer = ({
       {/* pagination */}
       {isPagination && (
         <div className={`${PaginationClassName}`}>
-          <ul className="inline-flex items-center gap-1">
+          <ul className="inline-flex items-center gap-1 ">
             <li>
               <button
-                className="flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
+                className="flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
                 onClick={() => setPageIndex(0)}
               >
                 First{" "}
@@ -457,7 +457,7 @@ const TableContainer = ({
             </li>
             <li>
               <button
-                className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${!getCanPreviousPage() && "disabled"
+                className={`flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${!getCanPreviousPage() && "disabled"
                   }`}
                 onClick={previousPage}
               >
@@ -468,7 +468,7 @@ const TableContainer = ({
               <React.Fragment key={key}>
                 <li>
                   <button
-                    className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${getState().pagination.pageIndex === item &&
+                    className={`flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${getState().pagination.pageIndex === item &&
                       "text-purple border-purple dark:text-purple dark:border-purple"
                       }`}
                     onClick={() => setPageIndex(item)}
@@ -480,7 +480,7 @@ const TableContainer = ({
             ))}
             <li>
               <button
-                className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple 
+                className={`flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple 
                 ${!getCanNextPage() && ""}`}
                 onClick={() => getCanNextPage() && nextPage()}
               >
@@ -489,7 +489,7 @@ const TableContainer = ({
             </li>
             <li>
               <button
-                className="flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
+                className="flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
                 onClick={() => setPageIndex(getPageOptions().length - 1)}
               >
                 Last{" "}

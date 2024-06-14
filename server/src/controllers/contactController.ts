@@ -101,3 +101,19 @@ export const deleteContact = async (
     res.status(500).json({ error: "Internal server error" });
   }
 };
+
+export const updateSeenProperty = async (req: Request, res: Response): Promise<void> => {
+  try {
+
+
+    const updatedContacts = await prisma.contact.updateMany({
+      data: {
+        seen: true
+      }
+    });
+    res.json(updatedContacts);
+  } catch (error) {
+    console.error("Error updating contact:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+} 
