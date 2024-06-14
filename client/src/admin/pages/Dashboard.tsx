@@ -28,18 +28,17 @@ const Dashboard = () => {
     return (
         <>
             <h1 className="header mb-3 dark:text-white">Dashboard</h1>
-            <div className="space-y-4 flex flex-col gap-1 md:gap-10">
-                <div className="grid lg:grid-cols-4 md:grid-cols-4 gap-2 h-28">
+            <div className="md:space-y-6 xs:space-y-32 flex flex-col gap-1 md:gap-10">
+                <div className="grid lg:grid-cols-4 md:grid-cols-4 sm:grid-cols-2 xs:grid-cols-2 gap-2 h-28">
                     <StatisticsCard text="Nombre total d'utilisateurs" title="utilisateurs" number={countData(users)} />
                     <StatisticsCard text="Nombre total des chambres" title="Chambres" number={countData(rooms)} />
                     <StatisticsCard text="Nombre des salles" title="salles" number={countData(salles)} />
                     <StatisticsCard text="Nombre total des réservations" title="Réservations" number={countData(reservations)} />
                 </div>
-                <div className="grid grid-cols-10 gap-2 h-full">
+                <div className="grid grid-cols-10 xs:grid-cols-2 gap-2 h-full">
                     <div className="col-span-6">
                         <LineChart title="Visiteurs" />
                     </div>
-
 
                     <div className="col-span-4">
                         <DonutChart

@@ -7,6 +7,7 @@ import NotificationDropdown from "./NotificationDropdown";
 import { useEffect, useState } from "react";
 import { iContactProps } from "../constants/Types";
 import Axios from "../../services/axios";
+import { MenuIcon } from "./icons/SVGIcons";
 
 const Topbar = ({ isDarkMode, toggleDarkMode }: any) => {
 
@@ -31,7 +32,10 @@ const Topbar = ({ isDarkMode, toggleDarkMode }: any) => {
   return (
     <>
       <div className=" dark:bg-darklight dark:border-darkborder flex gap-4 lg:z-10 items-center justify-between px-4 h-[60px] border-b border-black/10 detached-topbar relative">
-        <div className="flex items-center flex-1 gap-2 sm:gap-4">
+        <div className=" items-center flex-1 gap-2 sm:gap-4">
+          <div className="lg:hidden sm:flex">
+            <MenuIcon fontSize={30} className="dark:text-white"/>
+          </div>
         </div>
         <div className="flex items-center gap-4">
           {/* FullScreen */}

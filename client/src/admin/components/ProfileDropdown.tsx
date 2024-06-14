@@ -53,7 +53,7 @@ const ProfileDropdown = () => {
           onKeyDown={(e) => e.key === "Escape" && setDropdownOpen(false)}
         >
           <img
-            className="rounded-full h-7 w-7 ltr:xl:mr-2 rtl:xl:ml-2"
+            className="rounded-full h-7 w-7 ltr:xl:mr-2 rtl:xl:ml-2 mx-1"
             src={profile ? profile : user}
             alt="Header Avatar"
           />

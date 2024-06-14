@@ -71,7 +71,7 @@ const AdminLayout = () => {
                 {/* End Menu Sidebar Overlay */}
 
                 <div className="flex mx-auto main-container">
-                    <Sidebar isSidebarSize={isSidebarSize} />
+                    <Sidebar isSidebarSize={isSidebarSize}/>
                     <div className="flex-1 main-content">
                         {/* Topbar */}
                         <Topbar
