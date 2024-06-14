@@ -1,11 +1,69 @@
-import user from "../../../public/assets/images/user.png"
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { useState } from "react";
+import user from "../../../public/assets/images/profile.png"
+import useForm from "../../hooks/useForm";
 import loggedUser from "../../services/LoggedUser";
 import NavigateBack from "./NavigateBack";
+import bcrypt from 'bcryptjs';
+import { toast } from "react-toastify";
 
 
 const Settings = () => {
 
-    const { email, phoneNumber, CEN, username, profile, role } = loggedUser
+    const { email, phoneNumber, CEN, username, profile, role, password } = loggedUser
+
+    const initialState = {
+        username: username,
+        email: email,
+        cen: CEN,
+        phoneNumber: phoneNumber
+    }
+    
+    const [managePassword, setManagePassword] = useState({
+        currentPassword: "",
+        newPassword: "",
+        confirmation: "",
+    })
+
+    const handlePasswordChange = (name: string, value: string | number | boolean) => {
+        setManagePassword((prevInputs) => ({
+            ...prevInputs,
+            [name]: value,
+        }));
+
+    };
+
+    const handleSubmitPassword = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const { currentPassword, confirmation, newPassword } = managePassword;
+
+        // Check if password is defined
+        if (!password) {
+            toast.error("User password is not defined", { position: "top-right" });
+            return;
+        }
+
+        try {
+            const isPasswordValid = await bcrypt.compare(currentPassword, password);
+            if (isPasswordValid) {
+                if (newPassword === confirmation) {
+                    console.log("ur good to go");
+                    // Add code to update the password here
+                } else {
+                    toast.error("Le mot de passe doit correspondre", { position: "top-right" });
+                }
+            } else {
+                toast.error("Ce mot de passe est incorrect", { position: "top-right" });
+            }
+        } catch (error) {
+            toast.error("An error occurred while validating the password", { position: "top-right" });
+            console.error("Error comparing passwords", error);
+        }
+    };
+
+
+
+    const { inputs, handleChange, handleSubmit } = useForm(initialState, "", "PUT")
     return (
         <>
             <NavigateBack />
@@ -15,14 +73,15 @@ const Settings = () => {
                         <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
                             Détails de l'utilisateur
                         </h2>
-                        <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                        <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 md:grid-cols-2">
                             <div className="space-y-2 md:col-span-2">
-                                <label>Username</label>
+                                <label>Nom d'utilisateur</label>
                                 <input
                                     type="text"
-                                    className="form-input"
-                                    placeholder="username"
-                                    defaultValue={"username"}
+                                    className="form-input border"
+                                    placeholder="Nom d'utilisateur"
+                                    defaultValue={inputs['username']}
+                                    onChange={(e) => handleChange('username', e.target.value)}
                                     required
                                 />
                             </div>
@@ -30,52 +89,36 @@ const Settings = () => {
                                 <label>Email</label>
                                 <input
                                     type="email"
-                                    className="form-input"
+                                    className="form-input border"
                                     placeholder="Email"
-                                    defaultValue={"email"}
+                                    defaultValue={inputs['email']}
+                                    onChange={(e) => handleChange('email', e.target.value)}
                                     required
                                 />
                             </div>
                             <div className="space-y-2 md:col-span-2">
-                                <label>Profession</label>
+                                <label>Numéro de téléphone</label>
                                 <input
                                     type="text"
-                                    className="form-input"
-                                    placeholder="Profession"
-                                    defaultValue="Ui/Ux Designer"
+                                    className="form-input border"
+                                    placeholder="Numéro de téléphone"
+                                    defaultValue={inputs['phoneNumber']}
+                                    onChange={(e) => handleChange('phoneNumber', e.target.value)}
                                     required
                                 />
                             </div>
                             <div className="space-y-2 md:col-span-2">
-                                <label>Location</label>
+                                <label>CNE</label>
                                 <input
                                     type="text"
-                                    className="form-input"
-                                    placeholder="Location"
-                                    defaultValue="Canada"
+                                    className="form-input border"
+                                    placeholder="CNE"
+                                    defaultValue={inputs['cen']}
+                                    onChange={(e) => handleChange('cen', e.target.value)}
                                     required
                                 />
                             </div>
-                            <div className="space-y-2 md:col-span-2">
-                                <label>Website</label>
-                                <input
-                                    type="text"
-                                    className="form-input"
-                                    placeholder="Website"
-                                    defaultValue="websiteexample.com"
-                                    required
-                                />
-                            </div>
-                            <div className="space-y-2 md:col-span-2">
-                                <label>Phone</label>
-                                <input
-                                    type="phone"
-                                    className="form-input"
-                                    placeholder="Phone"
-                                    defaultValue={"phoneNumber"}
-                                    required
-                                />
-                            </div>
+
                             <div className="flex flex-wrap gap-3">
                                 <button
                                     type="button"
@@ -90,7 +133,7 @@ const Settings = () => {
                                     Discard
                                 </button>
                             </div>
-                        </div>
+                        </form>
                     </div>
 
 
@@ -101,7 +144,7 @@ const Settings = () => {
                         <div className="grid grid-cols-1 gap-4">
                             <div className="flex items-center gap-4">
                                 <img
-                                    src={user}
+                                    src={profile ? profile : user}
                                     className="w-16 h-16 rounded-full"
                                     alt=""
                                 />
@@ -110,7 +153,7 @@ const Settings = () => {
                                         {username}
                                     </h5>
                                     <p className="text-muted mt-0.5 dark:text-darkmuted">
-                                        { role }
+                                        {role}
                                     </p>
                                 </div>
                             </div>
@@ -161,17 +204,20 @@ const Settings = () => {
                         </div>
                     </div>
 
-                    <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
+                    <form
+                        className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                         <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
-                            Change Password
+                            Changer le mot de passe
                         </h2>
                         <div className="space-y-4">
                             <div className="space-y-2">
                                 <label>Current Password</label>
                                 <input
                                     type="password"
-                                    className="form-input"
+                                    className="form-input border"
                                     placeholder="Current Password"
+                                    value={managePassword.currentPassword}
+                                    onChange={(e) => handlePasswordChange('currentPassword', e.target.value)}
                                     required
                                 />
                             </div>
@@ -179,8 +225,10 @@ const Settings = () => {
                                 <label>New Password</label>
                                 <input
                                     type="password"
-                                    className="form-input"
+                                    className="form-input border"
                                     placeholder="New Password"
+                                    value={managePassword.newPassword}
+                                    onChange={(e) => handlePasswordChange('newPassword', e.target.value)}
                                     required
                                 />
                             </div>
@@ -188,14 +236,17 @@ const Settings = () => {
                                 <label>Confirm Password</label>
                                 <input
                                     type="password"
-                                    className="form-input"
+                                    className="form-input border"
                                     placeholder="Confirm Password"
+                                    value={managePassword.confirmation}
+                                    onChange={(e) => handlePasswordChange('confirmation', e.target.value)}
                                     required
                                 />
                             </div>
                             <div className="flex flex-wrap gap-3">
                                 <button
-                                    type="button"
+                                    onClick={handleSubmitPassword}
+                                    type="submit"
                                     className="btn bg-purple border border-purple rounded-md text-white transition-all duration-300 hover:bg-purple/[0.85] hover:border-purple/[0.85]"
                                 >
                                     Save
@@ -208,7 +259,7 @@ const Settings = () => {
                                 </button>
                             </div>
                         </div>
-                    </div>
+                    </form>
 
 
                     <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
