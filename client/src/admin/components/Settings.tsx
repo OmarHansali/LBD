@@ -6,24 +6,27 @@ import loggedUser from "../../services/LoggedUser";
 import NavigateBack from "./NavigateBack";
 import bcrypt from 'bcryptjs';
 import { toast } from "react-toastify";
+import Axios from "../../services/axios";
 
 
 const Settings = () => {
 
-    const { email, phoneNumber, CEN, username, profile, role, password } = loggedUser
+    const { id, email, phoneNumber, CEN, username, profile, role, password } = loggedUser
 
     const initialState = {
         username: username,
         email: email,
-        cen: CEN,
+        CEN: CEN,
         phoneNumber: phoneNumber
     }
-    
+
     const [managePassword, setManagePassword] = useState({
         currentPassword: "",
         newPassword: "",
         confirmation: "",
     })
+
+    const apiKey = `/user/${id}`
 
     const handlePasswordChange = (name: string, value: string | number | boolean) => {
         setManagePassword((prevInputs) => ({
@@ -32,6 +35,9 @@ const Settings = () => {
         }));
 
     };
+
+    const successMessageInfo = "Le profile a été modifié avec succès"
+    const errorMessageInfo = "Échec de la modification de le profile"
 
     const handleSubmitPassword = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -47,8 +53,20 @@ const Settings = () => {
             const isPasswordValid = await bcrypt.compare(currentPassword, password);
             if (isPasswordValid) {
                 if (newPassword === confirmation) {
-                    console.log("ur good to go");
-                    // Add code to update the password here
+                    const response = await Axios.put(apiKey, {
+                        password: newPassword
+                    })
+
+                    if (response.status == 200) {
+                        toast.success("Le mot de passe a été modifié avec succès", { position: "top-right" });
+                        localStorage.removeItem('user')
+                        const newUser = JSON.stringify((response.data))
+                        localStorage.setItem('user', newUser)
+                        setTimeout(() => {
+                            window.location.reload()
+                        }, 900)
+                    }
+
                 } else {
                     toast.error("Le mot de passe doit correspondre", { position: "top-right" });
                 }
@@ -63,7 +81,19 @@ const Settings = () => {
 
 
 
-    const { inputs, handleChange, handleSubmit } = useForm(initialState, "", "PUT")
+    const { inputs, handleChange, handleSubmit, data } = useForm(initialState, apiKey, "PUT", successMessageInfo, errorMessageInfo)
+
+
+    if (data && data.status == 200) {
+        localStorage.removeItem('user')
+        const newUser = JSON.stringify((data.data))
+        localStorage.setItem('user', newUser)
+        setTimeout(() => {
+            window.location.reload()
+        }, 900)
+    }
+
+
     return (
         <>
             <NavigateBack />
@@ -113,15 +143,15 @@ const Settings = () => {
                                     type="text"
                                     className="form-input border"
                                     placeholder="CNE"
-                                    defaultValue={inputs['cen']}
-                                    onChange={(e) => handleChange('cen', e.target.value)}
+                                    defaultValue={inputs['CEN']}
+                                    onChange={(e) => handleChange('CEN', e.target.value)}
                                     required
                                 />
                             </div>
 
                             <div className="flex flex-wrap gap-3">
                                 <button
-                                    type="button"
+                                    type="submit"
                                     className="btn bg-purple border border-purple rounded-md text-white transition-all duration-300 hover:bg-purple/[0.85] hover:border-purple/[0.85]"
                                 >
                                     Save
@@ -205,7 +235,7 @@ const Settings = () => {
                     </div>
 
                     <form
-                        onSubmit={(e)=>handleSubmitPassword(e)}
+                        onSubmit={(e) => handleSubmitPassword(e)}
                         className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                         <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
                             Changer le mot de passe

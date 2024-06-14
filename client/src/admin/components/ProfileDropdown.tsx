@@ -95,7 +95,7 @@ const ProfileDropdown = () => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/edit-profile" className="flex items-center gap-2">
+            <Link to="/admin/modifier-profile" className="flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
