@@ -205,6 +205,7 @@ const Settings = () => {
                     </div>
 
                     <form
+                        onSubmit={(e)=>handleSubmitPassword(e)}
                         className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
                         <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
                             Changer le mot de passe
@@ -245,7 +246,7 @@ const Settings = () => {
                             </div>
                             <div className="flex flex-wrap gap-3">
                                 <button
-                                    onClick={handleSubmitPassword}
+                                    // onClick={handleSubmitPassword}
                                     type="submit"
                                     className="btn bg-purple border border-purple rounded-md text-white transition-all duration-300 hover:bg-purple/[0.85] hover:border-purple/[0.85]"
                                 >
