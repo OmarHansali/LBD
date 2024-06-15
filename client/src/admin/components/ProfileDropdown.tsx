@@ -53,7 +53,7 @@ const ProfileDropdown = () => {
           onKeyDown={(e) => e.key === "Escape" && setDropdownOpen(false)}
         >
           <img
-            className="rounded-full h-7 w-7 ltr:xl:mr-2 rtl:xl:ml-2"
+            className="rounded-full h-7 w-7 ltr:xl:mr-2 rtl:xl:ml-2 mx-1"
             src={profile ? profile : user}
             alt="Header Avatar"
           />
@@ -95,7 +95,7 @@ const ProfileDropdown = () => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/edit-profile" className="flex items-center gap-2">
+            <Link to="/admin/modifier-profile" className="flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"

@@ -41,6 +41,7 @@ export const login = async (req: Request, res: Response): Promise<void> => {
             user: {
                 id: user.id,
                 username: user.username,
+                password: user.password,
                 role: user.role,
                 email: user.email,
                 phoneNumber: user.phoneNumber,

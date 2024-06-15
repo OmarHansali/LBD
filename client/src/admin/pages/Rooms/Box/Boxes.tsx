@@ -78,7 +78,7 @@ const Boxes = () => {
 
     return (
         <>
-            <h1 className="header capitalize">Gérer les boxes</h1>
+            <h1 className="header capitalize dark:text-white">Gérer les boxes</h1>
             <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}

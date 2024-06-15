@@ -67,3 +67,13 @@ model Materiel {
   salles       Salle[]   @relation("SalleMateriel")
 }
 
+// Contact model
+model Contact {
+  id      Int      @id @unique(map: "Contact_id_key") @default(autoincrement())
+  name    String
+  email   String
+  object  String
+  body    String
+  seen    Boolean @default(false)
+  createdAt   DateTime? @default(now())
+}

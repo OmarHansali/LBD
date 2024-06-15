@@ -1,37 +1,50 @@
 import { useState } from "react";
 import { toast } from "react-toastify";
+import Axios from "../../../services/axios";
+// import { AxiosResponse } from "axios";
 
 const ContactForm = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [age, setAge] = useState("");
-  const [number, setNumber] = useState("");
+  const [object, setObject] = useState("");
   const [msg, setMsg] = useState("");
-  const handleFormSubmit = (e: any) => {
+
+  const handleFormSubmit = async (e: any) => {
     e.preventDefault();
 
-    if (!name && !email && !age && !number && !msg) {
+    if (!name && !email && !object && !msg) {
       toast.error("Veuillez remplir tous les champs.", { position: "top-right" });
     } else if (!email) {
       toast.warning("Veuillez fournir une adresse e-mail.", { position: "top-right" });
     } else if (!name) {
       toast.warning("Veuillez fournir un nom d'utilisateur.", { position: "top-right" });
-    } else if (!age) {
-      toast.warning("Veuillez fournir l'âge.", { position: "top-right" });
-    } else if (!number) {
-      toast.warning("Veuillez fournir un numéro d'utilisateur.", { position: "top-right" });
+    } else if (!object) {
+      toast.warning("Veuillez fournir un objet.", { position: "top-right" });
     } else if (!msg) {
-      toast.warning("Veuillez fournir un message utilisateur.", { position: "top-right" });
+      toast.warning("Veuillez fournir un message.", { position: "top-right" });
     } else {
-      // If the form is successfully submitted, show a success toast
-      toast.success("Informations soumises avec succès !", { position: "top-right" });
-      setName("");
-      setEmail("");
-      setAge("");
-      setNumber("");
-      setMsg("");
+      try {
+        const response = await Axios.post("/contact", {
+          name,
+          email,
+          object,
+          body: msg,
+          seen: false,
+        });
+
+        if (response.status === 201) {
+          toast.success("Informations soumises avec succès !", { position: "top-right" });
+          setName("");
+          setEmail("");
+          setObject("");
+          setMsg("");
+        }
+      } catch (error) {
+        toast.error("Erreur lors de la soumission des informations.", { position: "top-right" });
+      }
     }
   };
+
   return (
     <form className="tl-7-contact-form" onSubmit={handleFormSubmit}>
       <div className="row g-3 g-md-4">
@@ -57,25 +70,14 @@ const ContactForm = () => {
           />
         </div>
 
-        <div className="col-6 col-xxs-12">
+        <div className="col-12 col-xxs-12">
           <input
-            type="number"
-            name="stud-age"
-            id="tl-7-stud-age"
-            placeholder="Votre Âge"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          />
-        </div>
-
-        <div className="col-6 col-xxs-12">
-          <input
-            type="tel"
-            name="stud-number"
-            id="tl-7-stud-namer"
-            placeholder="Votre Numéro"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
+            type="text"
+            name="stud-object"
+            id="tl-7-stud-object"
+            placeholder="Objet"
+            value={object}
+            onChange={(e) => setObject(e.target.value)}
           />
         </div>
 
