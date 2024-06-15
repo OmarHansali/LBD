@@ -94,7 +94,7 @@ const Stepper = () => {
 
       // Construct the reservation object
       const reservation = {
-        userId: 3,
+        userId: 1,
         salleId: selectedClass,
         dateReservation: datetime,
         heureReservation: (time? time.getHours() : '00') + ":" + (time? time.getMinutes() : '00'),
