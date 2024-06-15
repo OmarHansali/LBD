@@ -27,7 +27,11 @@ export const createMateriel = async (req: Request, res: Response)=> {
 // Read Materiels
 export const getMateriels = async (req: Request, res: Response): Promise<void> => {
     try {
-        const materiels = await prisma.materiel.findMany();
+        const materiels = await prisma.materiel.findMany({
+          orderBy: {
+            id: "desc",
+          },
+        });
         res.json(materiels);
     } catch (error) {
         console.error('Error getting materiels:', error);

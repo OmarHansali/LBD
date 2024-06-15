@@ -32,7 +32,11 @@ export const getContacts = async (
   res: Response
 ): Promise<void> => {
   try {
-    const contacts = await prisma.contact.findMany();
+    const contacts = await prisma.contact.findMany({
+      orderBy: {
+        id: "desc",
+      },
+    });
     res.json(contacts);
   } catch (error) {
     console.error("Error getting contacts:", error);

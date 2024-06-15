@@ -39,27 +39,30 @@ export const createReservation = async (req: Request, res: Response): Promise<vo
 export const getReservations = async (req: Request, res: Response): Promise<void> => {
     try {
         const reservations = await prisma.reservation.findMany({
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        username: true,
-                        role: true,
-                        email: true,
-                        phoneNumber: true,
-                        CEN: true,
-                        profile: true,
-                    },
-                },
-                salle: {
-                    select: {
-                        id: true,
-                        number: true,
-                        type: true,
-                        capacity: true,
-                    },
-                },
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                role: true,
+                email: true,
+                phoneNumber: true,
+                CEN: true,
+                profile: true,
+              },
             },
+            salle: {
+              select: {
+                id: true,
+                number: true,
+                type: true,
+                capacity: true,
+              },
+            },
+          },
+          orderBy: {
+            id: "desc",
+          },
         });
         res.json(reservations);
     } catch (error) {

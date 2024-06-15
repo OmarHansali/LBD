@@ -41,9 +41,12 @@ export const createSalle = async (req: Request, res: Response) => {
 export const getSalles = async (req: Request, res: Response): Promise<void> => {
     try {
         const salles = await prisma.salle.findMany({
-            include: {
-                materiels: true,
-            },
+          include: {
+            materiels: true,
+          },
+          orderBy: {
+            id: "desc",
+          },
         });
         res.json(salles);
     } catch (error) {
