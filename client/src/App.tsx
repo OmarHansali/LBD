@@ -7,7 +7,8 @@ import ContactPage1 from "./client/pages/ContactPage1";
 
 import LoginPage from "./client/pages/LoginPage";
 
-import ReservationPage from "./client/pages/Reservation";
+import ReserveCategoryPage from "./client/pages/Reservation/ReserveCategory";
+import ReserveClassPage from "./client/pages/Reservation/ReserverClass";
 
 import ResourcePage from "./client/pages/ResourcePage";
 
@@ -57,7 +58,8 @@ function App() {
 
           <Route path="/login" element={<LoginPage />} />
 
-          <Route path="/reservation" element={<ReservationPage />} />
+          <Route path="/reservation" element={<ReserveCategoryPage />} />
+          <Route path="/reserverClass" element={<ReserveClassPage />} />
 
           <Route path="/resource" element={<ResourcePage />} />
 
