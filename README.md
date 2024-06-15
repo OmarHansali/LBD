@@ -1,212 +1,95 @@
-Here's the updated README.md file with the provided information:
+# Harmonia
+
+## Project Overview
+
+This repository contains two main components:
+
+1. **Client Application (`harmonia-react`)**: A React application using Vite for development, TypeScript for type safety, Tailwind CSS for styling, and several other dependencies to enhance functionality.
+2. **Server Application (`server`)**: A Node.js server using Express.js, Prisma for database management, and several other dependencies for handling authentication, environment variables, and more.
+
+## Prerequisites
+
+Before running the project, ensure you have the following installed:
+
+- **Node.js**: Version 14 or higher
+- **npm**: Version 6 or higher (comes with Node.js)
+- **Vite**: For the client application
+- **Prisma CLI**: For database migrations
+
+## Getting Started
+
+### 1. Clone the Repository
+
+```sh
+git clone https://github.com/OmarHansali/LBD.git
+cd LBD
+```
+
+### 2. Install Dependencies
+
+#### Client Application (`harmonia-react`)
+
+```sh
+cd client
+npm install
+```
+
+#### Server Application (`server`)
+
+```sh
+cd server
+npm install
+```
+
+### 3. Setup Environment Variables
+
+Create a `.env` file in the `server` directory, and add the required environment variables:
+
+```
+# .env file for server
+DATABASE_URL="mysql://root:root@localhost:3306/lbd"
+JWT_SECRET="test"
+PORT=5000
+SMTP_USER="composer.require.phpmailer@gmail.com"
+SMTP_PASS='vbaj ntsz sqme uafx'
+```
+
+### 4. Run Database Migrations
+
+```sh
+cd server
+npm run migrate
+```
+
+### 5. Running the Applications
+
+#### Client Application (`harmonia-react`)
+
+```sh
+cd client
+npm run dev
+```
+
+#### Server Application (`server`)
+
+```sh
+cd server
+npm run dev
+```
+
+### 6. Access the Applications
+
+- The **client application** will be running at `http://localhost:5173` (default Vite port).
+- The **server application** will be running at `http://localhost:5000`.
+
+## Troubleshooting
+
+If you encounter any issues:
+
+1. Ensure all dependencies are installed correctly.
+2. Check the `.env` files for any missing or incorrect environment variables.
+3. Refer to the documentation of the respective libraries and frameworks used.
 
 ---
 
-# Project Name API Documentation
-
-This document provides information about the routes available in the Project Name API.
-
-## Base URL
-
-The base URL for all API requests is `http://localhost:5000`.
-
-## Authentication
-
-The following routes are available for user authentication:
-
-- `POST /auth/login`: Log in with username and password to obtain an authentication token.
-
-### Request
-
-```json
-{
-    "username": "example_user",
-    "password": "example_password"
-}
-```
-
-### Response
-
-```json
-{
-    "token": "JWT_TOKEN",
-    "user": {
-        "id": 1,
-        "username": "example_user",
-        "role": "user",
-        "email": "example@example.com",
-        "phoneNumber": "1234567890",
-        "CEN": null,
-        "profile": null,
-        "createdAt": "2024-06-12T14:56:00.323Z",
-        "updatedAt": null
-    }
-}
-```
-
-## User Routes
-
-The following routes are available for managing users:
-
-- `GET /user`: Get all users.
-- `GET /user/:id`: Get user by ID.
-- `POST /user`: Create a new user.
-- `PUT /user/:id`: Update user by ID.
-- `DELETE /user/:id`: Delete user by ID.
-
-### Request (POST /user)
-
-```json
-{
-    "username": "new_user",
-    "password": "new_password",
-    "role": "user",
-    "email": "new_user@example.com",
-    "phoneNumber": "1234567890"
-}
-```
-
-### Response (GET /user)
-
-```json
-[
-    {
-        "id": 1,
-        "username": "example_user",
-        "role": "user",
-        "email": "example@example.com",
-        "phoneNumber": "1234567890",
-        "CEN": null,
-        "profile": null,
-        "createdAt": "2024-06-12T14:56:00.323Z",
-        "updatedAt": null
-    },
-    {
-        "id": 2,
-        "username": "another_user",
-        "role": "user",
-        "email": "another@example.com",
-        "phoneNumber": "9876543210",
-        "CEN": null,
-        "profile": null,
-        "createdAt": "2024-06-12T15:00:00.323Z",
-        "updatedAt": null
-    }
-]
-```
-
-## Salle Routes
-
-- `POST /salle`: Create a new salle.
-- `GET /salle`: Get all salles.
-
-### Request (POST /salle)
-
-```json
-{
-  "number": "1",
-  "type": "fablab",
-  "capacity": 1,
-  "availability": false
-}
-```
-
-### Response (GET /salle)
-
-```json
-[
-    {
-        "id": 1,
-        "number": "1",
-        "type": "fablab",
-        "capacity": 1,
-        "availability": false
-    }
-]
-```
-
-## Materiel Routes
-
-- `POST /materiel`: Create a new materiel.
-- `GET /materiel`: Get all materiels.
-
-### Request (POST /materiel)
-
-```json
-{
-    "name": "Projector",
-    "quantity": 1,
-    "availability": true,
-    "salleIds": [1, 2, 3]
-}
-```
-
-### Response (GET /materiel)
-
-```json
-[
-    {
-        "id": 1,
-        "name": "Projector",
-        "quantity": 1,
-        "availability": true,
-        "salles": [
-            {
-                "id": 1,
-                "number": "1",
-                "type": "fablab",
-                "capacity": 1,
-                "availability": false
-            }
-        ]
-    }
-]
-```
-
-## Reservation Routes
-
-- `POST /reservation`: Create a new reservation.
-- `GET /reservation`: Get all reservations.
-
-### Request (POST /reservation)
-
-```json
-{
-  "userId": 1,
-  "salleId": 2,
-  "dateReservation": "2024-06-12T14:00:00.000Z",
-  "heureReservation": "14:00",
-  "duration": 5,
-  "code": 1234
-}
-```
-
-### Response (GET /reservation)
-
-```json
-[
-    {
-        "id": 2,
-        "userId": 1,
-        "salleId": 2,
-        "dateReservation": "2024-06-12T14:00:00.000Z",
-        "heureReservation": "14:00",
-        "duration": 5,
-        "code": 1234,
-        "user": {
-            "id": 1,
-            "username": "user",
-            "role": "user",
-            "email": "updatedemail@example.com",
-            "phoneNumber": "9876543210",
-            "CEN": null,
-            "profile": null
-        },
-        "salle": {
-            "id": 2,
-            "number": "1",
-            "type": "box",
-            "capacity": 1
-        }
-    }
-]
+**Note**: Replace `your-database-url`, `your-jwt-secret`, `your-email@example.com`, and `your-email-password` in the `.env` example with actual values required for your project.

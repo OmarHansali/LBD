@@ -2,11 +2,21 @@ import React from "react";
 import NavSection from "../navigation/NavSection";
 import { useTalimContext } from "../../context/TalimContext";
 import { Link } from "react-router-dom";
+import loggedUser from "../../../services/LoggedUser";
+
 interface HeaderProps {
   style: string;
   logo: string;
 }
 const HeaderSection7: React.FC<HeaderProps> = ({ style, logo }) => {
+
+  const { role } = loggedUser || {};
+
+  const handleLogout = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    window.location.href = '/'; 
+  };
   const { isHeaderFixed, handleSidebarOpen } = useTalimContext();
   return (
     <div className={`tl-4-header ${style}`}>
@@ -101,10 +111,27 @@ const HeaderSection7: React.FC<HeaderProps> = ({ style, logo }) => {
                     <i className="fa-light fa-magnifying-glass"></i>
                   </button>
                 </form>
-                <Link to="/login" className="tl-def-btn tl-4-def-btn">
-                  <i className="fa-light fa-user"></i>
-                  Login
-                </Link>
+                {!role && (
+                  <Link to="/login" className="tl-def-btn tl-4-def-btn">
+                    <i className="fa-light fa-user"></i>
+                    Login
+                  </Link>
+                )}
+                {role === 'admin' && (
+                  <Link to="/admin" className="tl-def-btn tl-4-def-btn">
+                    <i className="fa-light fa-user"></i>
+                    Admin
+                  </Link>
+                )}
+                {role === 'user' && (
+                  <button
+                    className="tl-def-btn tl-4-def-btn"
+                    onClick={handleLogout}
+                  >
+                    <i className="fa-light fa-user"></i>
+                    Logout
+                  </button>
+                )}
               </div>
             </div>
           </div>

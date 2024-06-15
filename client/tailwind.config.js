@@ -7,7 +7,12 @@ export default {
   ],
   darkMode: "class",
   theme: {
-    extend: {},
+    extend: {
+      screens: {
+        xs: "50px",
+        // md: "500px"
+      }
+    },
   },
   plugins: [
     require('@tailwindcss/forms')

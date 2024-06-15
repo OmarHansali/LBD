@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
+import LoadingPage from "../../../components/LoadingPage";
 import TableContainer from "../../../components/TableContainer";
-import { sallesData } from "../../../data/Data";
+import { iSalleType } from "../../../constants/Types";
+import Axios from "../../../../services/axios";
 
 
 const Fablabs = () => {
 
-    const onlyFablabs = sallesData.filter((salle) => salle.type == "fablab")
     const columns = [
         {
             header: "ID",
@@ -14,67 +16,80 @@ const Fablabs = () => {
             enableSorting: true,
         },
         {
-            header: "Type",
-            accessorKey: "type",
+            header: "Materiels",
+            accessorKey: "materielNames",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Number",
+            header: "№ chambre",
             accessorKey: "number",
             enableColumnFilter: false,
             enableSorting: true,
         },
-        // {
-        //     header: "Material",
-        //     accessorKey: "material",
-        //     enableColumnFilter: false,
-        //     enableSorting: true,
-        // },
         {
-            header: "Capacity",
+            header: "Heure de départ",
+            accessorKey: "startHour",
+            enableColumnFilter: false,
+            enableSorting: true,
+        },
+        {
+            header: "Heure de fin",
+            accessorKey: "endHour",
+            enableColumnFilter: false,
+            enableSorting: true,
+        },
+
+        {
+            header: "Capacité",
             accessorKey: "capacity",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Availability",
-            accessorKey: "availability",
+            header: "Disponibilité",
+            accessorKey: "dispo",
             enableColumnFilter: false,
             enableSorting: true,
         },
     ];
+    const [fablabs, setFablabs] = useState<iSalleType[]>([])
+    const [isLoading, setIsLoading] = useState(false)
 
-    // const [isLoading, setIsLoading] = useState(false)
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true)
+            const response = await Axios.get("/salle")
+            const mappedData = response.data.map((salle: any) => {
+                const materielNames = salle.materiels.map((materiel: any) => materiel.name).join(", ");
+                return {
+                    ...salle,
+                    materielNames,
+                    dispo: salle.availability == true ? "Oui" : "Non"
+                };
+            });
+            setFablabs(mappedData.filter((salle: iSalleType) => salle.type == "fablab"))
+        }
 
-    // useEffect(() => {
-    //     // setIsLoading(true)
-    //     fetch('https://fakestoreapi.com/products/1')
-    //         .then(res => res.json())
-    //         .then(json => {
-    //             console.log(json)
-    //             // setIsLoading(false)
-    //             toast.success('Here is your toast.')
-    //         }).catch((err: any) => {
-    //             toast.error(err)
-    //         })
-    // }, [])
+        fetchData()
+        setIsLoading(false)
+    }, [])
 
     return (
         <>
-            <h1 className="header capitalize">Gérer les fablabs</h1>
-                {/* <LoadingPage isLoading={isLoading} /> */}
-                <TableContainer
-                    columns={columns}
-                    data={onlyFablabs}
-                    isGlobalFilter={true}
-                    customPageSize={5}
-                    isSelect={true}
-                    isPagination={true}
-                    divclassName="overflow-auto"
-                    tableclassName="min-w-[640px] w-full"
-                    page="fablab"
-                />
+            <h1 className="header capitalize dark:text-white">Gérer les fablabs</h1>
+            <LoadingPage isLoading={isLoading} />
+            <TableContainer
+                columns={columns}
+                data={fablabs}
+                isGlobalFilter={true}
+                customPageSize={5}
+                isSelect={true}
+                isPagination={true}
+                divclassName="overflow-auto"
+                tableclassName="min-w-[640px] w-full"
+                page="fablab"
+            />
         </>
     );
 };

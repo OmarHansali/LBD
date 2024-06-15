@@ -2,6 +2,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import ReactApexChart from "react-apexcharts";
 import { ApexOptions } from "apexcharts";
+import LoadingPage from "./LoadingPage";
 
 export const DonutChart = ({ seriesValue, labels, title }: any) => {
     const options: ApexOptions = {
@@ -36,13 +37,18 @@ export const DonutChart = ({ seriesValue, labels, title }: any) => {
     return (
         <div className="border rounded">
             <h1 className="header p-3">{title}</h1>
-            <ReactApexChart
-                dir="ltr"
-                options={options}
-                series={series}
-                type="donut"
-                height={320}
-            />
+            {
+                labels && series ? (
+                    <ReactApexChart
+                        dir="ltr"
+                        options={options}
+                        series={series}
+                        type="donut"
+                        height={320}
+                    />
+
+                ) : (<LoadingPage isLoading={true}/>)
+            }
         </div>
     );
 };
@@ -92,7 +98,7 @@ export const DonutChart = ({ seriesValue, labels, title }: any) => {
 // };
 
 
-export const LineChart = ({title}: any) => {
+export const LineChart = ({ title }: any) => {
     const series = [
         {
             name: "Current Week",

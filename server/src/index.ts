@@ -5,6 +5,7 @@ import userRoute from './routes/userRoute';
 import salleRoute from './routes/salleRoute';
 import reservationRoute from './routes/reservationRoute';
 import materielRoute from './routes/materielRoute';
+import contactRoute from "./routes/contactRoute";
 import dotenv from 'dotenv';
 import { errorHandler } from './middleware/errorHandler';
 
@@ -33,6 +34,7 @@ app.use('/materiel', materielRoute);
 
 app.use('/reservation', reservationRoute);
 
+app.use("/contact", contactRoute);
 
 // Error handling middleware
 app.use(errorHandler);

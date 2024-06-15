@@ -29,7 +29,7 @@ model Reservation {
   id              Int      @id @unique(map: "Reservation_id_key") @default(autoincrement())
   userId          Int?
   salleId         Int?
-  dateReservation DateTime
+  dateReservation String
   heureReservation String
   duration        Int
   code            Int      
@@ -46,6 +46,8 @@ model Salle {
   type         String
   capacity     Int
   availability Boolean
+  startHour    String
+  endHour      String
 
   // Define relation with Reservation
   reservations Reservation[]
@@ -65,3 +67,13 @@ model Materiel {
   salles       Salle[]   @relation("SalleMateriel")
 }
 
+// Contact model
+model Contact {
+  id      Int      @id @unique(map: "Contact_id_key") @default(autoincrement())
+  name    String
+  email   String
+  object  String
+  body    String
+  seen    Boolean @default(false)
+  createdAt   DateTime? @default(now())
+}

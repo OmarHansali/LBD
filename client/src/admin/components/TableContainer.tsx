@@ -15,6 +15,7 @@ import {
 } from "@tanstack/react-table";
 import { rankItem } from "@tanstack/match-sorter-utils";
 import Modal from "./Modal/Index";
+import useForm from "../../hooks/useForm";
 
 // Column Filter
 const Filter = ({
@@ -93,7 +94,7 @@ interface TableContainerProps {
   isPagination: boolean;
   PaginationClassName?: string;
   SearchPlaceholder?: string;
-  page: string
+  page: string,
 }
 
 const TableContainer = ({
@@ -112,7 +113,7 @@ const TableContainer = ({
   customPageSize,
   isGlobalFilter,
   PaginationClassName,
-  page
+  page,
 
 }: TableContainerProps) => {
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -166,8 +167,9 @@ const TableContainer = ({
 
   const navigate = useNavigate()
   // modal
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [deleteApiKey, setDeleteApiKey] = useState<string>("")
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [deleteApiKey, setDeleteApiKey] = useState<string>("")
+
 
   let createAction
 
@@ -231,44 +233,51 @@ const TableContainer = ({
     }
   };
 
+  // let apiKey = ""
+
   const handleDeleteClick = (row: any) => {
     setIsModalOpen(true);
     switch (page) {
-      case "user":
-        console.log("Delete row in users:", row);
+      case "utilisateur":
+        setDeleteApiKey(`/user/${row.id}`)
+        break;
+
+      case "matérielle":
+        setDeleteApiKey(`/materiel/${row.id}`)
         break;
 
       case "salle":
-        console.log("Delete row in salles:", row);
+        setDeleteApiKey(`/salle/${row.id}`)
         break;
 
       case "box":
-        console.log("Delete row in box:", row);
+        setDeleteApiKey(`/salle/${row.id}`)
         break;
 
       case "fablab":
-        console.log("Delete row in fablab:", row);
+        setDeleteApiKey(`/salle/${row.id}`)
         break;
 
       case "reservation":
-        console.log("Delete row in reservations:", row);
+        setDeleteApiKey(`/reservation/${row.id}`)
         break;
 
     }
   };
 
-  const deletProcess = () => {
-    // axios
-    setIsModalOpen(true)
-    console.log("start deleting");
+  const successMessage = `${page} supprimé avec succès`
 
+  const { handleSubmit } = useForm({}, deleteApiKey, "delete", successMessage)
+
+  const onContinue = async () => {
+    await handleSubmit(null)
+    window.location.reload()
   }
 
 
   return (
     <Fragment>
       {/* Modal */}
-
       {
         isModalOpen &&
         <Modal
@@ -277,9 +286,8 @@ const TableContainer = ({
           content={`Are you sure that you to delete this ${page} ?`}
           onDiscard={() => {
             setIsModalOpen(false)
-            // setDeleteApiKey("")
           }}
-          onSubmit={deletProcess}
+          onSubmit={onContinue}
           sizeClass="relative w-full max-w-lg p-0 my-1 overflow-hidden bg-white border rounded-lg border-black/10 dark:bg-darklight dark:border-darkborder"
           spaceClass="py-4 px-5 space-y-4"
         />
@@ -291,7 +299,7 @@ const TableContainer = ({
         <div className="flex items-center gap-2">
           {isSelect && (
             <div className="flex items-center space-x-2 rtl:space-x-reverse">
-              <p>Afficher</p>
+              <p className="dark:text-white">Afficher</p>
               <select
                 className="form-select !w-20"
                 onClick={(event: any) => setPageSize(event.target.value)}
@@ -438,10 +446,10 @@ const TableContainer = ({
       {/* pagination */}
       {isPagination && (
         <div className={`${PaginationClassName}`}>
-          <ul className="inline-flex items-center gap-1">
+          <ul className="inline-flex items-center gap-1 ">
             <li>
               <button
-                className="flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
+                className="flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
                 onClick={() => setPageIndex(0)}
               >
                 First{" "}
@@ -449,7 +457,7 @@ const TableContainer = ({
             </li>
             <li>
               <button
-                className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${!getCanPreviousPage() && "disabled"
+                className={`flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${!getCanPreviousPage() && "disabled"
                   }`}
                 onClick={previousPage}
               >
@@ -460,7 +468,7 @@ const TableContainer = ({
               <React.Fragment key={key}>
                 <li>
                   <button
-                    className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${getState().pagination.pageIndex === item &&
+                    className={`flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple ${getState().pagination.pageIndex === item &&
                       "text-purple border-purple dark:text-purple dark:border-purple"
                       }`}
                     onClick={() => setPageIndex(item)}
@@ -472,7 +480,7 @@ const TableContainer = ({
             ))}
             <li>
               <button
-                className={`flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple 
+                className={`flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple 
                 ${!getCanNextPage() && ""}`}
                 onClick={() => getCanNextPage() && nextPage()}
               >
@@ -481,7 +489,7 @@ const TableContainer = ({
             </li>
             <li>
               <button
-                className="flex justify-center px-3.5 py-2 rounded transition text-muted hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
+                className="flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
                 onClick={() => setPageIndex(getPageOptions().length - 1)}
               >
                 Last{" "}

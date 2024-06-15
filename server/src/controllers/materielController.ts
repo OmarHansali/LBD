@@ -6,22 +6,13 @@ const prisma = new PrismaClient();
 // Create Materiel
 export const createMateriel = async (req: Request, res: Response)=> {
     try {
-        const { name, quantity, availability, salleIds } = req.body;
+        const { name, quantity, availability } = req.body;
 
-        // Validate salleIds
-        if (!Array.isArray(salleIds) || salleIds.length === 0) {
-            return res.status(400).json({ error: 'salleIds must be a non-empty array' });
-        }
-
-        // Create the materiel with associated salles
         const newMateriel = await prisma.materiel.create({
             data: {
                 name,
                 quantity,
-                availability,
-                salles: {
-                    connect: salleIds.map((salleId: number) => ({ id: salleId })),
-                },
+                availability: availability == "yes" ? true : false,
             },
         });
 
@@ -36,9 +27,7 @@ export const createMateriel = async (req: Request, res: Response)=> {
 // Read Materiels
 export const getMateriels = async (req: Request, res: Response): Promise<void> => {
     try {
-        const materiels = await prisma.materiel.findMany({
-            include: { salles: true },
-        });
+        const materiels = await prisma.materiel.findMany();
         res.json(materiels);
     } catch (error) {
         console.error('Error getting materiels:', error);
@@ -52,7 +41,6 @@ export const getMaterielById = async (req: Request, res: Response): Promise<void
         const materielId = parseInt(req.params.id);
         const materiel = await prisma.materiel.findUnique({
             where: { id: materielId },
-            include: { salles: true },
         });
         if (!materiel) {
             res.status(404).json({ error: 'Materiel not found' });
@@ -69,12 +57,7 @@ export const getMaterielById = async (req: Request, res: Response): Promise<void
 export const updateMateriel = async (req: Request, res: Response) => {
     try {
         const materielId = parseInt(req.params.id);
-        const { name, quantity, availability, salleIds } = req.body;
-
-        // Validate salleIds
-        if (!Array.isArray(salleIds) || salleIds.length === 0) {
-            return res.status(400).json({ error: 'salleIds must be a non-empty array' });
-        }
+        const { name, quantity, availability } = req.body;
 
         const updatedMateriel = await prisma.materiel.update({
             where: { id: materielId },
@@ -82,9 +65,6 @@ export const updateMateriel = async (req: Request, res: Response) => {
                 name,
                 quantity,
                 availability,
-                salles: {
-                    set: salleIds.map((salleId: number) => ({ id: salleId })),
-                },
             },
         });
 

@@ -1,22 +1,50 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
-import { contactsData } from "../data/Data";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { iContactProps } from "../constants/Types";
+import { countData } from "../../services/utils";
+import { Spinner } from "./icons/SVGIcons";
+import profileContact from "../../../public/assets/images/profile-user.png"
+import Axios from "../../services/axios";
 
+interface iProps {
+  contacts: iContactProps[]
+  isLoading?: boolean,
+}
 
+const NotificationDropdown = ({ contacts, isLoading }: iProps) => {
 
-const NotificationDropdown = () => {
+  const navigate = useNavigate()
 
   // dropdown
   const [isDropdownOpen, setDropdownOpen] = useState(false);
+  const [isNotSeen, setIsNotSeen] = useState(false) 
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleOpen = useCallback(() => {
     setDropdownOpen((previousState) => !previousState);
   }, []);
 
+  useEffect(()=>{
+    setIsNotSeen(contacts.length > 0)
+  },[contacts])
+
   useEffect(() => {
     const handleClick = (event: MouseEvent) => {
+      setTimeout(() => {
+        setIsNotSeen(false)
+      }, 100)
+
+      // Toggle all notifications as seen
+      const toggleAllNotification = async () => {
+        await Axios.patch(`/contact`)
+      }
+
+      toggleAllNotification()
+
+
+      //----------------------------------------
+
       if (
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
@@ -34,24 +62,15 @@ const NotificationDropdown = () => {
     };
   }, [isDropdownOpen, toggleOpen]);
 
-  // 
-  const [showElement, setShowElement] = useState(Array(contactsData.length).fill(true));
-
-  const messagesCounter = contactsData.reduce((total, item) => {
-    item.messages.map((_, index) => {
-      total += (index + 1)
+  const handleNavigate = (contactId: number) => {
+    navigate("/admin/contacts", {
+      state: { contactId: contactId }
     })
-    return total
-  }, 0)
+  }
 
-  // const toggleVisibility = (index : any) => {
-  //   const updatedVisibility = [...showElement];
-  //   updatedVisibility[index] = !updatedVisibility[index];
-  //   setShowElement(updatedVisibility);
-  // };
 
   return (
-    <React.Fragment>
+    <>
       <div className="relative inline-block h-5 notification" ref={dropdownRef}>
         <button
           type="button"
@@ -72,7 +91,11 @@ const NotificationDropdown = () => {
               fill="currentColor"
             ></path>
           </svg>
-          <span className="absolute w-2 h-2 border border-white rounded-full -top-px ltr:right-px rtl:left-px bg-purple"></span>
+          {/* notification */}
+          {
+            isNotSeen &&
+            <span className="absolute size-3 border animate-bounce border-white rounded-full -top-px ltr:right-px rtl:left-px bg-purple"></span>
+          }
         </button>
         {isDropdownOpen && (
           <>
@@ -81,35 +104,44 @@ const NotificationDropdown = () => {
               <h4 className="text-black dark:text-white/80 px-2 py-2.5 border-b border-black/10 flex items-center gap-2">
                 Notification{" "}
                 <span className="inline-block bg-purple/10 text-purple text-[10px] p-1 leading-none rounded">
-                  { messagesCounter }
+                  {contacts ? countData(contacts) : (<Spinner />)}
                 </span>
               </h4>
+
+
               <ul className="overflow-y-auto max-h-56 ">
-                {contactsData.map((item, index) => (
-                  <li key={index}>
-                    <div
-                      className="flex gap-2 cursor-pointer group"
-                      style={{ display: showElement[index] ? "" : "none" }}
-                    >
-                      <div className="flex-none overflow-hidden rounded-full h-9 w-9">
-                        <img
-                          src={item.profile}
-                          className="object-cover"
-                          alt="avatar"
-                        />
-                      </div>
-                      <div className="relative flex-1">
-                        <p className="whitespace-nowrap overflow-hidden text-ellipsis w-[185px] text-gray-700 text-sm dark:text-white ltr:pr-4 rtl:pl-4">
-                          {item.messages[item.messages.length - 1].title}
-                        </p>
-                      </div>
-                    </div>
-                  </li>
-                ))}
+                {
+                  !isLoading ? (
+                    contacts.map((item, index) => (
+                      <li 
+                        onClick={()=>handleNavigate(item.id)}
+                        key={index}>
+                        <div
+                          className="flex gap-2 cursor-pointer group"
+                        // style={{ display: showElement[index] ? "" : "none" }}
+                        >
+                          <div className="flex-none overflow-hidden rounded-full h-9 w-9">
+                            <img
+                              src={profileContact}
+                              className="object-cover"
+                              alt="avatar"
+                            />
+                          </div>
+                          <div className="relative flex-1">
+                            <h1 className="text-gray-500 font-semibold">{item.name}</h1>
+                            <p className="whitespace-nowrap overflow-hidden text-ellipsis italic w-[185px] text-gray-700 text-sm dark:text-white ltr:pr-4 rtl:pl-4">
+                              {item.object}
+                            </p>
+                          </div>
+                        </div>
+                      </li>
+                    ))
+                  ) : (<Spinner />)
+                }
               </ul>
               <div className="px-2 py-2.5 border-t border-black/10 dark:border-darkborder">
                 <Link
-                  to="#"
+                  to="/admin/contacts"
                   className="text-black duration-300 dark:text-white dark:hover:text-purple hover:text-purple"
                 >
                   Read More{" "}
@@ -129,7 +161,7 @@ const NotificationDropdown = () => {
           </>
         )}
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

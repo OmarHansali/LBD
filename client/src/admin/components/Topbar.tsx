@@ -1,62 +1,54 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
 import { Link } from "react-router-dom";
 
 import Fullscreen from "./Fullscreen";
 import ProfileDropdown from "./ProfileDropdown";
 import NotificationDropdown from "./NotificationDropdown";
+import { useEffect, useState } from "react";
+import { iContactProps } from "../constants/Types";
+import Axios from "../../services/axios";
+import { MenuIcon } from "./icons/SVGIcons";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../state/features/slices/sideBar";
 
-const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
+const Topbar = ({ isDarkMode, toggleDarkMode }: any) => {
+
+  const [isLoading, setIsLoading] = useState(false)
+  const [contacts, setContacts] = useState<iContactProps[]>([]);
+
+  // const isSidebarOpen = useSelector((state: any) => state.sidebar);
+  const dispatch = useDispatch()
+
+    const handleToggle = () => {
+        dispatch(toggleSidebar());
+    };
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true)
+      await Axios.get("/contact")
+        .then((res) => {
+          setContacts((res.data).filter((contact: iContactProps) => contact.seen == false));
+        })
+        .finally(() => {
+          setIsLoading(false)
+        });
+    };
+
+    fetchData();
+  }, []);
+
   return (
-    <React.Fragment>
+    <>
       <div className=" dark:bg-darklight dark:border-darkborder flex gap-4 lg:z-10 items-center justify-between px-4 h-[60px] border-b border-black/10 detached-topbar relative">
-        <div className="flex items-center flex-1 gap-2 sm:gap-4">
-          {/* toggle button */}
-          {/* <button
-            type="button"
-            className=" dark:text-white/80"
-            onClick={toggleSidebarCollapse}
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              className="w-6 h-6"
-            >
-              <path
-                d="M3 4H21V6H3V4ZM3 11H15V13H3V11ZM3 18H21V20H3V18Z"
-                fill="currentColor"
-              ></path>
-            </svg>
-          </button> */}
-
-          {/*  */}
-          {/* <form className="flex-1 hidden min-[420px]:block">
-            <div className="relative max-w-[180px] md:max-w-[350px]">
-              <input
-                type="text"
-                id="search"
-                className="border-black/10 dark:text-white/80 dark:placeholder:text-white/30 dark:border-darkborder dark:bg-dark dark:focus:border-white/30 focus:border-black/30 placeholder:text-black/50 border text-black text-sm rounded block w-full ltr:pl-3 rtl:pr-3 ltr:pr-7 rtl:pl-7 h-10 bg-[#f9fbfd] focus:ring-0 focus:outline-0"
-                placeholder="Search..."
-                required
-              />
-              <button
-                type="button"
-                className="absolute right-1 rounded-lg hover:bg-gray-200 px-3 inset-y-0 flex items-center ltr:right-0 rtl:left-0 ltr:pr-2 rtl:pl-2 dark:text-white/80"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  className="w-4 h-4"
-                >
-                  <path
-                    d="M11 2C15.968 2 20 6.032 20 11C20 15.968 15.968 20 11 20C6.032 20 2 15.968 2 11C2 6.032 6.032 2 11 2ZM11 18C14.8675 18 18 14.8675 18 11C18 7.1325 14.8675 4 11 4C7.1325 4 4 7.1325 4 11C4 14.8675 7.1325 18 11 18ZM19.4853 18.0711L22.3137 20.8995L20.8995 22.3137L18.0711 19.4853L19.4853 18.0711Z"
-                    fill="currentColor"
-                  ></path>
-                </svg>
-
-              </button>
-            </div>
-          </form> */}
+        <div className=" items-center flex-1 gap-2 sm:gap-4">
+          <div className="lg:hidden sm:flex">
+            <MenuIcon 
+              onClick={handleToggle}
+              fontSize={30} 
+              className="dark:text-white"/>
+          </div>
         </div>
         <div className="flex items-center gap-4">
           {/* FullScreen */}
@@ -97,13 +89,13 @@ const Topbar = ({ isDarkMode, toggleDarkMode, toggleSidebarCollapse }: any) => {
             </Link> */}
           </div>
           {/* Notification Dropdown */}
-          <NotificationDropdown />
+          <NotificationDropdown contacts={contacts} isLoading={isLoading} />
 
           {/* Profile Dropdown */}
           <ProfileDropdown />
         </div>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

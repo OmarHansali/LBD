@@ -1,24 +1,30 @@
 export interface iUserType {
+    id?:number,
     username?: string,
     phoneNumber?: string,
     email?: string,
     password?: string,
+    role?:string,
+    profile?:string,
+    CEN?: string
 }
-
 
 export interface iSalleType {
     id?: number,
     type: string,
-    material: [],
+    materiels: [],
     number: string,
     capacity: number,
-    availability: string
+    availability: string | boolean,
+    startHour?: string,
+    endHour?: string
 }
 
 export interface iMaterialType {
     id?: number,
-    material: string,
+    name: string,
     quantity: number | null,
+    availability?: boolean
     createdAt?: string
 }
 
@@ -26,22 +32,17 @@ export interface iReservationType {
     id?: number,
     userId: number | null,
     salleId: number | null,
-    startDate: Date,
-    endDate: Date,
-    duration: number | null,
-    material: [],
+dateReservation: string,
+    heureReservation: string,
+    duration: number | null,    
+    code: number,
 }
 
 export interface iContactProps {
-    id: number | string;
-    username: string;
-    profile: string;
+    id: number;
+    name: string;
     email: string;
-    messages: [
-        {
-            createdAt: string;
-            title: string;
-            content: string;
-        }
-    ]
+    object: string;
+    body: string,
+    seen: boolean,
 }

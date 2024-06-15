@@ -18,6 +18,7 @@ const AdminLayout = () => {
 
     const navigate = useNavigate()
     const dispatch = useDispatch();
+
     //  Dark & Light
     const currentThemeMode = useSelector((state: any) => state.layout.currentLayoutMode)
     const [isDarkMode, setIsDarkMode] = useState(currentThemeMode == "dark" ? true : false);
@@ -29,10 +30,6 @@ const AdminLayout = () => {
 
     useEffect(() => {
         // prevent a none admin users to access admin side
-        // if (!localStorage.getItem('user')) {
-        //     return navigate('/login')
-        // }
-
 
         if (currentThemeMode === THEME_MODE.DARK) {
             document.documentElement.classList.add('dark');
@@ -74,7 +71,7 @@ const AdminLayout = () => {
                 {/* End Menu Sidebar Overlay */}
 
                 <div className="flex mx-auto main-container">
-                    <Sidebar isSidebarSize={isSidebarSize} />
+                    <Sidebar isSidebarSize={isSidebarSize}/>
                     <div className="flex-1 main-content">
                         {/* Topbar */}
                         <Topbar

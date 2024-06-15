@@ -18,11 +18,11 @@ export const createReservation = async (req: Request, res: Response): Promise<vo
         // Create the reservation
         const newReservation = await prisma.reservation.create({
             data: {
-                userId,
-                salleId,
+                userId: Number(userId),
+                salleId: Number(salleId),
                 dateReservation,
                 heureReservation,
-                duration,
+                duration: Number(duration),
                 code,
             },
         });
@@ -116,11 +116,11 @@ export const updateReservation = async (req: Request, res: Response): Promise<vo
         const updatedReservation = await prisma.reservation.update({
             where: { id: reservationId },
             data: {
-                userId,
-                salleId,
+                userId: Number(userId),
+                salleId: Number(salleId),
                 dateReservation,
                 heureReservation,
-                duration,
+                duration: Number(duration),
                 code,
             },
         });

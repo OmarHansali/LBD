@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import user from "/assets/images/user.png";
+import { useCallback, useEffect, useRef, useState } from "react";
+import user from "/assets/images/profile.png";
 import { Link } from "react-router-dom";
+import loggedUser from "../../services/LoggedUser";
 
 const ProfileDropdown = () => {
   // dropdown
@@ -31,8 +32,16 @@ const ProfileDropdown = () => {
     };
   }, [isDropdownOpen, toggleOpen]);
 
+  const { role, username, profile } = loggedUser
+
+  const handleLogout = () => {
+    localStorage.clear()
+    window.location.reload()
+  }
+
   return (
-    <React.Fragment>
+    <>
+      <div className="inline-flex items-center rounded-full text-xs justify-center px-1.5 py-0.5 bg-danger text-white capitalize">{role}</div>
       <div className="profile" ref={dropdownRef}>
         <button
           type="button"
@@ -44,13 +53,14 @@ const ProfileDropdown = () => {
           onKeyDown={(e) => e.key === "Escape" && setDropdownOpen(false)}
         >
           <img
-            className="rounded-full h-7 w-7 ltr:xl:mr-2 rtl:xl:ml-2"
-            src={user}
+            className="rounded-full h-7 w-7 ltr:xl:mr-2 rtl:xl:ml-2 mx-1"
+            src={profile ? profile : user}
             alt="Header Avatar"
           />
           <span className="hidden fw-medium xl:block font-thin dark:text-white/80">
-            Stevens L.
+            {username}
           </span>
+
           <svg
             className="w-4 h-4"
             width="32"
@@ -66,9 +76,9 @@ const ProfileDropdown = () => {
           </svg>
         </button>
 
-        <ul 
+        <ul
           className={`dropdown -ml-14 mt-2 ${isDropdownOpen ? "visible" : "hidden"}`}
-          >
+        >
           <li>
             <Link to="/admin/profile" className="flex items-center gap-2">
               <svg
@@ -85,7 +95,7 @@ const ProfileDropdown = () => {
             </Link>
           </li>
           <li>
-            <Link to="/admin/edit-profile" className="flex items-center gap-2">
+            <Link to="/admin/modifier-profile" className="flex items-center gap-2">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -96,7 +106,7 @@ const ProfileDropdown = () => {
                   fill="currentColor"
                 ></path>
               </svg>
-              Settings
+              Paramètres
             </Link>
           </li>
           <li>
@@ -115,10 +125,11 @@ const ProfileDropdown = () => {
             </Link>
           </li>
           <li className="block h-px my-1 dark:bg-darkborder"></li>
-          <li>
-            <Link
-              to="/auth-logout"
-              className="flex items-center gap-2 dark:text-white"
+
+          <li className="hover:bg-red-100">
+            <button
+              onClick={handleLogout}
+              className="flex items-center gap-2 dark:text-white w-full"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -130,12 +141,12 @@ const ProfileDropdown = () => {
                   fill="currentColor"
                 ></path>
               </svg>
-              Sign Out
-            </Link>
+              Se déconnecter
+            </button>
           </li>
         </ul>
       </div>
-    </React.Fragment>
+    </>
   );
 };
 

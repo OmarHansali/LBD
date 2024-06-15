@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { useEffect, useState } from "react";
 import TableContainer from "../../components/TableContainer";
-import { usersData } from "../../data/Data";
+import { iUserType } from "../../constants/Types";
+import LoadingPage from "../../components/LoadingPage";
+import Axios from "../../../services/axios";
 
 const Users = () => {
 
@@ -12,13 +15,13 @@ const Users = () => {
             enableSorting: true,
         },
         {
-            header: "Username",
+            header: "Nom d'utilisateur",
             accessorKey: "username",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Role",
+            header: "Rôle",
             accessorKey: "role",
             enableColumnFilter: false,
             enableSorting: true,
@@ -30,20 +33,40 @@ const Users = () => {
             enableSorting: true,
         },
         {
-            header: "Phone Number",
+            header: "Numéro de téléphone",
             accessorKey: "phoneNumber",
             enableColumnFilter: false,
             enableSorting: true,
         },
     ];
 
+    const [isLoading, setIsLoading] = useState(false)
+    const [users, setUsers] = useState<iUserType[]>([])
+
+    useEffect(() => {
+        const fetchData = async () => {
+            setIsLoading(true)
+            await Axios.get("/user")
+                .then((res) => {
+                    setUsers((res.data).filter((data: iUserType) => data.role != "admin"))
+
+                })
+                .finally(() => {
+                    setIsLoading(false)
+                })
+        }
+
+        fetchData()
+    }, [])
+
 
     return (
         <>
-            <h1 className="header capitalize">gérer les utilisateurs</h1>
+            <h1 className="header capitalize dark:text-white">gérer les utilisateurs</h1>
+            <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}
-                data={usersData}
+                data={users}
                 isGlobalFilter={true}
                 customPageSize={5}
                 isSelect={true}

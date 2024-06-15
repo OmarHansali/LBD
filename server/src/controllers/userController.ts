@@ -14,7 +14,7 @@ const generateRandomPassword = () => {
 export const sendVerificationEmail = async (email, username, password): Promise<void> => {
 
     try {
-        await sendEmail(email , username, password);
+        await sendEmail(email, username, password);
     } catch (error) {
         console.error('Error sending verification email:', error);
     }
@@ -23,20 +23,19 @@ export const sendVerificationEmail = async (email, username, password): Promise<
 // Create User
 export const createUser = async (req: Request, res: Response) => {
     try {
-        const { username, email, phoneNumber, role } = req.body;
+        const { username, email, phoneNumber, role, CEN, profile } = req.body;
 
         // Check if the username or email already exists
         const existingUser = await prisma.user.findFirst({
             where: {
                 OR: [
                     { username },
-                    { email },
                 ],
             },
         });
 
         if (existingUser) {
-            return res.status(400).json({ error: 'Username or email already exists' });
+            return res.status(400).json({ error: 'Username already exists' });
         }
 
         const password = generateRandomPassword();
@@ -51,6 +50,8 @@ export const createUser = async (req: Request, res: Response) => {
                 email,
                 phoneNumber,
                 role,
+                CEN,
+                profile,
             },
         });
 
@@ -96,16 +97,42 @@ export const getUserById = async (req: Request, res: Response): Promise<void> =>
 export const updateUser = async (req: Request, res: Response): Promise<void> => {
     try {
         const userId = parseInt(req.params.id);
-        const { username, password, email, phoneNumber, role } = req.body;
+        const { username, password, email, phoneNumber, role, CEN, profile } = req.body;
+
+        const currentUser = await prisma.user.findUnique({
+            where: {
+                id: userId
+            }
+        })
+
+        if (!currentUser) {
+            res.status(404).json({ error: 'User not found' });
+            return;
+        }
+
+        if (username && username !== currentUser.username) {
+            const existingUser = await prisma.user.findUnique({
+                where: { username }
+            });
+
+            if (existingUser) {
+                res.status(400).json({ error: 'Username already taken' });
+                return;
+            }
+        }
+
+        const hashedPassword = password && await bcrypt.hash(password, 10)
 
         const updatedUser = await prisma.user.update({
             where: { id: userId },
             data: {
-                username,
-                password, // You may want to hash the updated password again if it's provided
-                email,
-                phoneNumber,
-                role,
+                username: username ? username : currentUser.username,
+                password: password ? hashedPassword : currentUser.password,
+                email: email ? email : currentUser.email,
+                phoneNumber: phoneNumber ? phoneNumber : currentUser.phoneNumber,
+                role: role ? role : currentUser.role,
+                CEN: CEN ? CEN : currentUser.CEN,
+                profile: profile ? profile : currentUser.profile,
             },
         });
 
