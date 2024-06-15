@@ -4,7 +4,7 @@
 
 This repository contains two main components:
 
-1. **Client Application (`harmonia-react`)**: A React application using Vite for development, TypeScript for type safety, Tailwind CSS for styling, and several other dependencies to enhance functionality.
+1. **Client Application (`harmonia`)**: A React application using Vite for development, TypeScript for type safety, Tailwind CSS for styling, and several other dependencies to enhance functionality.
 2. **Server Application (`server`)**: A Node.js server using Express.js, Prisma for database management, and several other dependencies for handling authentication, environment variables, and more.
 
 ## Prerequisites
@@ -27,7 +27,7 @@ cd LBD
 
 ### 2. Install Dependencies
 
-#### Client Application (`harmonia-react`)
+#### Client Application (`harmonia`)
 
 ```sh
 cd client
@@ -63,7 +63,7 @@ npm run migrate
 
 ### 5. Running the Applications
 
-#### Client Application (`harmonia-react`)
+#### Client Application (`harmonia`)
 
 ```sh
 cd client
@@ -81,6 +81,53 @@ npm run dev
 
 - The **client application** will be running at `http://localhost:5173` (default Vite port).
 - The **server application** will be running at `http://localhost:5000`.
+
+Sure! Here's a sequence of commands you can copy and paste to set up the project in one go.
+
+### 7. Full Setup Commands
+
+```sh
+# 1. Clone the Repository
+git clone https://github.com/OmarHansali/LBD.git
+cd LBD
+
+# 2. Install Client Dependencies
+cd client
+npm install
+
+# 3. Install Server Dependencies
+cd ../server
+npm install
+
+# 4. Setup Environment Variables
+echo 'DATABASE_URL="mysql://root@localhost:3306/lbd"' > .env
+echo 'JWT_SECRET="test"' >> .env
+echo 'PORT=5000' >> .env
+echo 'SMTP_USER="composer.require.phpmailer@gmail.com"' >> .env
+echo "SMTP_PASS='vbaj ntsz sqme uafx'" >> .env
+
+# 5. Run Database Migrations
+npm run migrate
+
+# 6. Run the Server Application
+npm run dev &
+
+# 7. Run the Client Application
+cd ../client
+npm run dev
+```
+
+### Explanation
+
+1. **Clone the Repository**: Clones the repository and navigates into the project directory.
+2. **Install Client Dependencies**: Installs dependencies for the client application.
+3. **Install Server Dependencies**: Installs dependencies for the server application.
+4. **Setup Environment Variables**: Creates the `.env` file and adds the required environment variables.
+5. **Run Database Migrations**: Runs the database migrations.
+6. **Run the Server Application**: Starts the server application.
+7. **Run the Client Application**: Starts the client application.
+
+Copy and paste these commands into your terminal to set up and run both the client and server applications.
 
 ## Troubleshooting
 
