@@ -4,6 +4,7 @@ import "../../styles/css/style.css";
 import Calendar from '../calendar/Calendar';
 import ChooseClass from '../../pages/Reservation/ChooseClass';
 import ReservationForm from "../../pages/Reservation/ReservationForm";
+import loggedUser from "../../../services/LoggedUser";
 
 interface Salle {
   id: number;
@@ -38,6 +39,8 @@ const Stepper = () => {
 
   const location = useLocation();
   const { category } = location.state || {};
+
+  const { id } = loggedUser
 
   useEffect(() => {
     const fetchSalleData = async () => {
@@ -94,7 +97,7 @@ const Stepper = () => {
 
       // Construct the reservation object
       const reservation = {
-        userId: 1,
+        userId: id,
         salleId: selectedClass,
         dateReservation: datetime,
         heureReservation: (time? time.getHours() : '00') + ":" + (time? time.getMinutes() : '00'),
