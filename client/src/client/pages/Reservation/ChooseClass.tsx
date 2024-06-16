@@ -23,44 +23,38 @@ interface ChooseClassProps {
 
 const ChooseClass: React.FC<ChooseClassProps> = ({ salles, onSalleSelect }) => {
   return (
-    <div>
+    <div className="row">
       {salles.length > 0 ? (
         salles.map((salle) => (
-          salle.availability ? (
+          <div className="flex flex-col mb-10" key={salle.id}>
             <button
-              key={salle.id}
-              className="p-4 my-2 rounded bg-green-500 w-full text-left"
+              className="tl-3-single-event hover:bg-gray-100 text-black"
               onClick={() => onSalleSelect(salle.id)}
+              disabled={!salle.availability}
             >
-            <p className="font-bold">Salle Number: <span className="normal-case">{salle.number}</span></p>
-            <p>Type: {salle.type}</p>
-            <p>Capacity: {salle.capacity}</p>
-            <p>Availability: {salle.availability ? 'Available' : 'Unavailable'}</p>
-            <div>
-              <p>Materiels:</p>
-              <ul>
-                {salle.materiels.map((materiel) => (
-                  <li key={materiel.id}>{materiel.name} - Quantity: {materiel.quantity} - {materiel.availability ? 'Available' : 'Unavailable'}</li>
-                ))}
-              </ul>
-            </div>
+              <div className="tl-3-single-event-date hover:border-black border border-gray-300">
+                <span className="date text-black">{salle.number}</span>
+                <div className={`inline-flex items-center rounded-full text-xs justify-center px-1.5 py-0.5 ${salle.availability ? 'bg-success' : 'bg-danger'} text-white w-30`}>{salle.availability ? 'Disponible' : 'Indisponible'}</div>
+              </div>
+
+              <div className="tl-3-single-event-txt">
+                <h3 className="tl-3-single-event-title">
+                  Salle Details
+                </h3>
+                <div className="tl-3-single-event-info">
+                  <p>Capacity: {salle.capacity}</p>
+                  <div>
+                    <p>Materiels:</p>
+                    <ul>
+                      {salle.materiels.map((materiel) => (
+                        <li key={materiel.id}>{materiel.name} - Quantity: {materiel.quantity} - {materiel.availability ? 'Available' : 'Unavailable'}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </button>
-          ) : (
-            <div key={salle.id} className="p-4 my-2 rounded bg-gray-300 w-full text-left">
-            <p className="font-bold">Salle Number: <span className="normal-case">{salle.number}</span></p>
-            <p>Type: {salle.type}</p>
-            <p>Capacity: {salle.capacity}</p>
-            <p>Availability: {salle.availability ? 'Available' : 'Unavailable'}</p>
-            <div>
-              <p>Materiels:</p>
-              <ul>
-                {salle.materiels.map((materiel) => (
-                  <li key={materiel.id}>{materiel.name} - Quantity: {materiel.quantity} - {materiel.availability ? 'Available' : 'Unavailable'}</li>
-                ))}
-              </ul>
-            </div>
-            </div>
-          )
+          </div>
         ))
       ) : (
         <div className="flex justify-center items-center h-screen">

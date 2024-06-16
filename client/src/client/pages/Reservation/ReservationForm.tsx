@@ -45,11 +45,11 @@ const GroupForm: React.FC<GroupFormProps> = ({ onGroupNumberChange, onDurationCh
     <>
       <div className="space-y-2 w-full flex flex-col align-center">
         <div className="items-center justify-center mb-4">
-          <label htmlFor="groupNumber">Group Number</label>
+          <label htmlFor="groupNumber">Nombre des personnes</label>
           <input
             id="groupNumber"
             className="form-input border rounded-r-none mt-1"
-            placeholder="Enter group number"
+            placeholder="Entrer nombre des personnes"
             type="number"
             value={groupNumber}
             onChange={handleGroupNumberChange}

@@ -22,10 +22,28 @@ const Calendar: React.FC<CalendarProps> = ({ onDateChange, onTimeChange, startHo
   };
 
   const today = new Date();
-  today.setHours(0, 0, 0, 0); // Reset hours, minutes, seconds, and milliseconds for comparison
+  const currentHour = today.getHours();
+  const [startHourNumber, startMinute] = startHour.split(':').map(Number);
+  const [endHourNumber, endMinute] = endHour.split(':').map(Number);
 
-  const minTime = startDate && startDate >= today ? parseHour(startHour, startDate) : parseHour("00:00", today);
-  const maxTime = startDate && startDate >= today ? parseHour(endHour, startDate) : parseHour("23:59", today);
+
+  // Determine if the selected date is today and if the current hour is less than the startHour
+  const isTodayAndBeforeStartHour = startDate?.toDateString() === today.toDateString() && currentHour < startHourNumber;
+
+  // Calculate minTime based on whether the selected date is today and comparing current hour with startHour
+  const minTime = startDate && (startDate > today || isTodayAndBeforeStartHour) 
+    ? parseHour(startHour, startDate) 
+    : isTodayAndBeforeStartHour 
+      ? parseHour(startHour, today) 
+      : parseHour(`${currentHour}:${today.getMinutes()}`, today);
+
+  // Determine if the selected date is today and if the current hour is less than the endHour
+  const isTodayAndBeforeEndHour = startDate?.toDateString() === today.toDateString() && currentHour < endHourNumber;
+
+  // Calculate maxTime based on whether the selected date is today and comparing current hour with endHour
+  const maxTime = startDate?.toDateString() === today.toDateString() && isTodayAndBeforeEndHour
+    ? parseHour(endHour, today)
+    : parseHour(`${currentHour}:${today.getMinutes()}`, today);
 
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
@@ -38,7 +56,7 @@ const Calendar: React.FC<CalendarProps> = ({ onDateChange, onTimeChange, startHo
   };
 
   return (
-    <div className='flex flex-col' style={{ zIndex: 9999 }}>
+    <div className='flex flex-col'>
       <label htmlFor="date" className="block text-sm font-medium text-gray-700">
         Choisissez la date souhaitée:
       </label>

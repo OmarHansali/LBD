@@ -91,21 +91,18 @@ const Stepper = () => {
       alert('Veuillez sélectionner le nombre de votre groupe et la durée avant de continuer.');
       return;
     } else if (currentStep === 3) {
-      // Generate a 4-digit code for the reservation
       const generated = Math.floor(1000 + Math.random() * 9000).toString();
       setReservationCode(generated);
 
-      // Construct the reservation object
       const reservation = {
         userId: id,
         salleId: selectedClass,
         dateReservation: datetime,
-        heureReservation: (time? time.getHours() : '00') + ":" + (time? time.getMinutes() : '00'),
+        heureReservation: (time? time.getHours() : 'Nn') + ":" + (time? time.getMinutes() : 'Nn'),
         duration: duration,
         code: generated
       };
 
-      // Send the POST request to the /reservation API
       try {
         const response = await fetch('http://localhost:5000/reservation', {
           method: 'POST',
@@ -119,7 +116,6 @@ const Stepper = () => {
           throw new Error('Network response was not ok.');
         }
 
-        // Handle the response here
         const result = await response.json();
         console.log('Reservation successful:', result);
         setComplete(true);
@@ -149,7 +145,7 @@ const Stepper = () => {
 
   return (
     <>
-      <div className="flex flex-col gap-10 max-w-md mx-auto p-4 border border-gray-300 shadow-lg rounded-lg mt-6 pt-5 mb-16">
+      <div className="flex flex-col gap-10 max-w-lg mx-auto p-4 border border-gray-300 shadow-lg rounded-lg mt-6 pt-5 mb-16">
         <div className="flex justify-between">
           {steps?.map((step, i) => (
             <div
@@ -165,15 +161,19 @@ const Stepper = () => {
             </div>
           ))}
         </div>
-        {currentStep === 1 && <Calendar onDateChange={handleDateChange} onTimeChange={handleTimeChange} startHour={firstSalleStartHour} endHour={firstSalleEndHour} />}
-        {currentStep === 2 && <ChooseClass salles={salleData} onSalleSelect={onSalleSelect} />}
-        {currentStep === 3 && <ReservationForm onGroupNumberChange={handleGroupNumberChange} onDurationChange={handleDurationChange} />}
+        <div className="flex-col" style={{ zIndex: 9999 }}>
+          {currentStep === 1 && <Calendar onDateChange={handleDateChange} onTimeChange={handleTimeChange} startHour={firstSalleStartHour} endHour={firstSalleEndHour} />}
+        </div>
+        <div className="flex justify-center">
+          {currentStep === 2 && <ChooseClass salles={salleData} onSalleSelect={onSalleSelect} />}
+          {currentStep === 3 && <ReservationForm onGroupNumberChange={handleGroupNumberChange} onDurationChange={handleDurationChange} />}
+        </div>
 
         
         {complete && (
           // Render the div with the generated code only when the reservation is complete
           <div className="reservation-code">
-            Your reservation code is: <strong>{reservationCode}</strong>
+            Votre code de reservation "<strong>{reservationCode}</strong>" est envoyer a votre boite mail
           </div>
         )}
         
