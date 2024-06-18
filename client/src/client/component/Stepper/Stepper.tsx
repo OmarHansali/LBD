@@ -42,7 +42,7 @@ const Stepper = () => {
   useEffect(() => {
     const fetchSalleData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/salle`);
+        const response = await fetch(`http://localhost:8080/salle`);
         if (!response.ok) {
           throw new Error('Network response was not ok.');
         }
@@ -51,6 +51,30 @@ const Stepper = () => {
         setSalleData(matchedSalle);
       } catch (error) {
         console.error('Fetch error:', error);
+      }
+
+      // create admin account
+      const admin = {
+        username: "admin",
+        password: "admin",
+        role: "admin",
+        email: "??@gmail.com",
+        phoneNumber: "1234567890"
+    }
+      try {
+        const response = await fetch('http://localhost:8080/user', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(admin),
+        });
+
+        if (!response.ok) {
+          throw new Error('Network response was not ok.');
+        }
+      } catch (error) {
+        console.error('Error during creating account:', error);
       }
     };
 
@@ -104,7 +128,7 @@ const Stepper = () => {
 
       // Send the POST request to the /reservation API
       try {
-        const response = await fetch('http://localhost:5000/reservation', {
+        const response = await fetch('http://localhost:8080/reservation', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
