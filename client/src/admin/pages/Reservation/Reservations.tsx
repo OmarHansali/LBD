@@ -43,6 +43,12 @@ const Reservations = () => {
             enableColumnFilter: false,
             enableSorting: true,
         },
+        {
+            header: "Code",
+            accessorKey: "code",
+            enableColumnFilter: false,
+            enableSorting: true,
+        },
     ];
 
 
