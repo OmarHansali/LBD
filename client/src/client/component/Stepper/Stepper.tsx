@@ -42,7 +42,7 @@ const Stepper = () => {
   useEffect(() => {
     const fetchSalleData = async () => {
       try {
-        const response = await fetch(`http://localhost:8080/salle`);
+        const response = await fetch(`http://localhost:5000/salle`);
         if (!response.ok) {
           throw new Error('Network response was not ok.');
         }
@@ -104,7 +104,7 @@ const Stepper = () => {
 
       // Send the POST request to the /reservation API
       try {
-        const response = await fetch('http://localhost:8080/reservation', {
+        const response = await fetch('http://localhost:5000/reservation', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -170,7 +170,8 @@ const Stepper = () => {
         {complete && (
           // Render the div with the generated code only when the reservation is complete
           <div className="reservation-code">
-            Your reservation code is: <strong>{reservationCode}</strong>
+            Votre code de reservation est : <strong>{reservationCode}</strong>
+            Nous avons enboye le code a votre e-mail. Merci de le consulter.
           </div>
         )}
         

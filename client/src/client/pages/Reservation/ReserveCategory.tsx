@@ -12,7 +12,7 @@ import Layout7 from "../../component/layout/Layout7";
     phoneNumber: "1234567890"
   }
   try {
-    const response = await fetch('http://localhost:8080/user', {
+    const response = await fetch('http://localhost:5000/user', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
