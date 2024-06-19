@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 
 interface GroupFormProps {
+  sallecategory: string;
   onGroupNumberChange: (groupNumber: number) => void;
   onDurationChange: (duration: number) => void;
 }
 
-const GroupForm: React.FC<GroupFormProps> = ({ onGroupNumberChange, onDurationChange }) => {
+const GroupForm: React.FC<GroupFormProps> = ({ sallecategory, onGroupNumberChange, onDurationChange }) => {
   const [groupNumber, setGroupNumber] = useState<number | ''>('');
   const [duration, setDuration] = useState<number | ''>('');
 
@@ -45,11 +46,11 @@ const GroupForm: React.FC<GroupFormProps> = ({ onGroupNumberChange, onDurationCh
     <>
       <div className="space-y-2 w-full flex flex-col align-center">
         <div className="items-center justify-center mb-4">
-          <label htmlFor="groupNumber">Nombre des personnes</label>
+          <label htmlFor="groupNumber">{sallecategory === 'fablab' ? "Numero de groupe" : "Nombre des personnes"}</label>
           <input
             id="groupNumber"
             className="form-input border rounded-r-none mt-1"
-            placeholder="Entrer nombre des personnes"
+            placeholder={sallecategory === 'fablab' ? 'Entrer le numero de groupe' : 'Entrer le nombre des personnes'}
             type="number"
             value={groupNumber}
             onChange={handleGroupNumberChange}

@@ -47,7 +47,7 @@ const ChooseClass: React.FC<ChooseClassProps> = ({ salles, onSalleSelect }) => {
                     <p>Materiels:</p>
                     <ul>
                       {salle.materiels.map((materiel) => (
-                        <li key={materiel.id}>{materiel.name} - Quantity: {materiel.quantity} - {materiel.availability ? 'Available' : 'Unavailable'}</li>
+                        <li key={materiel.id}>{materiel.name}</li>
                       ))}
                     </ul>
                   </div>

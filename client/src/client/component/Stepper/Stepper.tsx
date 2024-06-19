@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from 'react-router-dom';
+import { Spinner } from "../../../admin/components/icons/SVGIcons";
+import Axios from "../../../services/axios";
 import "../../styles/css/style.css"; 
 import Calendar from '../calendar/Calendar';
 import ChooseClass from '../../pages/Reservation/ChooseClass';
@@ -36,6 +38,8 @@ const Stepper = () => {
   const [groupNumber, setGroupNumber] = useState<number | null>(null);
   const [duration, setDuration] = useState<number | null>(null);
   const [reservationCode, setReservationCode] = useState('');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [SpinnerVisibility, setSpinnerVisibility] = useState(false);
 
   const location = useLocation();
   const { category } = location.state || {};
@@ -45,11 +49,9 @@ const Stepper = () => {
   useEffect(() => {
     const fetchSalleData = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/salle`);
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
-        }
-        const allData: Salle[] = await response.json();
+        const response = await Axios.get('/salle');
+        const allData: Salle[] = response.data;
+
         const matchedSalle = allData.filter(salle => salle.type === category);
         setSalleData(matchedSalle);
       } catch (error) {
@@ -91,34 +93,25 @@ const Stepper = () => {
       alert('Veuillez sélectionner le nombre de votre groupe et la durée avant de continuer.');
       return;
     } else if (currentStep === 3) {
+      setSpinnerVisibility(true);
+      setIsButtonDisabled(true);
       const generated = Math.floor(1000 + Math.random() * 9000).toString();
       setReservationCode(generated);
-
+  
       const reservation = {
         userId: id,
         salleId: selectedClass,
         dateReservation: datetime,
-        heureReservation: (time? time.getHours() : 'Nn') + ":" + (time? time.getMinutes() : 'Nn'),
+        heureReservation: (time ? `${time.getHours()}:${time.getMinutes()}` : 'Nn:Nn'),
         duration: duration,
         code: generated
       };
-
+  
       try {
-        const response = await fetch('http://localhost:5000/reservation', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(reservation),
-        });
-
-        if (!response.ok) {
-          throw new Error('Network response was not ok.');
-        }
-
-        const result = await response.json();
-        console.log('Reservation successful:', result);
+        const response = await Axios.post('/reservation', reservation);
+        console.log('Reservation successful:', response.data);
         setComplete(true);
+        setSpinnerVisibility(false);
       } catch (error) {
         console.error('Error during reservation:', error);
       }
@@ -126,6 +119,7 @@ const Stepper = () => {
       setCurrentStep((prev) => prev + 1);
     }
   };
+  
 
   const onSalleSelect = (id: number) => {
     setSelectedClass(id);
@@ -166,14 +160,14 @@ const Stepper = () => {
         </div>
         <div className="flex justify-center">
           {currentStep === 2 && <ChooseClass salles={salleData} onSalleSelect={onSalleSelect} />}
-          {currentStep === 3 && <ReservationForm onGroupNumberChange={handleGroupNumberChange} onDurationChange={handleDurationChange} />}
+          {currentStep === 3 && <ReservationForm sallecategory={category} onGroupNumberChange={handleGroupNumberChange} onDurationChange={handleDurationChange} />}
         </div>
 
         
         {complete && (
-          // Render the div with the generated code only when the reservation is complete
-          <div className="reservation-code">
-            Votre code de reservation "<strong>{reservationCode}</strong>" est envoyer a votre boite mail
+          <div className="reservation-code flex flex-col items-center justify-center text-center">
+            <Spinner fontSize={30} visibility={SpinnerVisibility ? 'visible' : 'hidden'}/> 
+            <p className="mt-2">Votre code de reservation "<strong>{reservationCode}</strong>" est envoyer a votre boite mail</p>
           </div>
         )}
         
@@ -181,6 +175,7 @@ const Stepper = () => {
           <button
             className="btn bg-gray-500 text-white hover:bg-gray-400"
             onClick={handleNextClick}
+            disabled={isButtonDisabled}
           >
             {currentStep === steps.length ? "Confirmer" : "Suivant"}
           </button>
