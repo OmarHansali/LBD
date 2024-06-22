@@ -17,6 +17,7 @@ interface Salle {
   startHour: string;
   endHour: string;
   materiels: Materiel[];
+  isReserved: boolean;
 }
 
 interface Materiel {
@@ -35,8 +36,8 @@ const Stepper = () => {
   const [time, setTime] = useState<Date | null>(null);
   const [salleData, setSalleData] = useState<Salle[]>([]);
   const [selectedClass, setSelectedClass] = useState<number | null>(null);
-  const [groupNumber, setGroupNumber] = useState<number | null>(null);
-  const [duration, setDuration] = useState<number | null>(null);
+  const [groupNumber, setGroupNumber] = useState<number | ''>('');
+  const [duration, setDuration] = useState<number | ''>('');
   const [reservationCode, setReservationCode] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [SpinnerVisibility, setSpinnerVisibility] = useState(false);
@@ -80,6 +81,7 @@ const Stepper = () => {
       combinedDateTime.setHours(newTime.getHours(), newTime.getMinutes());
       setDatetime(combinedDateTime);
     }
+
   };
 
   const handleNextClick = async () => {
@@ -89,8 +91,8 @@ const Stepper = () => {
     } else if (currentStep === 2 && selectedClass === null) {
       alert('Veuillez sélectionner une salle avant de continuer.');
       return;
-    } else if (currentStep === 3 && (duration === null || groupNumber === null)) {
-      alert('Veuillez sélectionner le nombre de votre groupe et la durée avant de continuer.');
+    } else if (currentStep === 3 && (duration === null || duration === '' || duration === 0 || groupNumber === null || groupNumber === '' )) {
+      alert('Veuillez sélectionner un nombre des personnes valide et une durée valide avant de continuer.');
       return;
     } else if (currentStep === 3) {
       setSpinnerVisibility(true);
@@ -119,7 +121,6 @@ const Stepper = () => {
       setCurrentStep((prev) => prev + 1);
     }
   };
-  
 
   const onSalleSelect = (id: number) => {
     setSelectedClass(id);
@@ -127,12 +128,44 @@ const Stepper = () => {
   };
 
   const handleGroupNumberChange = (groupNumber: number) => {
-    setGroupNumber(groupNumber);
+    if (category == 'salle' || category == 'box') {
+      if (groupNumber < 1 || groupNumber > 6) {
+        setGroupNumber('');
+      }
+      else {
+        setGroupNumber(groupNumber);
+      }
+    }
+    else {
+      setGroupNumber(groupNumber);
+    }
   };
 
   const handleDurationChange = (duration: number) => {
-    setDuration(duration);
+    if (duration < 15 || duration > 300) {
+      setDuration('');
+    } else {
+      const selectedSalle = salleData.find((salle) => salle.id === selectedClass);
+  
+      if (time) {
+        const combinedTime = new Date(date || '');
+        combinedTime.setHours(time.getHours(), time.getMinutes());
+  
+        const endTime = new Date(date || '');
+        endTime.setHours(Number(selectedSalle?.endHour.split(':')[0]), Number(selectedSalle?.endHour.split(':')[1]));
+
+        if (combinedTime.getTime() + duration * 60000 > endTime.getTime()) {
+          setDuration('');
+          const timeDifference = endTime.getTime() - combinedTime.getTime();
+          alert(`La salle v a etre fermer apres ${timeDifference/60000} minutes. Merci de choisir une duree inferieur a ${timeDifference/60000} minutes`);
+        } else {
+          setDuration(duration);
+        }
+      }
+    }
   };
+  
+  
 
   const firstSalleStartHour = salleData.length > 0 ? salleData[0].startHour : undefined;
   const firstSalleEndHour = salleData.length > 0 ? salleData[0].endHour : undefined;
@@ -159,7 +192,7 @@ const Stepper = () => {
           {currentStep === 1 && <Calendar onDateChange={handleDateChange} onTimeChange={handleTimeChange} startHour={firstSalleStartHour} endHour={firstSalleEndHour} />}
         </div>
         <div className="flex justify-center">
-          {currentStep === 2 && <ChooseClass salles={salleData} onSalleSelect={onSalleSelect} />}
+          {currentStep === 2 && <ChooseClass salles={salleData} date={datetime} onSalleSelect={onSalleSelect} />}
           {currentStep === 3 && <ReservationForm sallecategory={category} onGroupNumberChange={handleGroupNumberChange} onDurationChange={handleDurationChange} />}
         </div>
 

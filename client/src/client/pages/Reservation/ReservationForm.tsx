@@ -15,7 +15,7 @@ const GroupForm: React.FC<GroupFormProps> = ({ sallecategory, onGroupNumberChang
   const handleDurationConversion = (value: string) => {
     const minutes = parseInt(value);
 
-    if (!isNaN(minutes) && minutes >= 15 && minutes <= 300) { // 15 minutes to 5 hours (15*60 = 900 min)
+    if (!isNaN(minutes) && minutes >= 15 && minutes <= 300) { // 15 minutes to 5 hours (5*60 = 300 min)
       const hours = Math.floor(minutes / 60);
       const remainingMinutes = minutes % 60;
       const formattedDuration = `${hours > 0 ? `${hours}h` : ''}${remainingMinutes}min`;
@@ -33,7 +33,7 @@ const GroupForm: React.FC<GroupFormProps> = ({ sallecategory, onGroupNumberChang
     }
   };
 
-  const handleDurationChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleDurationChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const newDuration = e.target.value ? parseInt(e.target.value, 10) : '';
     setDuration(newDuration);
     if (newDuration || newDuration === 0) {
@@ -42,11 +42,12 @@ const GroupForm: React.FC<GroupFormProps> = ({ sallecategory, onGroupNumberChang
     }
   };
 
+
   return (
     <>
       <div className="space-y-2 w-full flex flex-col align-center">
         <div className="items-center justify-center mb-4">
-          <label htmlFor="groupNumber">{sallecategory === 'fablab' ? "Numero de groupe" : "Nombre des personnes"}</label>
+          <label htmlFor="groupNumber">{sallecategory === 'fablab' ? "Numero de groupe" : "Nombre des personnes"} <span className='text-red-800 mb-1' hidden={sallecategory === 'fablab' ? true : false}>[ 1 personne - 6 personnes ]</span></label>
           <input
             id="groupNumber"
             className="form-input border rounded-r-none mt-1"
@@ -54,6 +55,8 @@ const GroupForm: React.FC<GroupFormProps> = ({ sallecategory, onGroupNumberChang
             type="number"
             value={groupNumber}
             onChange={handleGroupNumberChange}
+            min={1}
+            max={6}
           />
         </div>
         <div className="flex items-center justify-between">

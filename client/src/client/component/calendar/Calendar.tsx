@@ -10,44 +10,51 @@ interface CalendarProps {
 }
 
 const Calendar: React.FC<CalendarProps> = ({ onDateChange, onTimeChange, startHour = "08:00", endHour = "18:00" }) => {
-  const [startDate, setStartDate] = useState<Date | null>(new Date());
+  const [startDate, setStartDate] = useState<Date | null>(null);
   const [startTime, setStartTime] = useState<Date | null>(null);
-
-  // Helper function to parse hour string into a Date object
+  const [minTime, setMinTime] = useState<Date>();
+  const [maxTime, setMaxTime] = useState<Date>();
+  
   const parseHour = (hourString: string, date: Date) => {
     const [hours, minutes] = hourString.split(':').map(Number);
     const time = new Date(date);
-    time.setHours(hours, minutes, 0, 0); // Set seconds and milliseconds to 0
+    time.setHours(hours, minutes, 0, 0);
     return time;
   };
 
   const today = new Date();
-  const currentHour = today.getHours();
-  const [startHourNumber, startMinute] = startHour.split(':').map(Number);
-  const [endHourNumber, endMinute] = endHour.split(':').map(Number);
+  const todayHour = new Date();
 
-
-  // Determine if the selected date is today and if the current hour is less than the startHour
-  const isTodayAndBeforeStartHour = startDate?.toDateString() === today.toDateString() && currentHour < startHourNumber;
-
-  // Calculate minTime based on whether the selected date is today and comparing current hour with startHour
-  const minTime = startDate && (startDate > today || isTodayAndBeforeStartHour) 
-    ? parseHour(startHour, startDate) 
-    : isTodayAndBeforeStartHour 
-      ? parseHour(startHour, today) 
-      : parseHour(`${currentHour}:${today.getMinutes()}`, today);
-
-  // Determine if the selected date is today and if the current hour is less than the endHour
-  const isTodayAndBeforeEndHour = startDate?.toDateString() === today.toDateString() && currentHour < endHourNumber;
-
-  // Calculate maxTime based on whether the selected date is today and comparing current hour with endHour
-  const maxTime = startDate?.toDateString() === today.toDateString() && isTodayAndBeforeEndHour
-    ? parseHour(endHour, today)
-    : parseHour(`${currentHour}:${today.getMinutes()}`, today);
 
   const handleDateChange = (date: Date | null) => {
     setStartDate(date);
     onDateChange(date);
+    
+    console.log(today.toDateString())
+    console.log(startDate?.toDateString())
+
+    if (date?.toDateString() === today.toDateString()) {
+      todayHour.setHours(Number(today.getHours()), Number(today.getMinutes()), 0, 0);
+  
+      if (Number(today.getHours()) >= Number(startHour.split(':')[0])) {
+        setMinTime(todayHour);
+      } else {
+        setMinTime(parseHour(startHour, date));
+      }
+  
+      if (Number(today.getHours()) >= Number(endHour.split(':')[0])) {
+        if (Number(today.getMinutes()) >= Number(endHour.split(':')[1])) {
+          setMaxTime(todayHour);
+        } else {
+          setMaxTime(parseHour(endHour, date));
+        }
+      } else {
+        setMaxTime(parseHour(endHour, date));
+      }
+    } else {
+      setMinTime(parseHour(startHour, today));
+      setMaxTime(parseHour(endHour, today));
+    }
   };
 
   const handleTimeChange = (time: Date | null) => {
