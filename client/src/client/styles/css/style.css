@@ -8024,9 +8024,7 @@ li.tl-nav-item.tl-9-nav-item.tl-dropdown>a:hover {
   color: var(--black);
   text-transform: capitalize;
   position: absolute;
-  top: 50%;
-  left: 20px;
-  /* Ajustez cette valeur selon vos besoins */
+  top: 110%;
   transform: translate(0, -50%);
   min-width: max-content;
 }
@@ -31101,4 +31099,16 @@ footer.tl-footer.tl-14-footer.tl-1-footer {
 }
 .rdt {
   position: relative;
+}
+
+.box {
+  left: 3px;
+}
+
+.fablab {
+  left: 4px;
+}
+
+.salle {
+  left: 30px;
 }

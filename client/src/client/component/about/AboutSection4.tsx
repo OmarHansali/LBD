@@ -28,15 +28,15 @@ const AboutSection4 = () => {
               <div className="tl-4-about-stats">
                 <div className="tl-4-about-stat">
                   <div className="tl-4-about-stat-txt">
-                    <span className="tl-4-about-stat-num">94</span>
-                    <span className="tl-4-about-stat-name">Boxes</span>
+                    <span className="tl-4-about-stat-num">8</span>
+                    <span className="tl-4-about-stat-name box">Boxes</span>
                   </div>
                 </div>
 
                 <div className="tl-4-about-stat">
                   <div className="tl-4-about-stat-txt">
-                    <span className="tl-4-about-stat-num">4+</span>
-                    <span className="tl-4-about-stat-name">
+                    <span className="tl-4-about-stat-num">1</span>
+                    <span className="tl-4-about-stat-name fablab">
                       Fablab
                     </span>
                   </div>
@@ -44,8 +44,8 @@ const AboutSection4 = () => {
 
                 <div className="tl-4-about-stat">
                   <div className="tl-4-about-stat-txt">
-                    <span className="tl-4-about-stat-num">25</span>
-                    <span className="tl-4-about-stat-name">
+                    <span className="tl-4-about-stat-num">12</span>
+                    <span className="tl-4-about-stat-name salle">
                       Salles
                     </span>
                   </div>

@@ -879,32 +879,32 @@ const testimonialList = [
     imgSrc: "assets/images/tl-4/testimony-1.jpg",
     review:
       "La réservation d'un espace au FabLab de l'université a grandement facilité mes projets créatifs. J'ai pu accéder aux équipements dont j'avais besoin et travailler dans un environnement propice à l'innovation. Je recommande vivement cette initiative à tous les étudiants passionnés par la fabrication et la conception.",
-    name: "Russell Sprout",
-    label: "Étudiant, Génie Informatique",
+    name: "Aymane CHATIT",
+    label: "Élève ingénieur en 1ère année",
   },
   {
     id: 1,
     imgSrc: "assets/images/tl-4/testimony-2.jpg",
     review:
       "La réservation d'un box à l'université a considérablement amélioré ma productivité. J'ai pu planifier mes séances d'étude en toute tranquillité, sans craindre de ne pas trouver de place disponible. Cela m'a également permis de travailler en groupe de manière plus efficace. Je suis reconnaissant envers l'université pour cette opportunité.",
-    name: "Alice Johnson",
-    label: "Étudiante, Mathématiques",
+    name: "Aya FRIK",
+    label: "Élève ingénieur en 1ère année",
   },
   {
     id: 2,
     imgSrc: "assets/images/tl-4/testimony-3.jpg",
     review:
       "La réservation d'un espace au FabLab de l'université a été une expérience fantastique pour moi. J'ai pu concrétiser mes idées et donner vie à mes projets grâce aux équipements de pointe disponibles. L'interface de réservation était conviviale et intuitive, ce qui a rendu le processus encore plus agréable.",
-    name: "Emily Wilson",
-    label: "Étudiante, Physique",
+    name: "Nada OUAZZANI",
+    label: "Élève ingénieur en 1ère année",
   },
   {
     id: 3,
     imgSrc: "assets/images/tl-4/testimony-4.jpg",
     review:
       "La possibilité de réserver un box à l'université a été extrêmement précieuse pour moi. En tant qu'étudiant en astronomie, j'ai besoin d'un endroit calme et propice à la concentration pour mes observations et mes études. Grâce à cette facilité de réservation, j'ai pu optimiser mon temps et me consacrer pleinement à ma passion.",
-    name: "Cassidy Jensen",
-    label: "Étudiant, Astronomie",
+    name: "Koffi Joule Kevin N'GUESSAN",
+    label: "Élève ingénieur en 1ère année",
   },
 ];
 

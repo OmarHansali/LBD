@@ -55,7 +55,7 @@ const FooterSection5: React.FC<FooterProps> = ({
               </div>
             </div>
 
-            <div className="col-lg-4 order-1 order-sm-2 order-lg-1">
+            <div className="col-lg-3 order-1 order-sm-2 order-lg-1">
               <div className="row gy-5">
                 <div className="col-6 col-xxs-12">
                   <div className="tl-footer-widget tl-4-footer-widget">
@@ -83,32 +83,6 @@ const FooterSection5: React.FC<FooterProps> = ({
                     </ul>
                   </div>
                 </div>
-                <div className="col-6 col-xxs-12">
-                  <div className="tl-footer-widget tl-4-footer-widget">
-                    <h5 className="tl-footer-widget-title tl-4-footer-widget-title">
-                      Academics
-                    </h5>
-                    <ul
-                      className={`tl-footer-links tl-4-footer-links ${footerLink}`}
-                    >
-                      <li>
-                        <a href="#">Programming</a>
-                      </li>
-                      <li>
-                        <a href="#">Art &amp; Design</a>
-                      </li>
-                      <li>
-                        <a href="#">Business</a>
-                      </li>
-                      <li>
-                        <a href="#">Engineering</a>
-                      </li>
-                      <li>
-                        <a href="#">Photography</a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
               </div>
             </div>
 
@@ -118,7 +92,7 @@ const FooterSection5: React.FC<FooterProps> = ({
                   Newsletter
                 </h5>
                 <p className="tl-3-nwsltr-txt">
-                  Register now to get latest updates on promotions & coupons.
+                  Inscrivez-vous maintenant pour recevoir les dernières mises à jour sur les promotions et les coupons.
                 </p>
                 <form action="#" className="tl-3-nwsltr-form">
                   <input
@@ -126,10 +100,10 @@ const FooterSection5: React.FC<FooterProps> = ({
                     name="nwsltr-mail"
                     id="tl-3-nwsltr-mail"
                     className="tl-3-nwsltr-mail-input"
-                    placeholder="Enter Your Email"
+                    placeholder="Entrez Votre Email"
                   />
                   <button className="tl-3-def-btn" id="tl-3-nwsltr-btn">
-                    Get Newsletter
+                    Recevoir la Newsletter
                   </button>
                 </form>
               </div>

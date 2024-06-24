@@ -49,7 +49,7 @@ const Materials = () => {
 
     return (
         <>
-            <h1 className="header capitalize dark:text-white">Gérer les matériaux</h1>
+            <h1 className="header capitalize dark:text-white">Gérer les matériels</h1>
             <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}

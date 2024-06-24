@@ -42,7 +42,7 @@ const Dashboard = () => {
 
                     <div className="col-span-4">
                         <DonutChart
-                            title="Matériaux"
+                            title="Matériels"
                             labels={materials && materials.map(material => material.name)}
                             seriesValue={materials && materials.map(material => material.quantity)}
                         />
