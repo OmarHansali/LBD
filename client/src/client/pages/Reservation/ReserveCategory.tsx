@@ -1,6 +1,7 @@
 import BreadcrumbSection from "../../component/breadcrumb/BreadcrumbSection";
 import ProgramSection from "../../component/campus/ProgramSection2";
 import Layout7 from "../../component/layout/Layout7";
+import Axios from "../../../services/axios";
 
 
   // create admin account
@@ -12,20 +13,27 @@ import Layout7 from "../../component/layout/Layout7";
     phoneNumber: "1234567890"
   }
   try {
-    const response = await fetch('http://localhost:5000/user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(admin),
-    });
-
-    if (!response.ok) {
-      throw new Error('Network response was not ok.');
-    }
+    const response = await Axios.post('/user', admin);
+    console.log('Reservation successful:', response.data);
   } catch (error) {
-    console.error('Error during creating account:', error);
+    console.error('Error during creating admin:', error);
   }
+  // try {
+    
+  //   const response = await fetch('http://localhost:5000/user', {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify(admin),
+  //   });
+
+  //   if (!response.ok) {
+  //     throw new Error('Network response was not ok.');
+  //   }
+  // } catch (error) {
+  //   console.error('Error during creating account:', error);
+  // }
 
 const Reservation = () => {
   return (
