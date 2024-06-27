@@ -43,7 +43,7 @@ const Sidebar = (isSidebarSize: any) => {
         <React.Fragment>
             <nav className="sidebar fixed z-[9999] flex-none w-[240px] ltr:border-r rtl:border-l dark:bg-darkborder border-black/10 transition-all duration-300 overflow-hidden">
                 <div
-                    className={`h-full bg-white dark:bg-darklight border-r-[1px] sm:hidden xs:hidden lg:block`}
+                    className={`h-full dark:bg-darklight border-r-[1px] sm:hidden xs:hidden lg:block`}
                 >
                     <div className="py-4 flex justify-center">
                         <Link to="/admin/dashboard" className="w-full main-logo">

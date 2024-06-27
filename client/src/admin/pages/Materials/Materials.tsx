@@ -15,13 +15,13 @@ const Materials = () => {
             enableSorting: true,
         },
         {
-            header: "Materiel",
+            header: "Matériel",
             accessorKey: "name",
             enableColumnFilter: false,
             enableSorting: true,
         },
         {
-            header: "Quantity",
+            header: "Quantité",
             accessorKey: "quantity",
             enableColumnFilter: false,
             enableSorting: true,
@@ -49,7 +49,7 @@ const Materials = () => {
 
     return (
         <>
-            <h1 className="header capitalize dark:text-white">Gérer les matériels</h1>
+            <h1 className="header first-letter:capitalize dark:text-white">Gérer le matériel</h1>
             <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}

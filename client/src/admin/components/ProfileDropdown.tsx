@@ -41,7 +41,7 @@ const ProfileDropdown = () => {
 
   return (
     <>
-      <div className="inline-flex items-center rounded-full text-xs justify-center px-1.5 py-0.5 bg-danger text-white capitalize">{role}</div>
+      <div className="inline-flex items-center rounded-full text-xs justify-center px-1.5 py-0.5 bg-danger text-white first-letter:capitalize">{role}</div>
       <div className="profile" ref={dropdownRef}>
         <button
           type="button"

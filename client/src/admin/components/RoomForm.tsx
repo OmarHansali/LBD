@@ -78,7 +78,7 @@ const RoomForm = ({ data, page }: iProps) => {
         <>
             <div className="flex items-center gap-10">
                 <NavigateBack />
-                <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
+                <h2 className="font-semibold text-2xl text-black first-letter:capitalize dark:text-white/80">
                     {data != undefined ? `Modifier ${type ? type : page}` : `Créer une nouvelle ${type ? type : page}`}
                 </h2>
             </div>
@@ -89,7 +89,7 @@ const RoomForm = ({ data, page }: iProps) => {
 
                     <div className="grid grid-cols-2 col-span-2 gap-2">
                         <div className="space-y-2 w-full">
-                            <label className="capitalize">Numéro de {type ? type : page}</label>
+                            <label className="first-letter:capitalize">Numéro de {type ? type : page}</label>
                             <input
                                 type="text"
                                 className="form-input border"

@@ -100,7 +100,7 @@ const Settings = () => {
             <div className="flex flex-col gap-4 min-h-[calc(100vh-212px)]">
                 <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                     <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                        <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
+                        <h2 className="mb-4 text-base font-semibold text-black first-letter:capitalize dark:text-white/80">
                             Détails de l'utilisateur
                         </h2>
                         <form onSubmit={handleSubmit} className="grid grid-cols-1 gap-4 md:grid-cols-2">
@@ -168,7 +168,7 @@ const Settings = () => {
 
 
                     <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                        <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
+                        <h2 className="mb-4 text-base font-semibold text-black first-letter:capitalize dark:text-white/80">
                             Photo Profile
                         </h2>
                         <div className="grid grid-cols-1 gap-4">
@@ -237,7 +237,7 @@ const Settings = () => {
                     <form
                         onSubmit={(e) => handleSubmitPassword(e)}
                         className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                        <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
+                        <h2 className="mb-4 text-base font-semibold text-black first-letter:capitalize dark:text-white/80">
                             Changer le mot de passe
                         </h2>
                         <div className="space-y-4">
@@ -294,7 +294,7 @@ const Settings = () => {
 
 
                     <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-                        <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
+                        <h2 className="mb-4 text-base font-semibold text-black first-letter:capitalize dark:text-white/80">
                             Notifications
                         </h2>
                         <div className="space-y-4">

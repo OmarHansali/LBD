@@ -333,7 +333,7 @@ const TableContainer = ({
             className="bg-indigo-500 hover:bg-indigo-600 text-white px-4 py-2.5 shadow-sm rounded-md flex items-center gap-2"
           >
             <i className="icofont-plus text-white"></i>
-            <span className="capitalize">Créer {page}</span>
+            <span className="first-letter:capitalize">Créer {page}</span>
           </Link>
 
         </div>
@@ -452,7 +452,7 @@ const TableContainer = ({
                 className="flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
                 onClick={() => setPageIndex(0)}
               >
-                First{" "}
+                Début{" "}
               </button>
             </li>
             <li>
@@ -461,7 +461,7 @@ const TableContainer = ({
                   }`}
                 onClick={previousPage}
               >
-                Prev
+                Précédent
               </button>
             </li>
             {getPageOptions().map((item: any, key: number) => (
@@ -484,7 +484,7 @@ const TableContainer = ({
                 ${!getCanNextPage() && ""}`}
                 onClick={() => getCanNextPage() && nextPage()}
               >
-                Next{" "}
+                Suivant{" "}
               </button>
             </li>
             <li>
@@ -492,7 +492,7 @@ const TableContainer = ({
                 className="flex justify-center px-3.5 py-2 rounded transition hover:text-purple border border-black/10 hover:border-purple dark:border-darkborder dark:text-darkmuted dark:hover:border-purple dark:hover:text-purple"
                 onClick={() => setPageIndex(getPageOptions().length - 1)}
               >
-                Last{" "}
+                Dernier{" "}
               </button>
             </li>
           </ul>

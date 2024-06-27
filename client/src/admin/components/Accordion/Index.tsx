@@ -35,7 +35,7 @@ const Accordion = ({
   return (
     <React.Fragment>
       <div className="p-5 bg-white border rounded border-black/10 dark:bg-darklight dark:border-darkborder">
-        <h2 className="mb-4 text-base font-semibold text-black capitalize dark:text-white/80">
+        <h2 className="mb-4 text-base font-semibold text-black first-letter:capitalize dark:text-white/80">
           {heading}
         </h2>
         <div className={ isSpace === false ? "" : "space-y-2"}>

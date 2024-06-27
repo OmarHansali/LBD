@@ -36,7 +36,7 @@ const MaterialForm = ({ data }: iProps) => {
         <>
             <div className="flex items-center gap-10">
                 <NavigateBack />
-                <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
+                <h2 className="font-semibold text-2xl text-black first-letter:capitalize dark:text-white/80">
                     {data != undefined ? "Modifier matérielle" : "Créer un nouveau matériau"}
                 </h2>
             </div>

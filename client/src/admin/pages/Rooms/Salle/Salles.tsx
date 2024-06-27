@@ -81,7 +81,7 @@ const Salles = () => {
     
     return (
         <>
-            <h1 className="header capitalize">Gérer les salles</h1>
+            <h1 className="header first-letter:capitalize">Gérer les salles</h1>
             <LoadingPage isLoading={isLoading} />
             <TableContainer
                 columns={columns}

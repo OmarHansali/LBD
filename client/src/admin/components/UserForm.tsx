@@ -30,8 +30,8 @@ const UserForm = ({ data }: iProps) => {
         <>
             <div className="flex items-center gap-10">
                 <NavigateBack />
-                <h2 className="font-semibold text-2xl text-black capitalize dark:text-white/80">
-                    {data != undefined ? "Edit User" : "Create New User"}
+                <h2 className="font-semibold text-2xl text-black first-letter:capitalize dark:text-white/80">
+                    {data != undefined ? "Modifier l'utilisateur" : "Créer un nouvel utilisateur"}
                 </h2>
             </div>
             <form 

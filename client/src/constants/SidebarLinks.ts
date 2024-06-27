@@ -22,8 +22,8 @@ const sidebarData = [
     icon: "M13 9H21L11 24V15H4L13 0V9ZM11 11V7.22063L7.53238 13H13V17.3944L17.263 11H11Z",
   },
   {
-    id: "chambre",
-    label: "Chambres",
+    id: "ressources",
+    label: "Ressources",
     // link: "/admin/salles",
     icon: "M12 1L21.5 6.5V17.5L12 23L2.5 17.5V6.5L12 1ZM5.49388 7.0777L12.0001 10.8444L18.5062 7.07774L12 3.311L5.49388 7.0777ZM4.5 8.81329V16.3469L11.0001 20.1101V12.5765L4.5 8.81329ZM13.0001 20.11L19.5 16.3469V8.81337L13.0001 12.5765V20.11Z",
     subItems: [
